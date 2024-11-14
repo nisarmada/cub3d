@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_isascii.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
+/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/14 16:06:32 by nsarmada      ########   odam.nl         */
+/*   Created: 2023/10/03 16:20:33 by nsarmada      #+#    #+#                 */
+/*   Updated: 2023/10/13 13:38:31 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include <stdio.h>
+#include "libft.h"
 
-int	main(int ac, char **av)
+int	ft_isascii(int c)
 {
-	char *filename;
-	t_cub	*cub;
-
-	(void)ac;
-	cub = initialize_cub();
-	filename = av[1];
-	parse_cub_file(filename, cub);
-	//input check
-	//parsing of map
-	// rendering?
-	// "playing"
+	if (c >= 0 && c <= 127)
+		return (1);
+	else
+		return (0);
 }
+
+/*int main()
+{
+	int c = 54;
+
+	printf("%d", ft_isascii(c));
+	return 0;
+}*/

@@ -1,6 +1,6 @@
 NAME = cub3d
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -flto
+CFLAGS = -Wall -Werror -Wextra -g
 
 LIBMLX	= ./lib/MLX42
 
@@ -10,7 +10,7 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 SRCS_DIR = src
 OBJ_DIR = obj
 
-SRCS	:= $(addprefix $(SRCS_DIR)/, main.c input_check.c)
+SRCS	:= $(addprefix $(SRCS_DIR)/, main.c input_check.c parsing.c)
 OBJS	:= $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
 all: $(NAME)

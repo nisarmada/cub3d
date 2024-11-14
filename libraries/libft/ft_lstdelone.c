@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_lstdelone.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
+/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/14 16:06:32 by nsarmada      ########   odam.nl         */
+/*   Created: 2023/10/24 15:04:43 by nsarmada      #+#    #+#                 */
+/*   Updated: 2023/10/24 17:59:08 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "libft.h"
+#include <stdio.h>
 
-int	main(int ac, char **av)
+void	ft_lstdelone(t_list *lst, void ((*del))(void *))
 {
-	char *filename;
-	t_cub	*cub;
-
-	(void)ac;
-	cub = initialize_cub();
-	filename = av[1];
-	parse_cub_file(filename, cub);
-	//input check
-	//parsing of map
-	// rendering?
-	// "playing"
+	if (!lst || !del)
+		return ;
+	(*del)(lst->content);
+	free(lst);
 }

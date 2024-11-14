@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_putstr_fd.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
+/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/14 16:06:32 by nsarmada      ########   odam.nl         */
+/*   Created: 2023/10/11 16:36:32 by nsarmada      #+#    #+#                 */
+/*   Updated: 2024/06/27 18:23:17 by snijhuis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include <unistd.h>
+#include "libft.h"
 
-int	main(int ac, char **av)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char *filename;
-	t_cub	*cub;
+	int	i;
 
-	(void)ac;
-	cub = initialize_cub();
-	filename = av[1];
-	parse_cub_file(filename, cub);
-	//input check
-	//parsing of map
-	// rendering?
-	// "playing"
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar_fd(s[i], fd);
+		i++;
+	}
 }
+
+// int main ()
+// {
+// 	char s[] = "halloo";
+// 	ft_putstr_fd(s, 1);
+// 	return 0;
+// }
