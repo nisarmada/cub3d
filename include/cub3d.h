@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   cub3d.h                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/14 14:05:03 by eeklund       ########   odam.nl         */
+/*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
+/*   Updated: 2024/11/14 14:07:43 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int ac, char **av)
-{
-	//input check
-	//parsing of map
-	// rendering?
-	// "playing"
-}
+#ifndef CUB3D_H
+# define CUB3D_H
+
+#endif
