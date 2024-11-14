@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/14 16:06:32 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/14 17:01:55 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ int	main(int ac, char **av)
 	char *filename;
 	t_cub	*cub;
 
-	(void)ac;
-	cub = initialize_cub();
 	filename = av[1];
+	if (!valid_input(ac, av))
+		return (1);
+	cub = initialize_cub();
 	parse_cub_file(filename, cub);
-	//input check
-	//parsing of map
-	// rendering?
-	// "playing"
+	
 }

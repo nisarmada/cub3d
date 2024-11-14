@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/14 16:41:21 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/14 17:11:39 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void parse_cub_file(char *filename, t_cub *cub)
 	int		fd;
 	char	*line;
 
+	(void)cub;
 	fd = open(filename, O_RDONLY);
 	// parse_directions(line, cub);
 	line = get_next_line(fd);

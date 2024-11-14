@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/14 16:34:12 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/14 17:11:08 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+# include <stddef.h>
+# include "../lib/libft/libft.h"
 
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
@@ -48,4 +50,6 @@ typedef struct s_cub
 
 void	parse_cub_file(char *filename, t_cub *cub);
 t_cub	*initialize_cub(void);
+int	valid_input(int ac, char **av);
+
 #endif
