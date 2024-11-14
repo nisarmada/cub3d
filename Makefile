@@ -1,38 +1,49 @@
 NAME = cub3d
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -flto
+CFLAGS = -Wall -Werror -Wextra -g
 
 LIBMLX	= ./lib/MLX42
+LIBFT_DIR	= ./lib/libft
+LIBFT	= $(LIBFT_DIR)/libft.a
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include -I
+HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 SRCS_DIR = src
 OBJ_DIR = obj
 
-SRCS	:= $(addprefix $(SRCS_DIR)/, main.c input_check.c)
+SRCS	:= $(addprefix $(SRCS_DIR)/, main.c input_check.c gnl/get_next_line.c gnl/get_next_line_utils.c)
 OBJS	:= $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+OBJ_SUBDIRS = $(sort $(dir $(OBJS)))
 
-all: $(NAME)
+GREEN = \033[32m
+BLUE = \033[34m
+
+all: $(LIBFT) $(NAME)
 
 $(LIBMLX)/build/libmlx42.a:
 	@cmake -S $(LIBMLX) -B $(LIBMLX)/build
 	make -C $(LIBMLX)/build -j4
 
-$(NAME): lib/MLX42/build/libmlx42.a $(OBJS)
+$(LIBFT):
+	@echo "$(BLUE)Building libft...$(RESET)"
+	@make -C $(LIBFT_DIR) > /dev/null
+	@echo "$(GREEN)libft built!$(RESET)"
+
+$(NAME): lib/MLX42/build/libmlx42.a $(OBJS) $(LIBFT)
 	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
-
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
 
 clean:
 	@rm -rf $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean > /dev/null
 	@rm -rf $(LIBMLX)/build
 
 fclean: clean
+	@make -C $(LIBFT_DIR) fclean > /dev/null
 	@rm -f $(NAME)
 
 re: clean all
