@@ -12,7 +12,8 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)
 SRCS_DIR = src
 OBJ_DIR = obj
 
-SRCS	:= $(addprefix $(SRCS_DIR)/, main.c input_check.c parsing.c)
+SRCS	:= $(addprefix $(SRCS_DIR)/, main.c input_check.c parsing/parsing.c parsing/color_conversion.c \
+parsing/map_parsing.c)
 OBJS	:= $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_SUBDIRS = $(sort $(dir $(OBJS)))
 

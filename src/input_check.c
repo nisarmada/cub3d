@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:11:17 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/15 16:47:20 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/11/15 18:04:21 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,48 +26,63 @@ typedef struct	s_string
 	int		elem_count;
 }	t_string;
 
-static int	check_line(t_string *op_line)
-{
-	if (!check_element()) // need to create
-		return (0);
-	op_line->elem_count++;
-	return (1);
-}
+// static int	check_line(t_string *op_line)
+// {
+// 	int		i;
+// 	char	*str;
 
-int	check_first_line(char *str)
-{
-	int	i;
+// 	i = 0;
+// 	str = op_line->line;
+// 	while (is_whitespace(str[i]))
+// 		i++;
+// 	if (str[i])
+// 	{
+// 		if (!ft_strncmp(&str[i], "F", 1) || !ft_strncmp(&str[i], "C", 1)\
+// 		&& is_whitespace(str[i + 1])) 
+// 	}
+// 	if (str[i])
+// 	{
+// 		if (!ft_strncmp(&str[i], "NO", 2) || !ft_strncmp(&str[i], "SO", 2)\
+// 		|| !ft_strncmp(&str[i], "WE", 2) || !ft_strncmp(&str[i], "EA", 2))
+// 	}
+// 	op_line->elem_count++;
+// 	return (1);
+// }
 
-	i = 0;
-	while (str[i])
-	{
-		if ()
-	}
-}
+// int	check_first_line(char *str)
+// {
+// 	int	i;
 
-static int	check_map(char	*line, int fd)
-{
-	char	*cur_line;
-	char	*next_line;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if ()
+// 	}
+// }
 
-	if (!check_first_line(line)) // need to create
-		return (free(line), 0); // error handling
-	free(line);
-	cur_line = get_next_line(fd);
-	next_line = get_next_line(fd);
-	while (next_line)
-	{
-		if (!check_map_line(cur_line)) // need to create
-			return (free(cur_line), 0);
-		free(cur_line);
-		cur_line = next_line;
-		next_line = get_next_line(fd);
-	}
-	if (!check_last_line(cur_line))
-		return (free(cur_line), 0); // error handling 
-	free(cur_line);
-	return (1);
-}
+// static int	check_map(char	*line, int fd)
+// {
+// 	char	*cur_line;
+// 	char	*next_line;
+
+// 	if (!check_first_line(line)) // need to create
+// 		return (free(line), 0); // error handling
+// 	free(line);
+// 	cur_line = get_next_line(fd);
+// 	next_line = get_next_line(fd);
+// 	while (next_line)
+// 	{
+// 		if (!check_map_line(cur_line)) // need to create
+// 			return (free(cur_line), 0);
+// 		free(cur_line);
+// 		cur_line = next_line;
+// 		next_line = get_next_line(fd);
+// 	}
+// 	if (!check_last_line(cur_line))
+// 		return (free(cur_line), 0); // error handling 
+// 	free(cur_line);
+// 	return (1);
+// }
 
 int	valid_input(int ac, char **av)
 {
@@ -85,16 +100,16 @@ int	valid_input(int ac, char **av)
 	while (line != NULL)
 	{
 		op_line.line = line;
-		if (!check_line(&op_line))
-			return (free (line), 0); //error handling msg
+		// if (!check_line(&op_line))
+		// 	return (free (line), 0); //error handling msg
 		free (line);
 		line = get_next_line(fd);
 		if (op_line.elem_count == 6)
 			break ;
 	}
-	// op_line.line = line;
-	if (!check_map(line, fd))
-		return (0); // error handling msg
+	op_line.line = line;
+	// if (!check_map(line, fd))
+	// 	return (0); // error handling msg
 	return (1);
 }
 
