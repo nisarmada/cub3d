@@ -18,6 +18,7 @@ OBJ_SUBDIRS = $(sort $(dir $(OBJS)))
 
 GREEN = \033[32m
 BLUE = \033[34m
+RESET = \033[0m
 
 all: $(LIBFT) $(NAME)
 
@@ -26,9 +27,9 @@ $(LIBMLX)/build/libmlx42.a:
 	make -C $(LIBMLX)/build -j4
 
 $(LIBFT):
-	# @echo "$(BLUE)Building libft...$(RESET)"
-	@make -C $(LIBFT_DIR) > dev/null
-	# @echo "$(GREEN)libft built!$(RESET)"
+	@echo "$(BLUE)Building libft...$(RESET)"
+	@make -C $(LIBFT_DIR) > /dev/null
+	@echo "$(GREEN)libft built!$(RESET)"
 
 $(NAME): lib/MLX42/build/libmlx42.a $(OBJS) $(LIBFT)
 	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
