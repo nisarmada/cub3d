@@ -12,7 +12,7 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)
 SRCS_DIR = src
 OBJ_DIR = obj
 
-SRCS	:= $(addprefix $(SRCS_DIR)/, main.c input_check.c parsing.c)
+SRCS	:= $(addprefix $(SRCS_DIR)/, main.c input_check.c parsing.c color_conversion.c map_parsing.c)
 OBJS	:= $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_SUBDIRS = $(sort $(dir $(OBJS)))
 
@@ -27,7 +27,7 @@ $(LIBMLX)/build/libmlx42.a:
 
 $(LIBFT):
 	# @echo "$(BLUE)Building libft...$(RESET)"
-	@make -C $(LIBFT_DIR) > dev/null
+	@make -C $(LIBFT_DIR) > /dev/null
 	# @echo "$(GREEN)libft built!$(RESET)"
 
 $(NAME): lib/MLX42/build/libmlx42.a $(OBJS) $(LIBFT)
