@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/15 17:25:47 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/11/18 20:19:49 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 # include <stddef.h>
+# include <limits.h>
 # include "../lib/libft/libft.h"
 
 #define WHITE 0xFFFFFF
@@ -66,9 +67,17 @@ t_cub	*initialize_cub(void);
 int		valid_input(int ac, char **av);
 void 	parse_redirections(char *line, t_cub *cub);
 char *find_path(char *file);
-int is_whitespace(char file);
 void	parse_colors(char *line, t_cub *cub);
 void	allocate_map(char *filename, t_cub *cub);
 void map_parsing(char *line, t_cub *cub, int j);
+
+/* inout_check */
+char	*trim_spaces(char *str);
+
+/* utils/extra */
+char	*ft_strndup(const char *s1, size_t n);
+int		is_whitespace(char file);
+int		ft_isvalid_path_chars(int c);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

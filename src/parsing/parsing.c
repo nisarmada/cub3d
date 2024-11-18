@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parsing.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/15 15:40:29 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/18 20:21:07 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void parse_cub_file(char *filename, t_cub *cub)
 	line = get_next_line(fd);
 	while (line)
 	{
+		line = trim_spaces(line); // ellen added this line
 		parse_directions(line, cub);
 		parse_colors(line, cub);
 	//	printf("line is %s\n", line);
@@ -98,10 +99,4 @@ char *find_path(char *file)
 	path = ft_substr(file, start, end - start);
 	// printf("path %s\n", path);
 	return (path);
-}
-
-int is_whitespace(char file)
-{
-	return (file == ' ' || file == '\t' || file == '\f' || file == '\v'
-		|| file == '\n' || file == '\r');
 }
