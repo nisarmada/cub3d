@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:11:17 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/18 20:41:30 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/11/19 15:25:25 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,18 +180,18 @@ void	set_element_as_found(char *id, t_string *op_line)
 int	elemnt_not_found(char *id, t_string *op_line)
 {
 	if (!ft_strcmp(id, "NO") && op_line->NO == 1)
-		return (0);
+		return (printf("duplicate id\n"), 0);
 	else if (!ft_strcmp(id, "SO") && op_line->SO == 1)
-		return (0);
+		return (printf("duplicate id\n"), 0);
 	else if (!ft_strcmp(id, "WE") && op_line->WE == 1)
-		return (0);
+		return (printf("duplicate id\n"), 0);
 	else if (!ft_strcmp(id, "EA") && op_line->EA == 1)
-		return (0);
+		return (printf("duplicate id\n"), 0);
 	else if (!ft_strcmp(id, "F") && op_line->F == 1)
-		return (0);
+		return (printf("duplicate id\n"), 0);
 	else if (!ft_strcmp(id, "C") && op_line->C == 1)
-		return (0);
-	return (printf("duplicate id\n"), 1);
+		return (printf("duplicate id\n"), 0);
+	return (1);
 }
 
 int	is_path_id(char *str)
@@ -248,7 +248,7 @@ static int	check_line(t_string *op_line)
 		i++;
 	if (str[i])
 	{
-		printf("str %s\n", &str[i]);
+		// printf("str %s\n", &str[i]);
 		if (!split_in_two(&str[i], &id_info))
 			return (printf("wroong \n"), 0); // split the line in two parts, by the first whitespace/ space
 		// printf("id: %s\ninfo: %s\n", id_info.id, id_info.info);
@@ -311,7 +311,6 @@ int	valid_input(int ac, char **av)
 		if (!check_line(&op_line))
 			return (free (line), 0); //error handling msg
 		free (line);
-		printf("line is gooood\n ----------------------------------- \n");
 		line = get_next_line(fd);
 		while (line && !ft_strcmp(line, "\n"))
 		{
@@ -322,10 +321,11 @@ int	valid_input(int ac, char **av)
 			break ;
 	}
 	op_line.line = line;
-	printf("line %s\n", line);
+	// printf("line %s\n", line);
 
 	// if (!check_map(line, fd))
 	// 	return (0); // error handling msg
+	close (fd);
 	return (1);
 }
 

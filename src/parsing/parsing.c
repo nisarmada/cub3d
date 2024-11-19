@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/18 20:21:07 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/11/19 16:56:40 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,26 @@ void parse_cub_file(char *filename, t_cub *cub)
 	line = get_next_line(fd);
 	while (line)
 	{
-		line = trim_spaces(line); // ellen added this line
+		// line = trim_spaces(line); // ellen added this line
 		parse_directions(line, cub);
 		parse_colors(line, cub);
 	//	printf("line is %s\n", line);
-		if (!ft_strncmp(line, "1", 1) || !ft_strncmp(line, "0", 1))
-		{
-			map_parsing(line, cub, j);
-			//printf("map[%i] %s\n", j, cub->map[j]);
-			
-		}
+		if (is_map_line(line))
+			break;
 		line = get_next_line(fd);
 	}
+	printf("our line %s\n", line);
+	while (line)
+	{
+		// if (!is_map_line(line)) // not sure if we need this
+		// 	break;
+		map_parsing(line, cub, j);
+		j++;
+		line = get_next_line(fd);
+	}
+	cub->map[j] = NULL;
 	close(fd);
 }
-
 
 char *find_path(char *file)
 {
