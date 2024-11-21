@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/18 20:19:49 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/11/19 15:26:30 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,8 @@ char	*ft_strndup(const char *s1, size_t n);
 int		is_whitespace(char file);
 int		ft_isvalid_path_chars(int c);
 int		ft_strcmp(const char *s1, const char *s2);
+
+/* map parsing*/
+int is_map_line(char *line);
 
 #endif

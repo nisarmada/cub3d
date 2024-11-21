@@ -6,12 +6,24 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/18 20:17:44 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/11/19 18:10:59 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+static void print_map(t_cub *cub)
+{
+	int i = 0;
+
+	printf("printing map\n");
+	while (cub->map[i])
+	{
+		printf("%s\n", cub->map[i]);
+		i++;
+	}
+	printf("max length %i\n", cub->map_width);
+}
 int	main(int ac, char **av)
 {
 	char	*filename;
@@ -24,5 +36,7 @@ int	main(int ac, char **av)
 	printf("input file is valid \n");
 	cub = initialize_cub();
 	parse_cub_file(filename, cub);
-	printf("paths %s", cub->north);
+	//printf("paths %s", cub->north);
+	
+	print_map(cub);
 }

@@ -6,12 +6,34 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/15 15:39:09 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/19 17:07:22 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+int is_map_line(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	if (line[i] == '\0' || line[i] == '\n')
+        return (0);
+	while (line[i])
+	{
+		if (line[i] != '1' && line[i] != '0' && line[i] != 'N' && line[i] != 'S'
+			&& line[i] != 'W' && line[i] != 'E' && line[i] != ' ' && line[i] != '\n')
+			{
+				printf("line[%i] %c\n", i, line[i]);
+				return (0);
+
+			}
+		i++;
+	}
+	return (1);
+}
 void	allocate_map(char *filename, t_cub *cub)
 {
 	int fd;
@@ -23,33 +45,50 @@ void	allocate_map(char *filename, t_cub *cub)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] == '1' || line[0] == '0')
+		if (is_map_line(line))
 			break;
 		line = get_next_line(fd);
 	}
 	while (line)
 	{
-		line = get_next_line(fd);
 		rows++;
+		if (!cub->map_width || ft_strlen(line) - 1 > (size_t)cub->map_width)
+			cub->map_width = ft_strlen(line) - 1;
+		line = get_next_line(fd);
 	}
 	//printf("this many rows %i\n", rows);
-	cub->map = malloc(sizeof(char *) * rows);
+	cub->map = malloc(sizeof(char *) * (rows + 1));
 	close(fd);
 }
 
 void map_parsing(char *line, t_cub *cub, int j)
 {
 	int i;
+	//char *final_line;
 
 	i = 0;
 	(void)j;
-	while (line[i])
+	cub->map[j] = malloc(sizeof(char) * cub->map_width + 1);
+	if (!cub->map[j])
+	return ;
+	while (i < (int)(ft_strlen(line) - 1))
 	{
-		// if (line[i] == 'N')
-		// 	player_position(line, cub);
+		cub->map[j][i] = line[i];
 		i++;
 	}
-	cub->map[j] = ft_strdup(line);
-	if (!cub->map_width || i > cub->map_width)
-		cub->map_width = i;
+	while (i < cub->map_width)
+	{
+		cub->map[j][i] = '2';
+		i++;
+	}
+	cub->map[j][i] = '\0';
+	// while (is_map_line(line))
+	// {
+		// if (line[i] == 'N')
+		// 	player_position(line, cub);
+		//cub->map[j] = ft_strndup(line, ft_strlen(line) - 1);
+		//line = get_next_line(fd);
+	//}
+	// if (!cub->map_width || ft_strlen(cub->map[j]) > (size_t)cub->map_width)
+	// 	cub->map_width = ft_strlen(cub->map[j]);
 }
