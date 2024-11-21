@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/19 15:26:30 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/21 17:03:32 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stddef.h>
 # include <limits.h>
 # include "../lib/libft/libft.h"
+# include "../lib/MLX42/include/MLX42/MLX42.h"
 
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
@@ -32,12 +33,19 @@
 #define CEILING_COLOR 0x4B4B4B  // Dark grey
 #define WALL_COLOR 0x888888  // Light grey
 #define INACCESSIBLE_COLOR 0x000000  // Black or grey
+#define TILE_SIZE 32
 
 typedef struct s_key_value
 {
 	char	*key;
 	char	*value;
 }	t_key_value;
+
+typedef struct s_player
+{
+	int	x;
+	int	y;
+}	t_player;
 
 typedef struct s_cub
 {
@@ -53,6 +61,7 @@ typedef struct s_cub
 	int		player_x;
 	int		player_y;
 	char	player_orientation;
+	t_player	*player;
 }	t_cub;
 
 typedef struct s_rgb
@@ -82,5 +91,11 @@ int		ft_strcmp(const char *s1, const char *s2);
 
 /* map parsing*/
 int is_map_line(char *line);
+void find_player_position(t_cub *cub);
+
+/*rendering*/
+int	render_game(t_cub *cub);
+void draw_tile(mlx_image_t *img, int x, int y, int color);
+void render_map(mlx_image_t *img, t_cub *cub);
 
 #endif
