@@ -1,10 +1,13 @@
 NAME = cub3d
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g -DMACOSX_DEPLOYMENT_TARGET=12.7
+
+export MACOSX_DEPLOYMENT_TARGET = 12.7
 
 LIBMLX	= ./lib/MLX42
 LIBFT_DIR	= ./lib/libft
 LIBFT	= $(LIBFT_DIR)/libft.a
+LDFLAGS = -L/usr/local/opt/glfw/lib
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)
@@ -34,7 +37,7 @@ $(LIBFT):
 	@echo "$(GREEN)libft built!$(RESET)"
 
 $(NAME): lib/MLX42/build/libmlx42.a $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(LDFLAGS) $(HEADERS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)

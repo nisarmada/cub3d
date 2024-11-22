@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/15 15:04:05 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/22 13:43:35 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	parse_colors(char *line, t_cub *cub)
 	int		color_int;
 
 	(void)cub;
+	(void) wall;
 	if (!ft_strncmp(line, "F", 1))
 	{
 		floor = get_rgb_values(line);

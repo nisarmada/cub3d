@@ -6,11 +6,17 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/19 17:07:22 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/22 15:12:21 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	is_map_char(char c)
+{
+	return (c == '1' || c == '0' || c == 'N' || c == 'S' \
+	|| c == 'W' || c == 'E' || c == ' ');
+}
 
 int is_map_line(char *line)
 {
@@ -23,12 +29,10 @@ int is_map_line(char *line)
         return (0);
 	while (line[i])
 	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != 'N' && line[i] != 'S'
-			&& line[i] != 'W' && line[i] != 'E' && line[i] != ' ' && line[i] != '\n')
+		if (!is_map_char(line[i]) && line[i] != '\n')
 			{
 				printf("line[%i] %c\n", i, line[i]);
 				return (0);
-
 			}
 		i++;
 	}
@@ -91,4 +95,11 @@ void map_parsing(char *line, t_cub *cub, int j)
 	//}
 	// if (!cub->map_width || ft_strlen(cub->map[j]) > (size_t)cub->map_width)
 	// 	cub->map_width = ft_strlen(cub->map[j]);
+}
+
+int is_valid_map(t_cub *cub)
+{
+	int	i;
+	int	j;
+	
 }

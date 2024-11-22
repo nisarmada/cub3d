@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/19 15:26:30 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/22 14:59:22 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,32 @@ typedef struct s_key_value
 	char	*key;
 	char	*value;
 }	t_key_value;
+
+/*
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
+
+typedef struct s_player
+{
+	int		player_x;
+	int		player_y;
+}	t_player;
+
+typedef struct s_map
+{
+	char	**map;
+	int		map_width;
+	int		map_height;
+}	t_map;
+
+typedef struct s_ray
+{
+};
+*/
 
 typedef struct s_cub
 {
