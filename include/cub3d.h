@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/21 17:03:32 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/22 15:27:18 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ void find_player_position(t_cub *cub);
 int	render_game(t_cub *cub);
 void draw_tile(mlx_image_t *img, int x, int y, int color);
 void render_map(mlx_image_t *img, t_cub *cub);
+void render_player(t_cub *cub, mlx_image_t *img);
 
 #endif
