@@ -6,8 +6,8 @@ LIBMLX	= ./lib/MLX42
 LIBFT_DIR	= ./lib/libft
 LIBFT	= $(LIBFT_DIR)/libft.a
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)
+HEADERS	:= -I ./include -I $(LIBMLX)/include -I /opt/homebrew/include
+LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT) -L/opt/homebrew/lib
 
 SRCS_DIR = src
 OBJ_DIR = obj
