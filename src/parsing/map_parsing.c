@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/22 15:12:21 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/11/22 17:39:17 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int is_map_line(char *line)
 	{
 		if (!is_map_char(line[i]) && line[i] != '\n')
 			{
-				printf("line[%i] %c\n", i, line[i]);
+				//printf("line[%i] %c\n", i, line[i]);
 				return (0);
 			}
 		i++;
@@ -82,19 +82,10 @@ void map_parsing(char *line, t_cub *cub, int j)
 	}
 	while (i < cub->map_width)
 	{
-		cub->map[j][i] = '2';
+		cub->map[j][i] = ' ';
 		i++;
 	}
 	cub->map[j][i] = '\0';
-	// while (is_map_line(line))
-	// {
-		// if (line[i] == 'N')
-		// 	player_position(line, cub);
-		//cub->map[j] = ft_strndup(line, ft_strlen(line) - 1);
-		//line = get_next_line(fd);
-	//}
-	// if (!cub->map_width || ft_strlen(cub->map[j]) > (size_t)cub->map_width)
-	// 	cub->map_width = ft_strlen(cub->map[j]);
 }
 
 int is_valid_map(t_cub *cub)

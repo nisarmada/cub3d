@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/19 16:56:40 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/21 16:45:19 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_cub *initialize_cub(void)
 	t_cub *cub;
 
 	cub = malloc(sizeof(t_cub));
+	cub->player = malloc(sizeof(t_player));
 	cub->east = NULL;
 	cub->west = NULL;
 	cub->north = NULL;
@@ -68,16 +69,12 @@ void parse_cub_file(char *filename, t_cub *cub)
 		// line = trim_spaces(line); // ellen added this line
 		parse_directions(line, cub);
 		parse_colors(line, cub);
-	//	printf("line is %s\n", line);
 		if (is_map_line(line))
 			break;
 		line = get_next_line(fd);
 	}
-	printf("our line %s\n", line);
 	while (line)
 	{
-		// if (!is_map_line(line)) // not sure if we need this
-		// 	break;
 		map_parsing(line, cub, j);
 		j++;
 		line = get_next_line(fd);
@@ -104,4 +101,29 @@ char *find_path(char *file)
 	path = ft_substr(file, start, end - start);
 	// printf("path %s\n", path);
 	return (path);
+}
+
+void find_player_position(t_cub *cub)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (cub->map[j])
+	{
+		i = 0;
+		while (cub->map[j][i])
+		{
+			if (cub->map[j][i] == 'N' || cub->map[j][i] == 'S'
+				|| cub->map[j][i] == 'W' || cub->map[j][i] == 'E')
+			{
+				cub->player->x = i;
+				cub->player->y = j;
+				cub->player_orientation = cub->map[j][i];
+			}
+			i++;
+		}
+		j++;
+	}
 }

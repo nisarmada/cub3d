@@ -9,14 +9,14 @@ LIBFT_DIR	= ./lib/libft
 LIBFT	= $(LIBFT_DIR)/libft.a
 LDFLAGS = -L/usr/local/opt/glfw/lib
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)
+HEADERS	:= -I ./include -I $(LIBMLX)/include -I /opt/homebrew/include
+LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT) -L/opt/homebrew/lib
 
 SRCS_DIR = src
 OBJ_DIR = obj
 
 SRCS	= $(addprefix $(SRCS_DIR)/, main.c input_check.c parsing/parsing.c parsing/color_conversion.c \
-parsing/map_parsing.c utils/extra.c)
+parsing/map_parsing.c utils/extra.c rendering/prepare_game.c)
 
 OBJS	= $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_SUBDIRS = $(sort $(dir $(OBJS)))
