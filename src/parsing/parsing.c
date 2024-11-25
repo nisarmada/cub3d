@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/25 11:41:15 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/25 19:08:40 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,36 @@ t_cub *initialize_cub(void)
 {
 	t_cub *cub;
 
-	cub = malloc(sizeof(t_cub));
-	cub->player = malloc(sizeof(t_player));
-	cub->east = NULL;
-	cub->west = NULL;
-	cub->north = NULL;
-	cub->south = NULL;
-	cub->map = NULL;
+    // Allocate memory for cub
+    cub = malloc(sizeof(t_cub));
+    if (!cub)
+        return (NULL);
+
+    // Allocate memory for player
+    cub->player = malloc(sizeof(t_player));
+    if (!cub->player)
+    {
+        // If player allocation fails, free cub and return NULL
+        free(cub);
+        return (NULL);
+    }
+
+    // Initialize player fields to 0 or default values
+    cub->player->x = 0;
+    cub->player->y = 0;
+    cub->player->angle = 0;
+    cub->player->fov = 0;
+    cub->player->orientation = '\0';
+
+    // Initialize other fields
+    cub->east = NULL;
+    cub->west = NULL;
+    cub->north = NULL;
+    cub->south = NULL;
+    cub->map = NULL;
+    cub->mlx = NULL;
+    cub->img = NULL;
+
 	return (cub);
 }
 

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/25 13:59:05 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/25 18:56:19 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ typedef struct s_cub
 	int		wall_color;
 	int		map_width;
 	int		map_height;
+	mlx_t	*mlx;
+	mlx_image_t	*img;
 	t_player	*player;
 }	t_cub;
 
@@ -107,7 +109,7 @@ void normalize_angle(float *angle);
 void draw_line(t_player *player, mlx_image_t *img, int x, int y);
 void move_player(t_player *player, char direction);
 void rotate_player(t_player *player, char direction);
-int key_hook(int keycode, t_cub *cub);
+void key_hook(mlx_key_data_t keycode, void *cub_ptr);
 
 /*main*/
 

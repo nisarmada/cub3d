@@ -6,7 +6,7 @@
 /*   By: nikos <nikos@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2024/11/25 13:59:26 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/25 19:10:05 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,18 @@ void rotate_player(t_player *player, char direction)
 	normalize_angle(&(player->angle));
 }
 
-int key_hook(int keycode, t_cub *cub)
+void key_hook(mlx_key_data_t keycode, void *cub_ptr)
 {
-	(void)cub;
-	printf("Keycode: %d\n", keycode);
-	return 1;
+	t_cub *cub;
+
+	cub = (t_cub *)cub_ptr;
+	printf("Keycode: %d\n", keycode.key);
+	if (keycode.key == MLX_KEY_ESCAPE && keycode.action == MLX_RELEASE)
+	{
+		mlx_delete_image(cub->mlx, cub->img);
+		mlx_close_window(cub->mlx);
+		mlx_terminate(cub->mlx);
+		exit(EXIT_SUCCESS);
+	}
+	// return 1;
 }

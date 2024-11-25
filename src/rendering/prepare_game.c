@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/25 14:09:55 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/25 19:07:16 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 
 int	render_game(t_cub *cub)
 {
-	void	*mlx;
-	mlx_image_t *img;
+	//void	*mlx;
+	//mlx_image_t *img;
 
 	(void)cub;
-	mlx = mlx_init(800, 600, "Cub3d", true);
-	if (!mlx)
+	cub->mlx = mlx_init(800, 600, "Cub3d", true);
+	if (!cub->mlx)
 		return (1);
-	img = mlx_new_image(mlx, 800, 600);
-	if (!img)
+	cub->img = mlx_new_image(cub->mlx, 800, 600);
+	if (!cub->img)
 		return (1);
-	render_map(img, cub);
-	render_player(cub, img);
-	mlx_image_to_window(mlx, img, 0, 0);
-	mlx_loop(mlx);
+	render_map(cub->img, cub);
+	render_player(cub, cub->img);
+	mlx_key_hook(cub->mlx, &key_hook, (void *)cub);
+	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
+	mlx_loop(cub->mlx);
 	return (0);
 }
 
@@ -57,6 +58,8 @@ void render_map(mlx_image_t *img, t_cub *cub)
 	int	tile_y;
 
 	row = 0;
+	// if (!cub || !cub->player)
+    //     return;
 	//printf("wall color %i\n", cub->wall_color);
 	while (cub->map[row])
 	{
