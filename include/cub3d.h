@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/22 15:27:18 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/25 13:59:05 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <fcntl.h>
 # include <stddef.h>
 # include <limits.h>
+# include <math.h>
 # include "../lib/libft/libft.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 
@@ -34,6 +35,8 @@
 #define WALL_COLOR 0x888888  // Light grey
 #define INACCESSIBLE_COLOR 0x000000  // Black or grey
 #define TILE_SIZE 32
+#define MOVE_SPEED 5
+#define ROTATION_SPEED 0.1
 
 typedef struct s_key_value
 {
@@ -43,8 +46,11 @@ typedef struct s_key_value
 
 typedef struct s_player
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	char	orientation;
+	float	angle;
+	float	fov;
 }	t_player;
 
 typedef struct s_cub
@@ -58,9 +64,6 @@ typedef struct s_cub
 	int		wall_color;
 	int		map_width;
 	int		map_height;
-	int		player_x;
-	int		player_y;
-	char	player_orientation;
 	t_player	*player;
 }	t_cub;
 
@@ -92,11 +95,20 @@ int		ft_strcmp(const char *s1, const char *s2);
 /* map parsing*/
 int is_map_line(char *line);
 void find_player_position(t_cub *cub);
+void define_field_of_vision(t_cub *cub);
 
 /*rendering*/
 int	render_game(t_cub *cub);
 void draw_tile(mlx_image_t *img, int x, int y, int color);
 void render_map(mlx_image_t *img, t_cub *cub);
 void render_player(t_cub *cub, mlx_image_t *img);
+void render_fov(t_player *player, mlx_image_t *img);
+void normalize_angle(float *angle);
+void draw_line(t_player *player, mlx_image_t *img, int x, int y);
+void move_player(t_player *player, char direction);
+void rotate_player(t_player *player, char direction);
+int key_hook(int keycode, t_cub *cub);
+
+/*main*/
 
 #endif

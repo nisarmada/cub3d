@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/21 16:45:19 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/25 11:41:15 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,24 @@ void find_player_position(t_cub *cub)
 			{
 				cub->player->x = i;
 				cub->player->y = j;
-				cub->player_orientation = cub->map[j][i];
+				cub->player->orientation = cub->map[j][i];
+				define_field_of_vision(cub);
 			}
 			i++;
 		}
 		j++;
 	}
+}
+
+void define_field_of_vision(t_cub *cub)
+{
+	cub->player->fov = M_PI / 3; //60o
+	if (cub->player->orientation == 'E')
+		cub->player->angle = 0;
+	else if (cub->player->orientation == 'N')
+		cub->player->angle = M_PI / 2;
+	else if (cub->player->orientation == 'S')
+		cub->player->angle = 3 * M_PI / 2;
+	else if (cub->player->orientation == 'W')
+		cub->player->angle = M_PI;
 }

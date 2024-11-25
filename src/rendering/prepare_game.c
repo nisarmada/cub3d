@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/22 15:29:35 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/25 14:09:55 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	render_game(t_cub *cub)
 {
 	void	*mlx;
-	// void	*window;
 	mlx_image_t *img;
 
 	(void)cub;
@@ -84,6 +83,7 @@ void render_map(mlx_image_t *img, t_cub *cub)
 		}
 		row++;
 	}
+	render_fov(cub->player, img);
 }
 
 void render_player(t_cub *cub, mlx_image_t *img)
@@ -111,5 +111,28 @@ void render_player(t_cub *cub, mlx_image_t *img)
 		}
 		i++;
 	}
+	// render_fov(cub->player, img);
 }
 
+void render_fov(t_player *player, mlx_image_t *img)
+{
+	int max_distance;
+	float	left_angle;
+	float	right_angle;
+	int		x_left;
+	int		y_left;
+	int		x_right;
+	int		y_right;
+	
+	max_distance = 200;
+	left_angle = player->angle + player->fov / 2;
+	right_angle = player->angle - player->fov / 2;
+	normalize_angle(&left_angle);
+	normalize_angle(&right_angle);
+	x_left = player->x + cos(left_angle) * max_distance;
+	y_left = player->y - sin(left_angle) * max_distance;
+	x_right = player->x + cos(right_angle) * max_distance;
+	y_right = player->y - sin(right_angle) * max_distance;
+	draw_line(player, img, x_left, y_left);
+	draw_line(player, img, x_right, y_right);
+}
