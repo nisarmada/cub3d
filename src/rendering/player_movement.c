@@ -6,33 +6,44 @@
 /*   By: nikos <nikos@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2024/11/26 15:03:24 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/26 15:55:48 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void move_player(t_player *player, char direction)
+void move_player(t_cub *cub, t_player *player, char direction)
 {
 	float	move_x;
 	float	move_y;
+	int		x_tile;
+	int		y_tile;
+	float	new_x;
+	float	new_y;
 
 	move_x = 0;
 	move_y = 0;
-	// printf("Before move - x: %f, y: %f, angle: %f\n", player->x, player->y, player->angle);
+	new_x = 0;
+	new_y = 0;
 	if (direction == 'W')
 	{
 		move_x = cos(player->angle) * MOVE_SPEED;
 		move_y = -sin(player->angle) * MOVE_SPEED;
-		// printf("Moving forward - move_x: %f, move_y: %f\n", move_x, move_y);
 	}
 	else if (direction == 'S')
 	{
 		move_x = -cos(player->angle) * MOVE_SPEED;
 		move_y = sin(player->angle) * MOVE_SPEED;
 	}
-	player->x += move_x;
-	player->y += move_y;
+	new_x = player->x + move_x;
+	new_y = player->y + move_y;
+	x_tile = new_x / TILE_SIZE; // Convert new position to tile coordinates
+	y_tile = new_y / TILE_SIZE;
+	if (cub->map[y_tile][x_tile] != '1') // if there's no wall in x axis update x-coordinate
+        player->x = new_x;
+    if (cub->map[y_tile][x_tile] != '1') // if there's no wall in y axis update y-coordinate
+        player->y = new_y;
+
 }
 
 void rotate_player(t_player *player, char direction)
@@ -79,9 +90,9 @@ void hook_loop(void *cub_ptr)
 
 	cub = (t_cub *)cub_ptr;
 	if (cub->keys[MLX_KEY_W])
-		move_player(cub->player, 'W');
+		move_player(cub, cub->player, 'W');
 	if (cub->keys[MLX_KEY_S])
-		move_player(cub->player, 'S');
+		move_player(cub, cub->player, 'S');
 	if (cub->keys[MLX_KEY_A])
 		rotate_player(cub->player, 'L');
 	if (cub->keys[MLX_KEY_D])

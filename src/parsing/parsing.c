@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/26 15:08:33 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/26 15:34:16 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ t_cub *initialize_cub(void)
     cub->map = NULL;
     cub->mlx = NULL;
     cub->img = NULL;
-	 for (int i = 0; i < 256; i++)
-        cub->keys[i] = false;
-	
+	for (int i = 0; i < 256; i++)
+    	cub->keys[i] = false;
 	return (cub);
 }
 

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/26 15:03:05 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/26 15:43:02 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 #define WALL_COLOR 0x888888  // Light grey
 #define INACCESSIBLE_COLOR 0x000000  // Black or grey
 #define TILE_SIZE 32
-#define MOVE_SPEED 5
-#define ROTATION_SPEED 0.1
+#define MOVE_SPEED 2.5
+#define ROTATION_SPEED 0.05
 
 typedef struct s_key_value
 {
@@ -108,7 +108,7 @@ void render_player(t_cub *cub, mlx_image_t *img);
 void render_fov(t_player *player, mlx_image_t *img);
 void normalize_angle(float *angle);
 void draw_line(t_player *player, mlx_image_t *img, int x, int y);
-void move_player(t_player *player, char direction);
+void move_player(t_cub *cub, t_player *player, char direction);
 void rotate_player(t_player *player, char direction);
 void key_hook(mlx_key_data_t keycode, void *cub_ptr);
 void hook_loop(void *cub_ptr);
