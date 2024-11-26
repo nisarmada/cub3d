@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/25 19:07:16 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/26 15:02:44 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	render_game(t_cub *cub)
 		return (1);
 	render_map(cub->img, cub);
 	render_player(cub, cub->img);
-	mlx_key_hook(cub->mlx, &key_hook, (void *)cub);
+	mlx_key_hook(cub->mlx, key_hook, cub);
+	mlx_loop_hook(cub->mlx, hook_loop, cub);
 	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
 	mlx_loop(cub->mlx);
 	return (0);
@@ -78,8 +79,8 @@ void render_map(mlx_image_t *img, t_cub *cub)
                      cub->map[row][column] == 'E' || cub->map[row][column] == 'W')
 			{
 				draw_tile(img, tile_x, tile_y, FLOOR_COLOR);
-				cub->player->x = column * TILE_SIZE + TILE_SIZE / 2;
-				cub->player->y = row * TILE_SIZE + TILE_SIZE / 2;
+				// cub->player->x = column * TILE_SIZE + TILE_SIZE / 2;
+				// cub->player->y = row * TILE_SIZE + TILE_SIZE / 2;
 				// render_player(cub, img);
 			}
 			column++;

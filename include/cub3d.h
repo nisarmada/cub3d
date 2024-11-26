@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/25 18:56:19 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/26 15:03:05 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_player
 
 typedef struct s_cub
 {
+	bool	keys[256];
 	char	*north;
 	char	*south;
 	char	*west;
@@ -110,6 +111,7 @@ void draw_line(t_player *player, mlx_image_t *img, int x, int y);
 void move_player(t_player *player, char direction);
 void rotate_player(t_player *player, char direction);
 void key_hook(mlx_key_data_t keycode, void *cub_ptr);
+void hook_loop(void *cub_ptr);
 
 /*main*/
 

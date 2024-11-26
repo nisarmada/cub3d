@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/25 19:08:40 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/26 15:08:33 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ t_cub *initialize_cub(void)
     cub->map = NULL;
     cub->mlx = NULL;
     cub->img = NULL;
-
+	 for (int i = 0; i < 256; i++)
+        cub->keys[i] = false;
+	
 	return (cub);
 }
 
@@ -141,8 +143,8 @@ void find_player_position(t_cub *cub)
 			if (cub->map[j][i] == 'N' || cub->map[j][i] == 'S'
 				|| cub->map[j][i] == 'W' || cub->map[j][i] == 'E')
 			{
-				cub->player->x = i;
-				cub->player->y = j;
+				cub->player->x = i * TILE_SIZE + TILE_SIZE / 2;
+				cub->player->y = j * TILE_SIZE + TILE_SIZE / 2;
 				cub->player->orientation = cub->map[j][i];
 				define_field_of_vision(cub);
 			}
