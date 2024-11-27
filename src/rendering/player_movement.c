@@ -6,7 +6,7 @@
 /*   By: nikos <nikos@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2024/11/26 15:55:48 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/27 16:53:53 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void move_player(t_cub *cub, t_player *player, char direction)
 void rotate_player(t_player *player, char direction)
 {
 	if (direction == 'L')
-		player->angle += ROTATION_SPEED;
-	if (direction == 'R')
 		player->angle -= ROTATION_SPEED;
+	if (direction == 'R')
+		player->angle += ROTATION_SPEED;
 	normalize_angle(&(player->angle));
 }
 
@@ -71,17 +71,6 @@ void key_hook(mlx_key_data_t keycode, void *cub_ptr)
 		mlx_terminate(cub->mlx);
 		exit(EXIT_SUCCESS);
 	}
-	// if (keycode.key == MLX_KEY_W && keycode.action == MLX_PRESS)
-	// 	move_player(cub->player, 'W');
-	// if (keycode.key == MLX_KEY_S && keycode.action == MLX_PRESS)
-	// 	move_player(cub->player, 'S');
-	// if (keycode.key == MLX_KEY_A && keycode.action == MLX_PRESS)
-	// 	rotate_player(cub->player, 'L');
-	// if (keycode.key == MLX_KEY_D && keycode.action == MLX_PRESS)
-	// 	rotate_player(cub->player, 'R');
-	// render_map(cub->img, cub);
-	// render_player(cub, cub->img);
-	// return 1;
 }
 
 void hook_loop(void *cub_ptr)

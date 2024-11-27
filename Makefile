@@ -13,7 +13,8 @@ SRCS_DIR = src
 OBJ_DIR = obj
 
 SRCS	= $(addprefix $(SRCS_DIR)/, main.c input_check.c parsing/parsing.c parsing/color_conversion.c \
-parsing/map_parsing.c utils/extra.c rendering/prepare_game.c rendering/extras.c rendering/player_movement.c)
+parsing/map_parsing.c utils/extra.c rendering/prepare_game.c rendering/extras.c rendering/player_movement.c \
+rendering/raycasting.c)
 
 OBJS	= $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_SUBDIRS = $(sort $(dir $(OBJS)))

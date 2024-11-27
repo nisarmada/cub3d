@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/26 15:02:44 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/27 18:05:36 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ void render_map(mlx_image_t *img, t_cub *cub)
 	int	tile_y;
 
 	row = 0;
-	// if (!cub || !cub->player)
-    //     return;
-	//printf("wall color %i\n", cub->wall_color);
 	while (cub->map[row])
 	{
 		column = 0;
@@ -77,17 +74,14 @@ void render_map(mlx_image_t *img, t_cub *cub)
 				draw_tile(img, tile_x, tile_y, INACCESSIBLE_COLOR);
 			else if (cub->map[row][column] == 'N' || cub->map[row][column] == 'S' || 
                      cub->map[row][column] == 'E' || cub->map[row][column] == 'W')
-			{
 				draw_tile(img, tile_x, tile_y, FLOOR_COLOR);
-				// cub->player->x = column * TILE_SIZE + TILE_SIZE / 2;
-				// cub->player->y = row * TILE_SIZE + TILE_SIZE / 2;
-				// render_player(cub, img);
-			}
+				
 			column++;
 		}
 		row++;
 	}
-	render_fov(cub->player, img);
+	render_fov(cub->player, img, cub);
+	// raycasting(cub, cub->player);
 }
 
 void render_player(t_cub *cub, mlx_image_t *img)
@@ -118,7 +112,7 @@ void render_player(t_cub *cub, mlx_image_t *img)
 	// render_fov(cub->player, img);
 }
 
-void render_fov(t_player *player, mlx_image_t *img)
+void render_fov(t_player *player, mlx_image_t *img, t_cub *cub)
 {
 	int max_distance;
 	float	left_angle;
@@ -128,7 +122,7 @@ void render_fov(t_player *player, mlx_image_t *img)
 	int		x_right;
 	int		y_right;
 	
-	max_distance = 200;
+	max_distance = 400;
 	left_angle = player->angle + player->fov / 2;
 	right_angle = player->angle - player->fov / 2;
 	normalize_angle(&left_angle);
@@ -139,4 +133,5 @@ void render_fov(t_player *player, mlx_image_t *img)
 	y_right = player->y - sin(right_angle) * max_distance;
 	draw_line(player, img, x_left, y_left);
 	draw_line(player, img, x_right, y_right);
+	raycasting(cub, cub->player);
 }

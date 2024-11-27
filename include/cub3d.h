@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/26 15:43:02 by nikos         ########   odam.nl         */
+/*   Updated: 2024/11/27 18:05:47 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <math.h>
 # include "../lib/libft/libft.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
@@ -37,6 +41,13 @@
 #define TILE_SIZE 32
 #define MOVE_SPEED 2.5
 #define ROTATION_SPEED 0.05
+
+typedef struct s_raycast
+{
+	float	distance;
+	int		tile_x;
+	int		tile_y;
+}	t_raycast;
 
 typedef struct s_key_value
 {
@@ -105,14 +116,17 @@ int	render_game(t_cub *cub);
 void draw_tile(mlx_image_t *img, int x, int y, int color);
 void render_map(mlx_image_t *img, t_cub *cub);
 void render_player(t_cub *cub, mlx_image_t *img);
-void render_fov(t_player *player, mlx_image_t *img);
+void render_fov(t_player *player, mlx_image_t *img, t_cub *cub);
 void normalize_angle(float *angle);
 void draw_line(t_player *player, mlx_image_t *img, int x, int y);
+void draw_line_float(t_player *player, mlx_image_t *img, int x, int y);
 void move_player(t_cub *cub, t_player *player, char direction);
 void rotate_player(t_player *player, char direction);
 void key_hook(mlx_key_data_t keycode, void *cub_ptr);
 void hook_loop(void *cub_ptr);
 
-/*main*/
+/*raycasting*/
+void	raycasting(t_cub *cub, t_player *player);
+t_raycast	cast_single_ray(t_cub *cub, t_player *player, float ray_angle);
 
 #endif
