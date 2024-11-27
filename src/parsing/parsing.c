@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/21 16:45:19 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/27 18:56:10 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ t_cub *initialize_cub(void)
 	cub->north = NULL;
 	cub->south = NULL;
 	cub->map = NULL;
+	cub->player_orientation = 0;
+	cub->player_x = -1;
+	cub->player_y = -1;
 	return (cub);
 }
 

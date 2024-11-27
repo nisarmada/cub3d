@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/21 16:34:24 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/27 19:22:02 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	main(int ac, char **av)
 	printf("input file is valid \n");
 	cub = initialize_cub();
 	parse_cub_file(filename, cub);
-	find_player_position(cub);
+	if (!valid_map(cub, cub->map_height, cub->map_width))
+		return (1); 
+	// find_player_position(cub);
 	printf("x->%i y->%i\n", cub->player->x, cub->player->y);
 	render_game(cub);
 	//printf("paths %s", cub->north);

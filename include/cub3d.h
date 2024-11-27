@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/22 17:38:23 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/11/27 17:25:12 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 /* map parsing*/
 int is_map_line(char *line);
 void find_player_position(t_cub *cub);
+int valid_map(t_cub *cub, int height, int width);
 
 /*rendering*/
 int	render_game(t_cub *cub);
