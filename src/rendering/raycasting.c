@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/28 14:47:38 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/28 17:09:18 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 void raycasting(t_cub *cub, t_player *player)
 {
 	normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
-	cast_single_ray(cub, player, player->angle);
+	cast_single_ray(cub, player, player->angle); //we need to call this in a while loop to do around 1024
+	//rays in total from player->angle - player->fov / 2 up to + fov / 2
 }
 
-void	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
+float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 {
 	float	ray_x; // starting position x
 	float	ray_y; // starting poisition y
@@ -31,7 +32,8 @@ void	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 	float	delta_x; // differential with respect to x
 	float	delta_y;
 	float	distance_x; //distance to next vertical border
-	float	distance_y; // distance to next horizontal border
+	float	distance_y; // d3istance to next horizontal border
+	float	total_distance;
 
 	normalize_angle(&ray_angle);
 	ray_x = player->x;
@@ -42,6 +44,7 @@ void	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 	tile_y = floor(ray_y / TILE_SIZE);
 	distance_x = 0.0;
 	distance_y = 0.0;
+	total_distance = 0.0;
 	if (dir_x > 0)
 		step_x = 1; // we move right
 	else
@@ -66,11 +69,13 @@ void	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 	{
 		if (distance_x < distance_y)
 		{
+			total_distance += distance_x;
 			distance_x += delta_x;
 			tile_x += step_x; // i need to try to write without step and only check cos sign and then here just add 1
 		}
 		else
 		{
+			total_distance += distance_y;
 			distance_y += delta_y;
 			tile_y += step_y;
 		}
@@ -78,7 +83,7 @@ void	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 		if (cub->map[tile_y][tile_x] == '1')
 		{
 			draw_line(player, cub->img, tile_x * TILE_SIZE, tile_y * TILE_SIZE);
-			return ;
+			return (total_distance);
 		}
 		// if (distance_x > 800 || distance_y > 600)
 		// 	return ;

@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/28 14:20:54 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/28 17:45:48 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void render_map(mlx_image_t *img, t_cub *cub)
 	while (cub->map[row])
 	{
 		column = 0;
-		while (cub->map[row][column])
+		while (column < cub->map_width)
 		{
 			tile_x = TILE_SIZE * column;
 			tile_y = TILE_SIZE * row;
