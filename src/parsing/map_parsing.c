@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/27 19:26:24 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/11/28 15:33:16 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void map_parsing(char *line, t_cub *cub, int j)
 		i++;
 	}
 	cub->map[j][i] = '\0';
+	// print_map(cub);
 }
 
 int	valid_first_last_row(char **map, int row, int width)
@@ -118,7 +119,7 @@ int	check_surrounding(char **map, int row, int i, int width)
 		return (0);
 	if (i != width && (cur[i + 1] != '1'  && cur[i + 1] != ' '))
 		return (0);
-	if ((up[i] != '1' && up[i] != ' ') || (down[i] != '1' && down[i] != ' '))
+	if ((up[i] != '1' && up[i] != ' ') || (down[i] != '1'))
 		return (0);
 	return (1);
 }
@@ -129,16 +130,15 @@ int	check_char(t_cub *cub, int row, int i)
 		return (printf("wrong, \n"), 0);
 	if (!ft_strchr("NSEW01", cub->map[row][i]))
 		return (printf("invalid char: %c\n", cub->map[row][i]), 0);
-	if (!cub->player_orientation && ft_strchr("NSEW", cub->map[row][i]))
+	if (!cub->player->orientation && ft_strchr("NSEW", cub->map[row][i]))
 	{
-		cub->player_orientation = cub->map[row][i];
-		cub->player_y = row;
-		cub->player_x = i;
+		cub->player->orientation = cub->map[row][i];
+		cub->player->y = row * TILE_SIZE + TILE_SIZE / 2;
+		cub->player->x = i * TILE_SIZE + TILE_SIZE / 2;
+		define_field_of_vision(cub);
 	}
-	else if (cub->player_orientation && ft_strchr("NSEW", cub->map[row][i]))
+	else if (cub->player->orientation && ft_strchr("NSEW", cub->map[row][i]))
 		return (printf("player alredy exists, x %i, y %i\n", i, row), 0);
-	if (!cub->player_orientation && row == cub->map_height - 2)
-		return (0);
 	return (1);
 }
 
@@ -166,12 +166,14 @@ int valid_map(t_cub *cub, int height, int width)
 			else
 			{
 				if (!check_char(cub, row, i))
-					return (0);
+					return (printf("invalid char %i %i\n", row, i), 0);
 			}
 			i++;
 		}
 		row++;
-	}	
+	}
+	if (!cub->player->orientation)
+		return(printf("no player\n"), 0);	
 	printf("map checked ;)\n");
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/28 15:04:06 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/28 15:30:08 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,7 @@ void hook_loop(void *cub_ptr);
 /*raycasting*/
 void	raycasting(t_cub *cub, t_player *player);
 void	cast_single_ray(t_cub *cub, t_player *player, float ray_angle);
+
+void print_map(t_cub *cub);
 
 #endif

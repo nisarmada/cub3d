@@ -6,13 +6,13 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/28 15:03:10 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/28 15:32:59 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void print_map(t_cub *cub)
+void print_map(t_cub *cub)
 {
 	int i = 0;
 
@@ -36,13 +36,14 @@ int	main(int ac, char **av)
 	printf("input file is valid \n");
 	cub = initialize_cub();
 	parse_cub_file(filename, cub);
+	// find_player_position(cub);
+	// print_map(cub);
+	// printf()
 	if (!valid_map(cub, cub->map_height, cub->map_width))
 		return (1); 
-	// find_player_position(cub);
 	printf("x->%i y->%i\n", cub->player->x, cub->player->y);
 	render_game(cub);
 	
 	//printf("paths %s", cub->north);
 	
-	print_map(cub);
 }
