@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/27 18:05:36 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/28 14:20:54 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	render_game(t_cub *cub)
 	render_player(cub, cub->img);
 	mlx_key_hook(cub->mlx, key_hook, cub);
 	mlx_loop_hook(cub->mlx, hook_loop, cub);
+	// raycasting(cub, cub->player);
 	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
 	mlx_loop(cub->mlx);
 	return (0);
@@ -81,7 +82,7 @@ void render_map(mlx_image_t *img, t_cub *cub)
 		row++;
 	}
 	render_fov(cub->player, img, cub);
-	// raycasting(cub, cub->player);
+	raycasting(cub, cub->player);
 }
 
 void render_player(t_cub *cub, mlx_image_t *img)
@@ -122,6 +123,7 @@ void render_fov(t_player *player, mlx_image_t *img, t_cub *cub)
 	int		x_right;
 	int		y_right;
 	
+	(void)cub;
 	max_distance = 400;
 	left_angle = player->angle + player->fov / 2;
 	right_angle = player->angle - player->fov / 2;
@@ -133,5 +135,5 @@ void render_fov(t_player *player, mlx_image_t *img, t_cub *cub)
 	y_right = player->y - sin(right_angle) * max_distance;
 	draw_line(player, img, x_left, y_left);
 	draw_line(player, img, x_right, y_right);
-	raycasting(cub, cub->player);
+	// raycasting(cub, cub->player);
 }

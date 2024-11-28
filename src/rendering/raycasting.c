@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/27 18:08:32 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/28 14:47:38 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,11 @@
 
 void raycasting(t_cub *cub, t_player *player)
 {
-	// t_raycast result;
-	// float ray;
-
-	normalize_angle(&player->angle);
-	// ray = player->angle;
-	//  printf("Raycasting - Player Angle: %.2f\n", player->angle);
-	cast_single_ray(cub, cub->player, player->angle);
-	// draw_line(player, cub->img, result.tile_x, result.tile_y);
+	normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
+	cast_single_ray(cub, player, player->angle);
 }
 
-t_raycast	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
+void	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 {
 	float	ray_x; // starting position x
 	float	ray_y; // starting poisition y
@@ -38,15 +32,12 @@ t_raycast	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 	float	delta_y;
 	float	distance_x; //distance to next vertical border
 	float	distance_y; // distance to next horizontal border
-	t_raycast result;
 
-	printf("Player Position: (%i, %i)\n", player->x, player->y);
-    printf("Player Angle: %.2f\n", player->angle);
-    printf("Ray Angle: %.2f\n", ray_angle);
+	normalize_angle(&ray_angle);
 	ray_x = player->x;
 	ray_y = player->y;
 	dir_x = cos(ray_angle);
-	dir_y = sin(ray_angle);
+	dir_y = -sin(ray_angle);
 	tile_x = floor(ray_x / TILE_SIZE);
 	tile_y = floor(ray_y / TILE_SIZE);
 	distance_x = 0.0;
@@ -70,25 +61,26 @@ t_raycast	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 		distance_y = ((tile_y + 1) * TILE_SIZE - ray_y) / fabs(dir_y);
 	else
 		distance_y = (ray_y - TILE_SIZE * tile_y) / fabs(dir_y);
+
 	while (1)
 	{
-		if (distance_x > distance_y)
+		if (distance_x < distance_y)
 		{
-			tile_x += step_x; // i need to try to write without step and only check cos sign and then here just add 1
 			distance_x += delta_x;
+			tile_x += step_x; // i need to try to write without step and only check cos sign and then here just add 1
 		}
 		else
 		{
-			tile_y += step_y;
 			distance_y += delta_y;
+			tile_y += step_y;
 		}
+		// distance = (distance_x > distance_y) ? distance_x : distance_y;
 		if (cub->map[tile_y][tile_x] == '1')
 		{
-			result.distance = (distance_x > distance_y) ? distance_x : distance_y;
-            result.tile_x = tile_x * TILE_SIZE;
-            result.tile_y = tile_y * TILE_SIZE;
-			draw_line(player, cub->img, result.tile_x, result.tile_y);
-			return (result);
+			draw_line(player, cub->img, tile_x * TILE_SIZE, tile_y * TILE_SIZE);
+			return ;
 		}
+		// if (distance_x > 800 || distance_y > 600)
+		// 	return ;
 	}
 }
