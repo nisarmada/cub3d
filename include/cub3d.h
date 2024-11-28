@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/28 13:55:07 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/28 15:04:06 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,32 @@ typedef struct s_player
 	float	fov;
 }	t_player;
 
+/*
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
+
+typedef struct s_player
+{
+	int		player_x;
+	int		player_y;
+}	t_player;
+
+typedef struct s_map
+{
+	char	**map;
+	int		map_width;
+	int		map_height;
+}	t_map;
+
+typedef struct s_ray
+{
+};
+*/
+
 typedef struct s_cub
 {
 	bool	keys[256];
@@ -110,6 +136,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 int is_map_line(char *line);
 void find_player_position(t_cub *cub);
 void define_field_of_vision(t_cub *cub);
+int valid_map(t_cub *cub, int height, int width);
 
 /*rendering*/
 int	render_game(t_cub *cub);

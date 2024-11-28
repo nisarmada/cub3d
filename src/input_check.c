@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:11:17 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/19 15:25:25 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/21 16:29:17 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,7 @@ typedef struct	s_string
 	int		C;
 }	t_string;
 
-typedef struct s_id_info
-{
-	char	*id;
-	char	*info;
-}	t_id_info;
-
-int	split_in_two(char *str, t_id_info *id_info)
+int	split_in_two(char *str, t_key_value *info)
 {
 	int	i;
 	int	start;
@@ -49,8 +43,8 @@ int	split_in_two(char *str, t_id_info *id_info)
 		i++;
 	if (str[i])
 	{
-		id_info->id = ft_strndup(&str[start], i);
-		id_info->info = ft_strndup(&str[i], ft_strlen(str) - i);
+		info->key = ft_strndup(&str[start], i);
+		info->value = ft_strndup(&str[i], ft_strlen(str) - i);
 		// printf("in split\nid: %s\ninfo: %s\n", id_info->id, id_info->info);
 		return (1);
 	}
@@ -84,24 +78,24 @@ char	*trim_spaces(char *str)
 	return (str);
 }
 
-int	check_path_info(char *info)
+int	check_path_info(char *value)
 {
 	int	i;
 	int	fd;
 
-	info = trim_spaces(info);
+	value = trim_spaces(value);
 	i = 0;
-	// printf("str after trim spaces: %s\n", info);
-	while (info[i])
+	// printf("str after trim spaces: %s\n", value);
+	while (value[i])
 	{
-		if (!ft_isvalid_path_chars(info[i]))
-			return (printf("invalid char in path, info[i] %c\n", info[i]), 0);
+		if (!ft_isvalid_path_chars(value[i]))
+			return (printf("invalid char in path, value[i] %c\n", value[i]), 0);
 		i++;
 	}
 	// printf("int max path %i\n", PATH_MAX);
 	if (i > PATH_MAX)
 		return (printf("too long path\n"), 0);
-	fd = open(info, O_RDONLY);
+	fd = open(value, O_RDONLY);
 	if (fd < 0)
 	{
 		perror("error opening file\n");
@@ -112,22 +106,22 @@ int	check_path_info(char *info)
 	// paths: validate the path and if there are more paths also error
 }
 
-int	check_colorinfo(char *info)
+int	check_colorinfo(char *value)
 {
 	int			i;
 	int			j;
 	char		**colors;
 
 	i = 0;
-	info = trim_spaces(info);
-	// printf("string after trim spaces |%s|\n", info);
-	// while (info[i])
+	value = trim_spaces(value);
+	// printf("string after trim spaces |%s|\n", value);
+	// while (value[i])
 	// {
-	// 	if (!ft_isvalid_path_chars(info[i]))
+	// 	if (!ft_isvalid_path_chars(value[i]))
 	// 		return (printf("invalid char in path\n"), 0);
 	// 	i++;
 	// }
-	colors = ft_split(info, ',');
+	colors = ft_split(value, ',');
 	i = 0;
 	while (colors[i])
 	{
@@ -161,35 +155,35 @@ int	check_colorinfo(char *info)
 	// see thet it is valid numbers (0 - 255) 
 }
 
-void	set_element_as_found(char *id, t_string *op_line)
+void	set_element_as_found(char *key, t_string *op_line)
 {
-	if (!ft_strcmp(id, "NO"))
+	if (!ft_strcmp(key, "NO"))
 		op_line->NO = 1;
-	else if (!ft_strcmp(id, "SO"))
+	else if (!ft_strcmp(key, "SO"))
 		op_line->SO = 1;
-	else if (!ft_strcmp(id, "WE"))
+	else if (!ft_strcmp(key, "WE"))
 		op_line->WE = 1;
-	else if (!ft_strcmp(id, "EA"))
+	else if (!ft_strcmp(key, "EA"))
 		op_line->EA = 1;
-	else if (!ft_strcmp(id, "F"))
+	else if (!ft_strcmp(key, "F"))
 		op_line->F = 1;
-	else if (!ft_strcmp(id, "C"))
+	else if (!ft_strcmp(key, "C"))
 		op_line->C = 1;
 }
 
-int	elemnt_not_found(char *id, t_string *op_line)
+int	elemnt_not_found(char *key, t_string *op_line)
 {
-	if (!ft_strcmp(id, "NO") && op_line->NO == 1)
+	if (!ft_strcmp(key, "NO") && op_line->NO == 1)
 		return (printf("duplicate id\n"), 0);
-	else if (!ft_strcmp(id, "SO") && op_line->SO == 1)
+	else if (!ft_strcmp(key, "SO") && op_line->SO == 1)
 		return (printf("duplicate id\n"), 0);
-	else if (!ft_strcmp(id, "WE") && op_line->WE == 1)
+	else if (!ft_strcmp(key, "WE") && op_line->WE == 1)
 		return (printf("duplicate id\n"), 0);
-	else if (!ft_strcmp(id, "EA") && op_line->EA == 1)
+	else if (!ft_strcmp(key, "EA") && op_line->EA == 1)
 		return (printf("duplicate id\n"), 0);
-	else if (!ft_strcmp(id, "F") && op_line->F == 1)
+	else if (!ft_strcmp(key, "F") && op_line->F == 1)
 		return (printf("duplicate id\n"), 0);
-	else if (!ft_strcmp(id, "C") && op_line->C == 1)
+	else if (!ft_strcmp(key, "C") && op_line->C == 1)
 		return (printf("duplicate id\n"), 0);
 	return (1);
 }
@@ -203,36 +197,36 @@ int	is_path_id(char *str)
 }
 
 
-static int	valid_id_and_info(t_id_info *id_info, t_string *op_line)
+static int	valid_id_and_value(t_key_value *info, t_string *op_line)
 {
 	int		len;
-	char	*id;
-	char	*info;
+	char	*key;
+	char	*value;
 
-	id = id_info->id;
-	info = id_info->info;
-	len = ft_strlen(id);
+	key = info->key;
+	value = info->value;
+	len = ft_strlen(key);
 	if (len == 2)
 	{
-		if (is_path_id(id) && elemnt_not_found(id, op_line))
+		if (is_path_id(key) && elemnt_not_found(key, op_line))
 		{
-			if (!check_path_info(info))
+			if (!check_path_info(value))
 				return (0);
-			set_element_as_found(id, op_line);
+			set_element_as_found(key, op_line);
 			return (1);
 		}
 	}
 	else if (len == 1)
 	{
-		if ((!ft_strcmp(id, "F") || !ft_strcmp(id, "C")) && elemnt_not_found(id, op_line))
+		if ((!ft_strcmp(key, "F") || !ft_strcmp(key, "C")) && elemnt_not_found(key, op_line))
 		{
-			if (!check_colorinfo(info))
+			if (!check_colorinfo(value))
 				return (0);
-			set_element_as_found(id, op_line);
+			set_element_as_found(key, op_line);
 			return (1);
 		}
 	}
-	return (printf("invalid id, %s\n", id), 0);
+	return (printf("invalid id, %s\n", key), 0);
 	// validate the information two different funcs for paths and colors
 }
 
@@ -240,7 +234,7 @@ static int	check_line(t_string *op_line)
 {
 	int			i;
 	char		*str;
-	t_id_info	id_info;
+	t_key_value	info;
 
 	i = 0;
 	str = op_line->line;
@@ -248,24 +242,24 @@ static int	check_line(t_string *op_line)
 		i++;
 	if (str[i])
 	{
-		// printf("str %s\n", &str[i]);
-		if (!split_in_two(&str[i], &id_info))
-			return (printf("wroong \n"), 0); // split the line in two parts, by the first whitespace/ space
-		// printf("id: %s\ninfo: %s\n", id_info.id, id_info.info);
-		if (!valid_id_and_info(&id_info, op_line)) // validate the identifier
+		printf("str %s\n", &str[i]);
+		if (!split_in_two(&str[i], &info))
+			return (printf("have to divide id and info with space\n"), 0); // split the line in two parts, by the first whitespace/ space
+		// printf("id: %s\ninfo: %s\n", info.key, info.value);
+		if (!valid_id_and_value(&info, op_line)) // validate the identifier
 		{
-			// free(id_info.id);
-			// free(id_info.info);
+			// free(info.key);
+			// free(info.value);
 			return (0);
 		}
 		op_line->elem_count++;
-		// free(id_info.id);
-		// free(id_info.info);
+		// free(info.key);
+		// free(info.value);
 		return (1);
 	}
-	// free(id_info.id);
-	// free(id_info.info);
-	return (printf("only whitespace on line\n"), 0);
+	// free(info.key);
+	// free(info.value);
+	return (printf("only whitespace on line\n"), 0); // maybe we say this is fine?? 
 }
 
 void	init_op_line(t_string *op_line)
@@ -297,20 +291,21 @@ int	valid_input(int ac, char **av)
 	t_string	op_line;
 
 	if (ac != 2)
-		return (printf("wrong amount of args\n"), 0);
+		return (printf("Wrong amount of args\n"), 0);
 	if (!is_cub_file(av[1]))
-		return (printf("wrong file type, need .cub\n"), 0);
+		return (printf("Wrong file type, need .cub\n"), 0);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
-		return (printf("invalid file format"), 0); // error handling msg
+		return (printf("Invalid file format"), 0); // error handling msg
 	line = get_next_line(fd);
 	init_op_line(&op_line);
 	while (line != NULL)
 	{
 		op_line.line = line;
 		if (!check_line(&op_line))
-			return (free (line), 0); //error handling msg
+			return (free (line), 0); //error handling msg and close fd
 		free (line);
+		// printf("line is gooood\n ----------------------------------- \n");
 		line = get_next_line(fd);
 		while (line && !ft_strcmp(line, "\n"))
 		{
@@ -320,12 +315,12 @@ int	valid_input(int ac, char **av)
 		if (op_line.elem_count == 6) // can be above the while loop and the get_next_line
 			break ;
 	}
-	op_line.line = line;
+	// op_line.line = line;
 	// printf("line %s\n", line);
 
 	// if (!check_map(line, fd))
 	// 	return (0); // error handling msg
-	close (fd);
+	close(fd);
 	return (1);
 }
 

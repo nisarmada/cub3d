@@ -6,11 +6,17 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/21 17:10:59 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/27 19:26:24 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	is_map_char(char c)
+{
+	return (c == '1' || c == '0' || c == 'N' || c == 'S' \
+	|| c == 'W' || c == 'E' || c == ' ');
+}
 
 int is_map_line(char *line)
 {
@@ -23,12 +29,10 @@ int is_map_line(char *line)
         return (0);
 	while (line[i])
 	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != 'N' && line[i] != 'S'
-			&& line[i] != 'W' && line[i] != 'E' && line[i] != ' ' && line[i] != '\n')
+		if (!is_map_char(line[i]) && line[i] != '\n')
 			{
 				//printf("line[%i] %c\n", i, line[i]);
 				return (0);
-
 			}
 		i++;
 	}
@@ -51,12 +55,15 @@ void	allocate_map(char *filename, t_cub *cub)
 	}
 	while (line)
 	{
-		rows++;
 		if (!cub->map_width || ft_strlen(line) - 1 > (size_t)cub->map_width)
 			cub->map_width = ft_strlen(line) - 1;
 		line = get_next_line(fd);
+		rows++;
 	}
-	//printf("this many rows %i\n", rows);
+	// printf("this many rows %i\n", rows);
+	cub->map_height = rows - 1;
+	// printf("map height: %i\n", cub->map_height);
+	// printf("map width: %i\n", cub->map_width);
 	cub->map = malloc(sizeof(char *) * (rows + 1));
 	close(fd);
 }
@@ -82,4 +89,89 @@ void map_parsing(char *line, t_cub *cub, int j)
 		i++;
 	}
 	cub->map[j][i] = '\0';
+}
+
+int	valid_first_last_row(char **map, int row, int width)
+{
+	int	i;
+
+	i = 0;
+	while (i < width - 1)
+	{
+		if (map[row][i] != ' ' && map[row][i] != '1')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	check_surrounding(char **map, int row, int i, int width)
+{
+	char	*cur; 
+	char	*up;
+	char	*down;
+
+	cur = map[row];
+	up = map[row - 1];
+	down = map[row + 1];
+	if (i != 0 && (cur[i - 1] != '1' && cur[i - 1] != ' '))
+		return (0);
+	if (i != width && (cur[i + 1] != '1'  && cur[i + 1] != ' '))
+		return (0);
+	if ((up[i] != '1' && up[i] != ' ') || (down[i] != '1' && down[i] != ' '))
+		return (0);
+	return (1);
+}
+
+int	check_char(t_cub *cub, int row, int i)
+{
+	if (i == 0 && cub->map[row][i] != '1')
+		return (printf("wrong, \n"), 0);
+	if (!ft_strchr("NSEW01", cub->map[row][i]))
+		return (printf("invalid char: %c\n", cub->map[row][i]), 0);
+	if (!cub->player_orientation && ft_strchr("NSEW", cub->map[row][i]))
+	{
+		cub->player_orientation = cub->map[row][i];
+		cub->player_y = row;
+		cub->player_x = i;
+	}
+	else if (cub->player_orientation && ft_strchr("NSEW", cub->map[row][i]))
+		return (printf("player alredy exists, x %i, y %i\n", i, row), 0);
+	if (!cub->player_orientation && row == cub->map_height - 2)
+		return (0);
+	return (1);
+}
+
+int valid_map(t_cub *cub, int height, int width)
+{
+	int		row;
+	int		i;
+	char	**map;
+
+	map = cub->map;
+	if (!valid_first_last_row(map, 0, width) || \
+	!valid_first_last_row(map, height, width))
+		return (printf("wrong first or last line\n"), 0); //errr func with nice error msgs
+	row = 1;
+	while (row < height - 1)
+	{
+		i = 0;
+		while (i < width)
+		{
+			if (map[row][i] == ' ')
+			{
+				if (!check_surrounding(map, row, i, cub->map_width - 1))
+					return (printf("leak in map, row: %i, index: %i\n", row, i), 0);
+			}
+			else
+			{
+				if (!check_char(cub, row, i))
+					return (0);
+			}
+			i++;
+		}
+		row++;
+	}	
+	printf("map checked ;)\n");
+	return (1);
 }
