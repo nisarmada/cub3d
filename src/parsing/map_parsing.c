@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   map_parsing.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/28 15:33:16 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/29 15:03:10 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

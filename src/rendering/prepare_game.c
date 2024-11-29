@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   prepare_game.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/28 14:20:54 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/11/29 15:03:34 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
