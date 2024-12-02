@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/02 09:32:59 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/02 12:34:50 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 	float	distance_y; // d3istance to next horizontal border
 	float	total_distance;
 
-	normalize_angle(&ray_angle);
+	// normalize_angle(&ray_angle);
 	ray_x = player->x;
 	ray_y = player->y;
 	dir_x = cos(ray_angle);
@@ -80,11 +80,35 @@ float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 			tile_y += step_y;
 		}
 		// distance = (distance_x > distance_y) ? distance_x : distance_y;
-		if (cub->map[tile_y][tile_x] == '1')
+		// if (step_y < 0) // Moving upwards, check the north wall
+		// {
+		// 	if (cub->map[tile_y - 2][tile_x] == '1')  // North wall
+		// 	{
+		// 		draw_line(player, cub->img, tile_x * TILE_SIZE, (tile_y - 1) * TILE_SIZE);
+		// 		return total_distance;
+		// 	}
+		// }
+		// else if (step_x < 0)
+		// {
+		// 	if (cub->map[tile_y][tile_x - 2] == '1')  // West wall
+		// 	{
+		// 		draw_line(player, cub->img, (tile_x - 1) * TILE_SIZE, tile_y  * TILE_SIZE);
+		// 		return total_distance;
+		// 	}
+		// }
+		// else // Moving downwards, check the south wall
 		{
-			draw_line(player, cub->img, tile_x * TILE_SIZE, tile_y * TILE_SIZE);
-			return (total_distance);
+			if (cub->map[tile_y][tile_x] == '1' || cub->map[tile_y - 1][tile_x] == '1' || cub->map[tile_y][tile_x - 1] == '1')  // South wall
+			{
+				draw_line(player, cub->img, tile_x * TILE_SIZE, tile_y * TILE_SIZE);
+				return total_distance;
+			}
 		}
+		// if (cub->map[tile_y - 1][tile_x] == '1')
+		// {
+		// 	draw_line(player, cub->img, tile_x * TILE_SIZE, tile_y * TILE_SIZE);
+		// 	return (total_distance);
+		// }
 		// if (distance_x > 800 || distance_y > 600)
 		// 	return ;
 	}

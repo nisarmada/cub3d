@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/02 09:32:55 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/02 10:59:03 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	render_game(t_cub *cub)
 	//mlx_image_t *img;
 
 	(void)cub;
-	cub->mlx = mlx_init(800, 600, "Cub3d", true);
+	cub->mlx = mlx_init(900, 800, "Cub3d", true);
 	if (!cub->mlx)
 		return (1);
-	cub->img = mlx_new_image(cub->mlx, 800, 600);
+	cub->img = mlx_new_image(cub->mlx, 1000, 800);
 	if (!cub->img)
 		return (1);
 	render_map(cub->img, cub);
