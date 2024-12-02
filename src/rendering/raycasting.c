@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   raycasting.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/28 17:09:18 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/02 09:32:59 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,3 +89,4 @@ float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 		// 	return ;
 	}
 }
+
