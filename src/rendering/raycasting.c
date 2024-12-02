@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/02 13:15:56 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/02 13:17:09 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,20 @@
 
 void raycasting(t_cub *cub, t_player *player)
 {
-	normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
-	cast_single_ray(cub, player, player->angle); //we need to call this in a while loop to do around 1024
+	float	distorted_distance;
+	float	correct_dist;
+	float	div;
+
+	div = -M_PI / 6;
+	float step = (M_PI / 3) / 1024;
+	while (div <= M_PI / 6)
+	{
+		normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
+		distorted_distance = cast_single_ray(cub, player, player->angle + div); //we need to call this in a while loop to do around 1024
+		correct_dist = distorted_distance * cos(div);
+		div += step;
+	}
+	// printf("distorted: %f, corrected: %f\n", distorted_distance, correct_dist);
 	//rays in total from player->angle - player->fov / 2 up to + fov / 2
 }
 
@@ -85,5 +97,6 @@ float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 			return total_distance;
 		}
 	}
+	// return (1);
 }
 
