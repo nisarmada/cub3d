@@ -6,7 +6,7 @@
 /*   By: nikos <nikos@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2024/11/27 17:33:39 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/02 12:31:32 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void normalize_angle(float *angle)
 {
-	while (*angle < 0)
+	while (*angle < 2 * M_PI)
 		*angle += 2 * M_PI;
 	while (*angle > 2 * M_PI)
 		*angle -= 2 * M_PI;
@@ -46,7 +46,9 @@ void draw_line(t_player *player, mlx_image_t *img, int x, int y)
 		sy = -1;
 	while (1)
 	{
-		if (x0 >= 0 && x0 < 800 && y0 >= 0 && y0 < 600)
+		if (x0 <= 0 || y0 <= 0)
+			break ;
+		if (x0 >= 0 && y0 >= 0)
 			mlx_put_pixel(img, x0, y0, GREEN);
 		if (x0 == x && y0 == y)
 			break;

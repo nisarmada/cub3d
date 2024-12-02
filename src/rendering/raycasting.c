@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/02 12:45:15 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/02 13:11:34 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ void raycasting(t_cub *cub, t_player *player)
 	float	correct_dist;
 	float	div;
 
-	div = -30;
-	normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
-	while (div <= 30)
+	div = -M_PI / 6;
+	float step = (M_PI / 3) / 1024;
+	while (div <= M_PI / 6)
 	{
+		normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
 		distorted_distance = cast_single_ray(cub, player, player->angle + div); //we need to call this in a while loop to do around 1024
-		correct_dist = distorted_distance * cos(player->angle + div);
-		div+= 0.1;
+		correct_dist = distorted_distance * cos(div);
+		div += step;
 	}
 	// printf("distorted: %f, corrected: %f\n", distorted_distance, correct_dist);
 	//rays in total from player->angle - player->fov / 2 up to + fov / 2
@@ -46,7 +47,7 @@ float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 	float	distance_y; // d3istance to next horizontal border
 	float	total_distance;
 
-	normalize_angle(&ray_angle);
+	// normalize_angle(&ray_angle);
 	ray_x = player->x;
 	ray_y = player->y;
 	dir_x = cos(ray_angle);
@@ -90,14 +91,14 @@ float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 			distance_y += delta_y;
 			tile_y += step_y;
 		}
-		// distance = (distance_x > distance_y) ? distance_x : distance_y;
-		if (cub->map[tile_y][tile_x] == '1')
+		// if (tile_x < 0 || tile_x >= cub->map_width || tile_y < 0 || tile_y >= cub->map_height)
+		// 	break;
+		if (cub->map[tile_y][tile_x] == '1' || cub->map[tile_y - 1][tile_x] == '1' || cub->map[tile_y][tile_x - 1] == '1')  // South wall
 		{
 			draw_line(player, cub->img, tile_x * TILE_SIZE, tile_y * TILE_SIZE);
-			return (total_distance);
+			return total_distance;
 		}
-		// if (distance_x > 800 || distance_y > 600)
-		// 	return ;
 	}
+	// return (1);
 }
 
