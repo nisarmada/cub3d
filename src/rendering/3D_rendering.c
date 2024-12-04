@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/04 17:29:47 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 17:51:08 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	render_wallslice(t_cub *cub, float dist, float angle, int x)
 	(void) angle;
 	(void) cub;
 	(void) x;
-	line_height = TILE_SIZE / dist * cub->dist_pplane;
+	line_height = (TILE_SIZE / dist) * cub->dist_pplane;
 	if (line_height > WIN_HEIGHT)
 		line_height = WIN_HEIGHT;
     start_y = (WIN_HEIGHT / 2) - ((int)line_height / 2);

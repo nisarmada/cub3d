@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/04 17:29:38 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 17:45:32 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void raycasting(t_cub *cub, t_player *player)
 	float	distorted_distance;
 	float	correct_dist;
 	float	div;
-	// float	ray_angle;
+	float	ray_angle;
 	int		x;
 	int		y;
 
@@ -42,11 +42,11 @@ void raycasting(t_cub *cub, t_player *player)
 	float step = (M_PI / 3) / WIN_WIDTH;
 	while (div <= M_PI / 6)
 	{
-		// ray_angle = player->angle + div;
-		// normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
-		// distorted_distance = cast_single_ray(cub, player, ray_angle);
-		normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
-		distorted_distance = cast_single_ray(cub, player, player->angle + div); // 
+		ray_angle = player->angle + div;
+		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
+		distorted_distance = cast_single_ray(cub, player, ray_angle);
+		// normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
+		// distorted_distance = cast_single_ray(cub, player, player->angle + div); // 
 		correct_dist = distorted_distance * cos(div);
 		int x = (div + M_PI / 6) / step;
 		render_wallslice(cub, correct_dist, player->angle + div, x);
