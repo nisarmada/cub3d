@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/04 16:12:44 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 17:29:47 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	render_wallslice(t_cub *cub, float dist, float angle, int x)
 	float	line_height;
     int start_y;
     int end_y;
-    int color = WALL_COLOR;
+    int color = BLACK;
 	int	y;
 
 	(void) angle;

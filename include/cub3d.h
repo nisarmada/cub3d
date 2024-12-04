@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/04 15:12:30 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 17:31:08 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,19 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-#define WHITE 0xFFFFFF
-#define BLACK 0x000000
-#define RED 0xFF0000
-#define GREEN 0x00FF00
-#define BLUE 0x0000FF
-#define YELLOW 0xFFFF00
-#define CYAN 0x00FFFF
-#define MAGENTA 0xFF00FF
-#define FLOOR_COLOR 0xDCE4E8  // Light blue-grey
-#define CEILING_COLOR 0x4B4B4B  // Dark grey
-#define WALL_COLOR 0x888888  // Light grey
-#define INACCESSIBLE_COLOR 0x000000  // Black or grey
+#define WHITE 0xFFFFFFFF
+#define BLACK 0x000000FF
+#define RED 0xFF0000FF
+# define ORANGE 0xFFA500FF
+#define GREEN 0x00FF00FF
+#define BLUE 0x0000FFFF
+#define YELLOW 0xFFFF00FF
+#define CYAN 0x00FFFFFF
+#define MAGENTA 0xFF00FFFF
+#define FLOOR_COLOR 0xDCE4E8FF  // Light blue-grey
+#define CEILING_COLOR 0x4B4B4BFF  // Dark grey
+#define WALL_COLOR 0x888888FF  // Light grey
+#define INACCESSIBLE_COLOR 0x000000FF  // Black or grey
 #define TILE_SIZE 32
 #define MOVE_SPEED 2.5
 #define ROTATION_SPEED 0.05
@@ -160,6 +161,9 @@ void move_player(t_cub *cub, t_player *player, char direction);
 void rotate_player(t_player *player, char direction);
 void key_hook(mlx_key_data_t keycode, void *cub_ptr);
 void hook_loop(void *cub_ptr);
+
+/*prepare game */
+void	render_frame(t_cub *cub);
 
 /*raycasting*/
 void	raycasting(t_cub *cub, t_player *player);

@@ -6,11 +6,19 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/04 15:23:26 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 17:23:58 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	render_frame(t_cub *cub)
+{
+	raycasting(cub, cub->player);
+	render_map(cub->img, cub);
+	render_player(cub, cub->img);
+	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
+}
 
 int	render_game(t_cub *cub)
 {
@@ -24,13 +32,9 @@ int	render_game(t_cub *cub)
 	cub->img = mlx_new_image(cub->mlx, 800, 600);
 	if (!cub->img)
 		return (1);
-	// render_3D(cub);
-	render_map(cub->img, cub);
-	render_player(cub, cub->img);
+	render_frame(cub);
 	mlx_key_hook(cub->mlx, key_hook, cub);
 	mlx_loop_hook(cub->mlx, hook_loop, cub);
-	// raycasting(cub, cub->player);
-	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
 	mlx_loop(cub->mlx);
 	return (0);
 }
@@ -84,7 +88,7 @@ void render_map(mlx_image_t *img, t_cub *cub)
 		row++;
 	}
 	render_fov(cub->player, img, cub);
-	raycasting(cub, cub->player);
+	// raycasting(cub, cub->player);
 }
 
 void render_player(t_cub *cub, mlx_image_t *img)

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/04 16:21:14 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 17:29:38 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,37 +17,41 @@ void raycasting(t_cub *cub, t_player *player)
 	float	distorted_distance;
 	float	correct_dist;
 	float	div;
-	float	ray_angle;
+	// float	ray_angle;
 	int		x;
+	int		y;
 
-    for (x = 0; x < WIN_WIDTH; x++) {
-        // Render the ceiling (top half of the screen)
-        for (int y = 0; y < WIN_HEIGHT / 2; y++) {
-            mlx_put_pixel(cub->img, x, y, BLUE);
-        }
-
-        // Render the floor (bottom half of the screen)
-        for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++) {
-            mlx_put_pixel(cub->img, x, y, FLOOR_COLOR);
-        }
-    }
-
+	x = 0;
+	while (x < WIN_WIDTH) 
+	{
+		// Render the ceiling (top half of the screen)
+		y = 0;
+		while (y < WIN_HEIGHT / 2) {
+			mlx_put_pixel(cub->img, x, y, RED);
+			y++;
+		}
+		// Render the floor (bottom half of the screen)
+		y = WIN_HEIGHT / 2;
+		while (y < WIN_HEIGHT) {
+			mlx_put_pixel(cub->img, x, y, GREEN);
+			y++;
+		}
+		x++;
+	}
 	div = -M_PI / 6;
 	float step = (M_PI / 3) / WIN_WIDTH;
 	while (div <= M_PI / 6)
 	{
-		ray_angle = player->angle + div;
-		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
-		distorted_distance = cast_single_ray(cub, player, ray_angle); //we need to call this in a while loop to do around 1024
-		// normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
-		// distorted_distance = cast_single_ray(cub, player, player->angle + div); // 
+		// ray_angle = player->angle + div;
+		// normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
+		// distorted_distance = cast_single_ray(cub, player, ray_angle);
+		normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
+		distorted_distance = cast_single_ray(cub, player, player->angle + div); // 
 		correct_dist = distorted_distance * cos(div);
 		int x = (div + M_PI / 6) / step;
 		render_wallslice(cub, correct_dist, player->angle + div, x);
 		div += step;
 	}
-	// printf("distorted: %f, corrected: %f\n", distorted_distance, correct_dist);
-	//rays in total from player->angle - player->fov / 2 up to + fov / 2
 }
 
 // void raycasting(t_cub *cub, t_player *player)
