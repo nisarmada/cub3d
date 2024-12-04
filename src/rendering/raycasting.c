@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/03 19:00:11 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/04 12:13:05 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void raycasting(t_cub *cub, t_player *player)
 		ray_angle = player->angle + div;
 		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
 		distorted_distance = cast_single_ray(cub, player, ray_angle); //we need to call this in a while loop to do around 1024
+		normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
+		distorted_distance = cast_single_ray(cub, player, player->angle + div); // 
 		correct_dist = distorted_distance * cos(div);
 		render_wallslice(cub, correct_dist, player->angle + div);
 		div += step;
@@ -58,6 +60,15 @@ void raycasting(t_cub *cub, t_player *player)
 // 	printf("distorted: %f, corrected: %f\n", distorted_distance, correct_dist);
 // 	//rays in total from player->angle - player->fov / 2 up to + fov / 2
 // }
+/*
+projection plan: 
+distance from player to projection plan = (projectionplan width / 2) / tan(30 (half of fov))
+angle between rays = fov / projectionplan width (these are columns on the projection plan)
+projected wall slice height = actual wall slice height / dist to the actual wall * dist f. player to projection plane
+projected wall slice height = 32 / correct_dist * dist f. player to projection plane
+draw vertical line on the corresponding column on projection plane
+
+*/
 
 float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 {
