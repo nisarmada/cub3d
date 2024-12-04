@@ -6,10 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/29 14:05:42 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 11:15:35 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "cub3d.h"
 
 typedef  struct  s_line
 {
@@ -30,7 +31,17 @@ typedef  struct  s_line
 // player_fov = 60° 
 // player_height = cube-unit / 2 = 16 units
 //
-int	distance_to_wall()
+
+void	render_wallslice(t_cub *cub, float dist, float angle)
 {
+	float	line_height;
+
+	(void) angle;
+	(void) cub;
+	line_height = (TILE_SIZE * 320) / dist;
+	if (line_height > 320)
+		line_height = 320;
 	
+	//closer to the wall --> bigger number
+	// printf("height %f\n", line_height);
 }

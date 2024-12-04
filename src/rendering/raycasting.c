@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/02 13:11:34 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/03 19:00:11 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,47 @@ void raycasting(t_cub *cub, t_player *player)
 	float	distorted_distance;
 	float	correct_dist;
 	float	div;
+	float	ray_angle;
 
 	div = -M_PI / 6;
 	float step = (M_PI / 3) / 1024;
 	while (div <= M_PI / 6)
 	{
-		normalize_angle(&(player->angle)); // Ensure the angle is within 0 to 2*PI
-		distorted_distance = cast_single_ray(cub, player, player->angle + div); //we need to call this in a while loop to do around 1024
+		ray_angle = player->angle + div;
+		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
+		distorted_distance = cast_single_ray(cub, player, ray_angle); //we need to call this in a while loop to do around 1024
 		correct_dist = distorted_distance * cos(div);
+		render_wallslice(cub, correct_dist, player->angle + div);
 		div += step;
 	}
 	// printf("distorted: %f, corrected: %f\n", distorted_distance, correct_dist);
 	//rays in total from player->angle - player->fov / 2 up to + fov / 2
 }
+
+// void raycasting(t_cub *cub, t_player *player)
+// {
+// 	float	distorted_distance;
+// 	float	correct_dist;
+// 	float	one_degree_in_rad;
+// 	int		r;
+// 	float	ray_angle;
+
+// 	one_degree_in_rad = 0.0174532925;
+// 	r = 0;
+// 	ray_angle =  player->angle - one_degree_in_rad*30;
+// 	while (r < 60)
+// 	{
+// 		normalize_angle(&(player->angle)); // Ensure the angle is within -2PI to 2*PI
+// 		normalize_angle(&(ray_angle));
+// 		distorted_distance = cast_single_ray(cub, player, ray_angle); //we need to call this in a while loop to do around 1024
+// 		correct_dist = distorted_distance * cos(player->angle - ray_angle);
+// 		// render_wallslice(cub, correct_dist, player->angle + div);
+// 		ray_angle += one_degree_in_rad;
+// 		r++;
+// 	}
+// 	printf("distorted: %f, corrected: %f\n", distorted_distance, correct_dist);
+// 	//rays in total from player->angle - player->fov / 2 up to + fov / 2
+// }
 
 float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
 {
