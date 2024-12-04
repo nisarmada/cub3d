@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/03 15:40:46 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/04 15:12:30 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@
 #define TILE_SIZE 32
 #define MOVE_SPEED 2.5
 #define ROTATION_SPEED 0.05
+
+#define WIN_HEIGHT 600
+#define WIN_WIDTH 800
+#define	MINI_TILE 32 * 0.4
+#define MINIMAP_SCALE 0.4
+#define MINIMAP_OFFSET_X 10
+#define MINIMAP_OFFSET_Y 10
+
 
 typedef struct s_raycast
 {
@@ -102,6 +110,7 @@ typedef struct s_cub
 	int		wall_color;
 	int		map_width;
 	int		map_height;
+	int		dist_pplane;
 	mlx_t	*mlx;
 	mlx_image_t	*img;
 	t_player	*player;
@@ -157,7 +166,7 @@ void	raycasting(t_cub *cub, t_player *player);
 float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle);
 
 /* 3D_rendering */
-void	render_wallslice(t_cub *cub, float dist, float angle);
+void	render_wallslice(t_cub *cub, float dist, float angle, int x);
 
 void print_map(t_cub *cub);
 
