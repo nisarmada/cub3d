@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2024/12/04 14:22:16 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 18:40:14 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void normalize_angle(float *angle)
 	while (*angle > 2 * M_PI)
 		*angle -= 2 * M_PI;
 }
+
+
 
 void draw_line(t_player *player, mlx_image_t *img, int x, int y)
 {

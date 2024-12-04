@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/04 17:41:50 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 18:47:01 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 #define WALL_COLOR 0x888888FF  // Light grey
 #define INACCESSIBLE_COLOR 0x000000FF  // Black or grey
 #define TILE_SIZE 32
-#define MOVE_SPEED 1.5
+#define MOVE_SPEED 2.5
 #define ROTATION_SPEED 0.05
 
 #define WIN_HEIGHT 600
@@ -170,7 +170,7 @@ void	raycasting(t_cub *cub, t_player *player);
 float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle);
 
 /* 3D_rendering */
-void	render_wallslice(t_cub *cub, float dist, float angle, int x);
+void	render_wallslice(t_cub *cub, float dist, int x);
 
 void print_map(t_cub *cub);
 

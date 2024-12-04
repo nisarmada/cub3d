@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/04 17:51:08 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/04 19:07:36 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ projected wall slice height = 32 / correct_dist * dist f. player to projection p
 draw vertical line on the corresponding column on projection plane
 */
 
-void	render_wallslice(t_cub *cub, float dist, float angle, int x)
+
+void	render_wallslice(t_cub *cub, float dist, int x)
 {
 	float	line_height;
-    int start_y;
-    int end_y;
-    int color = BLACK;
-	int	y;
+    int		start_y;
+    int		end_y;
+	int		y;
+	int		text_x;
+	int		text_y;
+	// int		color;
 
-	(void) angle;
-	(void) cub;
-	(void) x;
 	line_height = (TILE_SIZE / dist) * cub->dist_pplane;
 	if (line_height > WIN_HEIGHT)
 		line_height = WIN_HEIGHT;
@@ -61,10 +61,13 @@ void	render_wallslice(t_cub *cub, float dist, float angle, int x)
 		start_y = 0;
     if (end_y > WIN_HEIGHT)
 		end_y = WIN_HEIGHT;
+	text_x = (x % TILE_SIZE);
 	y = start_y;
     while (y < end_y)
 	{
-        mlx_put_pixel(cub->img, x, y, color); // Replace `put_pixel` with your specific drawing function
+		text_y = ((y - start_y) * TILE_SIZE) / line_height;
+		// color = get_texture_color(cub->north, text_x, text_y);
+        mlx_put_pixel(cub->img, x, y, BLACK);
 		y++;
 	}
 	//closer to the wall --> bigger number
