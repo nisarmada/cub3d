@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   extras.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nikos <nikos@student.codam.nl>               +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2024/12/02 12:31:32 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/04 18:40:14 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void normalize_angle(float *angle)
 		*angle -= 2 * M_PI;
 }
 
+
+
 void draw_line(t_player *player, mlx_image_t *img, int x, int y)
 {
 	int dx;
@@ -31,8 +33,8 @@ void draw_line(t_player *player, mlx_image_t *img, int x, int y)
 	int err;
 	int	err2;
 
-	x0 = player->x;
-	y0 = player->y;
+	x0 = player->x *MINIMAP_SCALE;
+	y0 = player->y *MINIMAP_SCALE;
 	dx = abs(x - x0); // x1 - x0
 	dy = abs(y - y0); // y1 - y0
 	err = dx - dy;
@@ -46,12 +48,12 @@ void draw_line(t_player *player, mlx_image_t *img, int x, int y)
 		sy = -1;
 	while (1)
 	{
-		if (x0 <= 0 || y0 <= 0)
-			break ;
-		if (x0 >= 0 && y0 >= 0)
+		if (x0 >= 0 && x0 < WIN_WIDTH  && y0 >= 0 && y0 < WIN_HEIGHT)
 			mlx_put_pixel(img, x0, y0, GREEN);
+
 		if (x0 == x && y0 == y)
 			break;
+
 		err2 = err * 2;
 		if (err2 > -dy)
 		{

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   player_movement.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nikos <nikos@student.codam.nl>               +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2024/11/27 16:53:53 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/04 17:16:58 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,5 @@ void hook_loop(void *cub_ptr)
 		rotate_player(cub->player, 'L');
 	if (cub->keys[MLX_KEY_D])
 		rotate_player(cub->player, 'R');
-	render_map(cub->img, cub);
-	render_player(cub, cub->img);
+	render_frame(cub);
 }
