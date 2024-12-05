@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/04 19:07:36 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/05 17:28:02 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ draw vertical line on the corresponding column on projection plane
 */
 
 
+
+// int	get_texture_color(xpm_t *xpm, int text_x, int text_y)
+// {
+
+// }
+
+
 void	render_wallslice(t_cub *cub, float dist, int x)
 {
 	float	line_height;
@@ -66,7 +73,7 @@ void	render_wallslice(t_cub *cub, float dist, int x)
     while (y < end_y)
 	{
 		text_y = ((y - start_y) * TILE_SIZE) / line_height;
-		// color = get_texture_color(cub->north, text_x, text_y);
+		// color = get_texture_color(cub->xpm, text_x, text_y);
         mlx_put_pixel(cub->img, x, y, BLACK);
 		y++;
 	}

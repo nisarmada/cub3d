@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/04 18:47:01 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/05 17:29:56 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_cub
 	int		map_width;
 	int		map_height;
 	int		dist_pplane;
+	// xpm_t	*xpm;
 	mlx_t	*mlx;
 	mlx_image_t	*img;
 	t_player	*player;

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/04 17:23:58 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/05 17:29:20 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ int	render_game(t_cub *cub)
 	cub->img = mlx_new_image(cub->mlx, 800, 600);
 	if (!cub->img)
 		return (1);
+	// cub->xpm = mlx_load_xpm42(cub->north);
+	// if (!cub->xpm)						
+	// {
+	// 	printf("Failed to load XPM file.\n");
+	// 	return (0);
+	// }
 	render_frame(cub);
 	mlx_key_hook(cub->mlx, key_hook, cub);
 	mlx_loop_hook(cub->mlx, hook_loop, cub);
