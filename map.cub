@@ -1,7 +1,7 @@
-NO stone wall.xpm
-SO stone wall.xpm
-WE stone wall.xpm
-EA stone wall.xpm
+NO ./stone_wall.xpm
+SO ./stone_wall.xpm
+WE ./stone_wall.xpm
+EA ./stone_wall.xpm
 
 F 220,180,0
 C 225,30,0

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/05 17:29:56 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/07 15:34:27 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,17 @@ typedef struct s_map
 	int		map_width;
 	int		map_height;
 }	t_map;
-
-typedef struct s_ray
-{
-};
 */
+
+typedef struct s_text
+{
+	xpm_t	*no;
+	xpm_t	*so;
+	xpm_t	*we;
+	xpm_t	*ea;
+	// xpm_t	*ceiling;
+	// xpm_t	*floor;
+}	t_text;
 
 typedef struct s_cub
 {
@@ -112,7 +118,7 @@ typedef struct s_cub
 	int		map_width;
 	int		map_height;
 	int		dist_pplane;
-	// xpm_t	*xpm;
+	t_text	*text;
 	mlx_t	*mlx;
 	mlx_image_t	*img;
 	t_player	*player;

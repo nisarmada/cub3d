@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/05 17:29:29 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/07 16:31:32 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ t_cub *initialize_cub(void)
         free(cub);
         return (NULL);
     }
-
+	// cub->text = malloc (sizeof(t_text));
+	// if (!cub->text)
+	// {
+	// 	free(cub->player);
+	// 	free(cub);
+	// 	return (NULL);
+	// }
     // Initialize player fields to 0 or default values
     cub->player->x = 0;
     cub->player->y = 0;
@@ -45,10 +51,10 @@ t_cub *initialize_cub(void)
     cub->map = NULL;
     cub->mlx = NULL;
     cub->img = NULL;
-	// cub->xpm = NULL;
+	// cub->text = NULL;
 	cub->dist_pplane = 692;
 	for (int i = 0; i < 256; i++)
-    	cub->keys[i] = false;
+		cub->keys[i] = false;
 	return (cub);
 }
 
@@ -117,7 +123,7 @@ char *find_path(char *file)
 
 	start = 2;
 	path = NULL;
-	//printf("whitespace %i\n", is_whitespace(file[start]));
+	// printf("whitespace %i\n", is_whitespace(file[start]));
 	while (is_whitespace(file[start]))
 		start++;
 	end = start;
