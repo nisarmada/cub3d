@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/04 17:23:58 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/07 16:28:46 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,27 @@ void	render_frame(t_cub *cub)
 	render_map(cub->img, cub);
 	render_player(cub, cub->img);
 	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
+}
+
+int	load_textures(t_cub *cub)
+{
+	printf("paht: %s\n", cub->north);
+	printf("paht: %s\n", cub->south);
+	printf("paht: %s\n", cub->west);
+	printf("paht: %s\n", cub->east);
+
+	if (access(cub->north, F_OK) == -1)
+    	printf("File %s does not exist or is not accessible.\n", cub->north);
+	cub->text->no = mlx_load_xpm42(cub->north);
+	cub->text->so = mlx_load_xpm42(cub->south);
+	cub->text->we = mlx_load_xpm42(cub->west);
+	cub->text->ea = mlx_load_xpm42(cub->east);
+	if (!cub->text->no || !cub->text->so || !cub->text->we || !cub->text->ea)						
+	{
+		printf("Failed to load XPM file.\n");
+		return (0);
+	}
+	return (1);
 }
 
 int	render_game(t_cub *cub)
@@ -32,6 +53,8 @@ int	render_game(t_cub *cub)
 	cub->img = mlx_new_image(cub->mlx, 800, 600);
 	if (!cub->img)
 		return (1);
+	// if (!load_textures(cub))
+	// 	return (1);
 	render_frame(cub);
 	mlx_key_hook(cub->mlx, key_hook, cub);
 	mlx_loop_hook(cub->mlx, hook_loop, cub);

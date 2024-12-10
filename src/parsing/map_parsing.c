@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/04 15:14:57 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/05 14:48:01 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void map_parsing(char *line, t_cub *cub, int j)
 		i++;
 	}
 	cub->map[j][i] = '\0';
-	print_map(cub);
+	// print_map(cub);
 }
 
 int	valid_first_last_row(char **map, int row, int width)

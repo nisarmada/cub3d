@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:11:17 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/21 16:29:17 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/07 16:29:47 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ static int	check_line(t_string *op_line)
 		i++;
 	if (str[i])
 	{
-		printf("str %s\n", &str[i]);
+		// printf("str %s\n", &str[i]);
 		if (!split_in_two(&str[i], &info))
 			return (printf("have to divide id and info with space\n"), 0); // split the line in two parts, by the first whitespace/ space
 		// printf("id: %s\ninfo: %s\n", info.key, info.value);
