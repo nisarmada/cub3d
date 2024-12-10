@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/10 13:50:22 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/10 17:41:37 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,62 +53,10 @@ void raycasting(t_cub *cub, t_player *player)
 		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
 		distorted_distance = cast_single_ray(cub, player, ray_angle);
 		correct_dist = distorted_distance * cos(div);
-		render_wallslice(cub, correct_dist, (div + M_PI / 6) / step);
+		render_wallslice(cub, correct_dist, round((div + M_PI / 6) / step));
 		div += step;
 	}
 }
-
-// void raycasting(t_cub *cub, t_player *player)
-// {
-// 	float	distorted_distance;
-// 	float	correct_dist;
-// 	float	one_degree_in_rad;
-// 	int		r;
-// 	float	ray_angle;
-
-// 	one_degree_in_rad = 0.0174532925;
-// 	r = 0;
-// 	ray_angle =  player->angle - one_degree_in_rad*30;
-// 	while (r < 60)
-// 	{
-// 		normalize_angle(&(player->angle)); // Ensure the angle is within -2PI to 2*PI
-// 		normalize_angle(&(ray_angle));
-// 		distorted_distance = cast_single_ray(cub, player, ray_angle); //we need to call this in a while loop to do around 1024
-// 		correct_dist = distorted_distance * cos(player->angle - ray_angle);
-// 		// render_wallslice(cub, correct_dist, player->angle + div);
-// 		ray_angle += one_degree_in_rad;
-// 		r++;
-// 	}
-// 	printf("distorted: %f, corrected: %f\n", distorted_distance, correct_dist);
-// 	//rays in total from player->angle - player->fov / 2 up to + fov / 2
-// }
-
-/*
-projection plan: 
-distance from player to projection plan = (projectionplan width / 2) / tan(30 (half of fov))
-angle between rays = fov / projectionplan width (these are columns on the projection plan)
-projected wall slice height = actual wall slice height / dist to the actual wall * dist f. player to projection plane
-projected wall slice height = 32 / correct_dist * dist f. player to projection plane
-draw vertical line on the corresponding column on projection plane
-*/
-
-// void	draw_minimap(t_cub *cub, t_player *player)
-// {
-// 	int scaled_tile;
-// 	int	y;
-// 	int	x;
-
-// 	scaled_tile = TILE_SIZE * MINIMAP_SCALE;
-// 	while (y < cub->map_height)
-// 	{
-// 		x = 0;
-// 		while (x < cub->map_width)
-// 		{
-			
-// 		}
-// 	}
-// }
-
 
 typedef struct s_ray
 {

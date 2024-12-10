@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/07 16:31:32 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 14:25:56 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,21 @@ t_cub *initialize_cub(void)
         free(cub);
         return (NULL);
     }
-	// cub->text = malloc (sizeof(t_text));
-	// if (!cub->text)
-	// {
-	// 	free(cub->player);
-	// 	free(cub);
-	// 	return (NULL);
-	// }
+	cub->text = malloc(sizeof(t_text));
+	if (!cub->text)
+	{
+		free(cub->player);
+		free(cub);
+		return (NULL);
+	}
+	cub->text->no = NULL;
+	cub->text->so = NULL;
+	cub->text->we = NULL;
+	cub->text->ea = NULL;
+	cub->text->no_img = NULL;
+	cub->text->we_img = NULL;
+	cub->text->so_img = NULL;
+	cub->text->ea_img = NULL;
     // Initialize player fields to 0 or default values
     cub->player->x = 0;
     cub->player->y = 0;

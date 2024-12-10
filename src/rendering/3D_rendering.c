@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/07 15:06:14 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 18:28:08 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	render_wallslice(t_cub *cub, float dist, int x)
 	int		y;
 	int		text_x;
 	int		text_y;
-	// int		color;
+	int		color;
 
 	line_height = (TILE_SIZE / dist) * cub->dist_pplane;
 	if (line_height > WIN_HEIGHT)
@@ -70,44 +70,40 @@ void	render_wallslice(t_cub *cub, float dist, int x)
 		end_y = WIN_HEIGHT;
 	text_x = (x % TILE_SIZE);
 	y = start_y;
+	// printf("HHELLOchfdfgdrs\n");
     while (y < end_y)
 	{
-		text_y = ((y - start_y) * TILE_SIZE) / line_height;
-		// color = get_texture_color(cub->xpm, text_x, text_y);
-        mlx_put_pixel(cub->img, x, y, BLACK);
+		text_y = ((y - start_y) * TILE_SIZE) / (int)line_height;
+		color = get_texture_color(cub, text_x, text_y);
+		// printf("color is %i\n", color);
+        mlx_put_pixel(cub->img, x, y, color);
 		y++;
 	}
 	//closer to the wall --> bigger number
 	// printf("height %f\n", line_height);
 }
 
-// void render_wallslice(t_cub *cub, float dist, float angle, int x)
-// {
-//     float line_height;
-//     int start_y;
-//     int end_y;
-//     int color = 0xFFFFFF; // Set this to your wall color or texture
+int get_texture_color(t_cub *cub, int text_x, int text_y)
+{
+    uint32_t *pixels;
 
-//     // Calculate the projected wall slice height using the distance to the wall and distance to the projection plane
-//     line_height = (TILE_SIZE / dist) * cub->dist_pplane;
+    // Bounds check
+    if (text_x < 0 || text_x >= (int)cub->text->no->width || text_y < 0 || text_y >= (int)cub->text->no->height)
+        return 0; // Default to black if out of bounds
 
-//     // Limit the line height to the window height (to avoid rendering off-screen)
-//     if (line_height > WIN_HEIGHT)
-//         line_height = WIN_HEIGHT;
+    pixels = (uint32_t *)cub->text->no_img->pixels;
 
-//     // Calculate the vertical position (y-coordinates) on the screen to render the slice
-//     start_y = (WIN_HEIGHT / 2) - ((int)line_height / 2);
-//     end_y = start_y + (int)line_height;
+    // Extract alpha, red, green, blue components
+    unsigned char alpha = (pixels[text_y * cub->text->no->width + text_x] & 0xFF000000) >> 24;
+    unsigned char red = (pixels[text_y * cub->text->no->width + text_x] & 0x00FF0000) >> 16;
+    unsigned char green = (pixels[text_y * cub->text->no->width + text_x] & 0x0000FF00) >> 8; // look at it tomorrow I dont know what the fuck is going on
+    unsigned char blue = pixels[text_y * cub->text->no->width + text_x] & 0x000000FF;
 
-//     // Ensure the coordinates are within screen bounds
-//     if (start_y < 0) start_y = 0;
-//     if (end_y > WIN_HEIGHT) end_y = WIN_HEIGHT;
+    // Recombine into MLX42 format
+    unsigned int mlx42_color = (alpha << 24) | (red << 16) | (green << 8) | blue;
 
-//     // Render the wall slice as a vertical line on the screen
-//     for (int y = start_y; y < end_y; y++) {
-//         put_pixel(cub->screen, x, y, color); // Replace `put_pixel` with your specific drawing function
-//     }
-// }
+    return mlx42_color;
+}
 
 
 void	render_3D(t_cub *cub)
