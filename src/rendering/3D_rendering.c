@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/10 18:34:56 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 18:38:21 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	render_wallslice(t_cub *cub, float dist, int x)
 	int		y;
 	int		text_x;
 	int		text_y;
-	// int		color;
+	int		color;
 
 	// Calculate the projected wall slice height using the distance to the wall and distance to the projection plane
 	line_height = (TILE_SIZE / dist) * cub->dist_pplane;
@@ -69,13 +69,37 @@ void	render_wallslice(t_cub *cub, float dist, int x)
 	// Render the wall slice as a vertical line on the screen
     while (y < end_y)
 	{
-		text_y = ((y - start_y) * TILE_SIZE) / line_height;
-		// color = get_texture_color(cub->xpm, text_x, text_y);
-        mlx_put_pixel(cub->img, x, y, BLACK);
+		text_y = ((y - start_y) * TILE_SIZE) / (int)line_height;
+		color = get_texture_color(cub, text_x, text_y);
+		// printf("color is %i\n", color);
+        mlx_put_pixel(cub->img, x, y, color);
 		y++;
 	}
 	//closer to the wall --> bigger number
 	// printf("height %f\n", line_height);
+}
+
+
+int get_texture_color(t_cub *cub, int text_x, int text_y)
+{
+    uint32_t *pixels;
+
+    // Bounds check
+    if (text_x < 0 || text_x >= (int)cub->text->no->width || text_y < 0 || text_y >= (int)cub->text->no->height)
+        return 0; // Default to black if out of bounds
+
+    pixels = (uint32_t *)cub->text->no_img->pixels;
+
+    // Extract alpha, red, green, blue components
+    unsigned char alpha = (pixels[text_y * cub->text->no->width + text_x] & 0xFF000000) >> 24;
+    unsigned char red = (pixels[text_y * cub->text->no->width + text_x] & 0x00FF0000) >> 16;
+    unsigned char green = (pixels[text_y * cub->text->no->width + text_x] & 0x0000FF00) >> 8; // look at it tomorrow I dont know what the fuck is going on
+    unsigned char blue = pixels[text_y * cub->text->no->width + text_x] & 0x000000FF;
+
+    // Recombine into MLX42 format
+    unsigned int mlx42_color = (alpha << 24) | (red << 16) | (green << 8) | blue;
+
+    return mlx42_color;
 }
 
 /*
@@ -103,8 +127,6 @@ Optimize Rendering:
 Simplify Loops:
 
     Analyze nested loops in rendering and raycasting functions for redundant computations.
-
-
 memory leak doesnt get bigger with longer run time
 
 ./cub3d map.cub

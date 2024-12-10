@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/10 14:28:28 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 18:37:01 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,36 +74,20 @@ typedef struct s_player
 	int		changed;
 }	t_player;
 
-/*
-typedef struct s_rgb
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_rgb;
-
-typedef struct s_player
-{
-	int		player_x;
-	int		player_y;
-}	t_player;
-
-typedef struct s_map
-{
-	char	**map;
-	int		map_width;
-	int		map_height;
-}	t_map;
-*/
-
 typedef struct s_text
 {
-	xpm_t	*no;
-	xpm_t	*so;
-	xpm_t	*we;
-	xpm_t	*ea;
-	// xpm_t	*ceiling;
-	// xpm_t	*floor;
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*we;
+	mlx_texture_t	*ea;
+	mlx_image_t		*no_img;
+	mlx_image_t		*so_img;
+	mlx_image_t		*we_img;
+	mlx_image_t		*ea_img;
+	uint32_t		*no_pixels; // Pixel data for North texture
+	uint32_t		*so_pixels; // Pixel data for South texture
+	uint32_t		*we_pixels; // Pixel data for West texture
+	uint32_t		*ea_pixels;
 }	t_text;
 
 typedef struct s_cub
@@ -179,7 +163,7 @@ float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle);
 
 /* 3D_rendering */
 void	render_wallslice(t_cub *cub, float dist, int x);
-
+int get_texture_color(t_cub *cub, int text_x, int text_y);
 void print_map(t_cub *cub);
 
 #endif

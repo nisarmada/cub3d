@@ -1,7 +1,7 @@
-NO ./stone_wall.xpm
-SO ./stone_wall.xpm
-WE ./stone_wall.xpm
-EA ./stone_wall.xpm
+NO ./wall_texture.png
+SO ./wall_texture.png
+WE ./wall_texture.png
+EA ./wall_texture.png
 
 F 220,180,0
 C 225,30,0
