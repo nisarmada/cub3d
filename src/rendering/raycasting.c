@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/10 18:39:04 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 18:44:52 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,55 +27,6 @@ Boundary Checks:
     Ensure rays terminate when they leave the map bounds to avoid unnecessary calculations.
 */
 
-void	render_floor_ceiling(t_cub *cub)
-{
-	int		x;
-	int		y;
-
-	x = 0;
-	while (x < WIN_WIDTH) 
-	{
-		// Render the ceiling (top half of the screen)
-		y = 0;
-		while (y < WIN_HEIGHT / 2) {
-			mlx_put_pixel(cub->img, x, y, RED);
-			y++;
-		}
-		// Render the floor (bottom half of the screen)
-		y = WIN_HEIGHT / 2;
-		while (y < WIN_HEIGHT) {
-			mlx_put_pixel(cub->img, x, y, GREEN);
-			y++;
-		}
-		x++;
-	}
-}
-
-void raycasting(t_cub *cub, t_player *player)
-{
-	float	distorted_distance;
-	float	correct_dist;
-	float	div;
-	float	ray_angle;
-	float	step;
-	int		x;
-
-	render_floor_ceiling(cub);
-	div = -M_PI / 6;
-	step = (M_PI / 3) / WIN_WIDTH;
-	x = 0;
-	while (x < WIN_WIDTH)
-	{
-		ray_angle = player->angle + div;
-		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
-		distorted_distance = cast_single_ray(cub, player, ray_angle);
-		correct_dist = distorted_distance * cos(div);
-		// printf("slice %f\n", round((div + M_PI / 6) / step));
-		render_wallslice(cub, correct_dist, x);
-		div += step;
-		x++;
-	}
-}
 
 // void raycasting(t_cub *cub, t_player *player)
 // {
