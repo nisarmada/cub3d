@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2024/12/04 17:16:58 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 14:31:03 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void move_player(t_cub *cub, t_player *player, char direction)
 	new_x = player->x + move_x;
 	new_y = player->y + move_y;
 	x_tile = new_x / TILE_SIZE; // Convert new position to tile coordinates
+	player->changed = 1;
 	y_tile = new_y / TILE_SIZE;
 	if (cub->map[y_tile][x_tile] != '1') // if there's no wall in x axis update x-coordinate
         player->x = new_x;
     if (cub->map[y_tile][x_tile] != '1') // if there's no wall in y axis update y-coordinate
         player->y = new_y;
-
 }
 
 void rotate_player(t_player *player, char direction)
@@ -53,6 +53,7 @@ void rotate_player(t_player *player, char direction)
 	if (direction == 'R')
 		player->angle += ROTATION_SPEED;
 	normalize_angle(&(player->angle));
+	player->changed = 1;
 }
 
 void key_hook(mlx_key_data_t keycode, void *cub_ptr)
@@ -86,5 +87,9 @@ void hook_loop(void *cub_ptr)
 		rotate_player(cub->player, 'L');
 	if (cub->keys[MLX_KEY_D])
 		rotate_player(cub->player, 'R');
-	render_frame(cub);
+	if (cub->player->changed == 1)
+	{
+		render_frame(cub);
+		cub->player->changed = 0;
+	}
 }

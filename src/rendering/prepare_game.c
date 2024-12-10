@@ -6,11 +6,21 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/07 16:28:46 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 18:28:13 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/*OPTIMIZATION
+Optimize Loops:
+
+    Avoid redundant operations in nested loops by caching results or breaking early when possible.
+
+Memory Cleanup:
+
+    Ensure all dynamically loaded resources are freed appropriately to avoid memory leaks.
+*/
 
 void	render_frame(t_cub *cub)
 {
@@ -22,10 +32,10 @@ void	render_frame(t_cub *cub)
 
 int	load_textures(t_cub *cub)
 {
-	printf("paht: %s\n", cub->north);
-	printf("paht: %s\n", cub->south);
-	printf("paht: %s\n", cub->west);
-	printf("paht: %s\n", cub->east);
+	printf("path: %s\n", cub->north);
+	printf("path: %s\n", cub->south);
+	printf("path: %s\n", cub->west);
+	printf("path: %s\n", cub->east);
 
 	if (access(cub->north, F_OK) == -1)
     	printf("File %s does not exist or is not accessible.\n", cub->north);
@@ -62,7 +72,6 @@ int	render_game(t_cub *cub)
 	return (0);
 }
 
-
 void draw_tile(mlx_image_t *img, int x, int y, int color)
 {
 	int i;
@@ -94,8 +103,8 @@ void render_map(mlx_image_t *img, t_cub *cub)
 		column = 0;
 		while (column < cub->map_width)
 		{
-			tile_x = TILE_SIZE * column * MINIMAP_SCALE;
-			tile_y = TILE_SIZE * row * MINIMAP_SCALE;
+			tile_x = column * MINI_TILE;
+			tile_y = row * MINI_TILE;
 			if (cub->map[row][column] == '1') //wall
 				draw_tile(img, tile_x, tile_y, WALL_COLOR);
 			else if (cub->map[row][column] == '0')

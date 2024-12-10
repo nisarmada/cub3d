@@ -6,11 +6,26 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/05 15:23:27 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 18:34:40 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/* OPTIMIZATION
+all calcs that are same every rendering should be caluclated only once!
+Reduce Trigonometric Overhead:
+
+    Precompute sine and cosine values for angles if they are reused across frames.
+
+Optimize Ray Distance Calculation:
+
+    Use efficient algorithms for grid traversal (e.g., Digital Differential Analyzer (DDA)).
+
+Boundary Checks:
+
+    Ensure rays terminate when they leave the map bounds to avoid unnecessary calculations.
+*/
 
 void	render_floor_ceiling(t_cub *cub)
 {
@@ -43,18 +58,22 @@ void raycasting(t_cub *cub, t_player *player)
 	float	div;
 	float	ray_angle;
 	float	step;
+	int		x;
 
 	render_floor_ceiling(cub);
 	div = -M_PI / 6;
 	step = (M_PI / 3) / WIN_WIDTH;
-	while (div <= M_PI / 6)
+	x = 0;
+	while (x < WIN_WIDTH)
 	{
 		ray_angle = player->angle + div;
 		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
 		distorted_distance = cast_single_ray(cub, player, ray_angle);
 		correct_dist = distorted_distance * cos(div);
-		render_wallslice(cub, correct_dist, (div + M_PI / 6) / step);
+		// printf("slice %f\n", round((div + M_PI / 6) / step));
+		render_wallslice(cub, correct_dist, x);
 		div += step;
+		x++;
 	}
 }
 
@@ -91,24 +110,6 @@ projected wall slice height = actual wall slice height / dist to the actual wall
 projected wall slice height = 32 / correct_dist * dist f. player to projection plane
 draw vertical line on the corresponding column on projection plane
 */
-
-// void	draw_minimap(t_cub *cub, t_player *player)
-// {
-// 	int scaled_tile;
-// 	int	y;
-// 	int	x;
-
-// 	scaled_tile = TILE_SIZE * MINIMAP_SCALE;
-// 	while (y < cub->map_height)
-// 	{
-// 		x = 0;
-// 		while (x < cub->map_width)
-// 		{
-			
-// 		}
-// 	}
-// }
-
 
 typedef struct s_ray
 {
@@ -165,6 +166,7 @@ void	calc_start_dist(t_ray *ray)
 	else
 		ray->distance_y = (ray->ray_y - TILE_SIZE * ray->tile_y) / fabs(ray->dir_y);
 }
+
 void	calc_new_dist(t_ray *r, int is_x)
 {
 	if (is_x)

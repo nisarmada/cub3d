@@ -6,21 +6,21 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/07 15:06:14 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 18:34:56 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-typedef  struct  s_line
+typedef  struct  s_slice
 {
 	int  x; //the x coordinate of line relative to screen
 	int  y; //the current pixel index of the line (along y axis)
-	int  y0; //y start index of drawing texture
-	int  y1; //y end index of drawing texture
-	int  tex_x; //x coordinate of texture to draw
-	int  tex_y; //y coordinate of texture to draw
-} t_line;
+	int  start_y; //y start index of drawing texture
+	int  end_y; //y end index of drawing texture
+	int  text_x; //x coordinate of texture to draw
+	int  text_y; //y coordinate of texture to draw
+} t_slice;
 
 // correct_dist = distorted_dist * cos(angle_from distorted ray to middle_ray) because: cos(b) = correct_dist/distorted_dist
 // (30 degrees for the leftmost ray and -30 degrees for the right most ray)
@@ -42,13 +42,6 @@ draw vertical line on the corresponding column on projection plane
 */
 
 
-
-// int	get_texture_color(xpm_t *xpm, int text_x, int text_y)
-// {
-
-// }
-
-
 void	render_wallslice(t_cub *cub, float dist, int x)
 {
 	float	line_height;
@@ -59,17 +52,21 @@ void	render_wallslice(t_cub *cub, float dist, int x)
 	int		text_y;
 	// int		color;
 
+	// Calculate the projected wall slice height using the distance to the wall and distance to the projection plane
 	line_height = (TILE_SIZE / dist) * cub->dist_pplane;
-	if (line_height > WIN_HEIGHT)
+	if (line_height > WIN_HEIGHT) //make sure its not rendering off screen
 		line_height = WIN_HEIGHT;
+	// Calculate the vertical position (y-coordinates) on the screen to render the slice
     start_y = (WIN_HEIGHT / 2) - ((int)line_height / 2);
     end_y = start_y + (int)line_height;
+	// Ensure the coordinates are within screen bounds
     if (start_y < 0)
 		start_y = 0;
     if (end_y > WIN_HEIGHT)
 		end_y = WIN_HEIGHT;
 	text_x = (x % TILE_SIZE);
 	y = start_y;
+	// Render the wall slice as a vertical line on the screen
     while (y < end_y)
 	{
 		text_y = ((y - start_y) * TILE_SIZE) / line_height;
@@ -81,36 +78,36 @@ void	render_wallslice(t_cub *cub, float dist, int x)
 	// printf("height %f\n", line_height);
 }
 
-// void render_wallslice(t_cub *cub, float dist, float angle, int x)
-// {
-//     float line_height;
-//     int start_y;
-//     int end_y;
-//     int color = 0xFFFFFF; // Set this to your wall color or texture
+/*
+OPTIMIZATON
+Use a Profiler:
 
-//     // Calculate the projected wall slice height using the distance to the wall and distance to the projection plane
-//     line_height = (TILE_SIZE / dist) * cub->dist_pplane;
+    Run your program with a profiler (e.g., gprof or valgrind) to pinpoint slow functions and memory issues.
 
-//     // Limit the line height to the window height (to avoid rendering off-screen)
-//     if (line_height > WIN_HEIGHT)
-//         line_height = WIN_HEIGHT;
+Memory Leaks:
 
-//     // Calculate the vertical position (y-coordinates) on the screen to render the slice
-//     start_y = (WIN_HEIGHT / 2) - ((int)line_height / 2);
-//     end_y = start_y + (int)line_height;
+    Use tools like valgrind to detect and fix memory leaks. Ensure all resources (textures, map data) are freed properly.
 
-//     // Ensure the coordinates are within screen bounds
-//     if (start_y < 0) start_y = 0;
-//     if (end_y > WIN_HEIGHT) end_y = WIN_HEIGHT;
+Reduce Redundant Computations:
 
-//     // Render the wall slice as a vertical line on the screen
-//     for (int y = start_y; y < end_y; y++) {
-//         put_pixel(cub->screen, x, y, color); // Replace `put_pixel` with your specific drawing function
-//     }
-// }
+    Cache results of expensive operations (e.g., map data, trigonometric calculations).
+
+Parallel Processing:
+
+    Consider using multithreading for rendering or raycasting to utilize multiple CPU cores.
+
+Optimize Rendering:
+
+    Only redraw parts of the screen that have changed (dirty rectangles).
+
+Simplify Loops:
+
+    Analyze nested loops in rendering and raycasting functions for redundant computations.
 
 
-void	render_3D(t_cub *cub)
-{
-	(void) cub;
-}
+memory leak doesnt get bigger with longer run time
+
+./cub3d map.cub
+gprof ./cub3d gmon.out > analysis.txt
+less analysis.txt 
+*/

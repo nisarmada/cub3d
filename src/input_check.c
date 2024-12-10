@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:11:17 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/07 16:29:47 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 17:41:07 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ int	check_colorinfo(char *value)
 	// 	i++;
 	// }
 	free (colors);
-
 	return (1);
 	// colors: split only numeric chars and commas else error and then split further by commas, 
 	// see thet it is valid numbers (0 - 255) 

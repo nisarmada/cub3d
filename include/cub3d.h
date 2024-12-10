@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/07 15:34:27 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 14:28:28 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_player
 	char	orientation;
 	float	angle;
 	float	fov;
+	int		changed;
 }	t_player;
 
 /*

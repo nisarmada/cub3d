@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/07 16:31:32 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/10 14:29:07 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_cub *initialize_cub(void)
     cub->player->angle = 0;
     cub->player->fov = 0;
     cub->player->orientation = '\0';
+	cub->player->changed = 0;
 
     // Initialize other fields
     cub->east = NULL;
