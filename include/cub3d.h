@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/11 12:02:25 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/11 15:47:27 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,16 @@ typedef struct s_rgb
 	int	b;
 }	t_rgb;
 
-void	parse_cub_file(char *filename, t_cub *cub);
+// t_cub	*allocate_cub(void);
+// void	parse_cub_file(char *filename, t_cub *cub);
 t_cub	*initialize_cub(char *filename);
 int		valid_input(int ac, char **av);
 void 	parse_redirections(char *line, t_cub *cub);
-char *find_path(char *file);
 void	parse_colors(char *line, t_cub *cub);
 void	allocate_map(char *filename, t_cub *cub);
-void map_parsing(char *line, t_cub *cub, int j);
+void	map_parsing(char *line, t_cub *cub, int j);
+void	free_and_exit_game(t_cub *cub, int status);
+t_cub	*init_parse_cub(char *filename);
 
 /* inout_check */
 char	*trim_spaces(char *str);
@@ -134,13 +136,20 @@ int		is_whitespace(char file);
 int		ft_isvalid_path_chars(int c);
 int		ft_strcmp(const char *s1, const char *s2);
 
+
+/* PARSING */
+
+/* directions_parsing */
+void parse_directions(char *line, t_cub *cub);
+
 /* map parsing*/
 int is_map_line(char *line);
-void find_player_position(t_cub *cub);
-void define_field_of_vision(t_cub *cub);
+// void find_player_position(t_cub *cub);
+// void define_field_of_vision(t_cub *cub);
 int valid_map(t_cub *cub, int height, int width);
 
 /*rendering*/
+void	init_mlx(t_cub *cub);
 int	render_game(t_cub *cub);
 void draw_tile(mlx_image_t *img, int x, int y, int color);
 void render_map(mlx_image_t *img, t_cub *cub);

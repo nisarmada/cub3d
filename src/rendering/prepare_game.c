@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/11 11:48:10 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/11 15:52:17 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,22 @@ int	load_textures(t_cub *cub)
 	return (1);
 }
 
-int	render_game(t_cub *cub)
+void	init_mlx(t_cub *cub)
 {
-	//void	*mlx;
-	//mlx_image_t *img;
-
 	cub->mlx = mlx_init(800, 600, "Cub3d", true);
 	if (!cub->mlx)
-		return (1);
+		exit(EXIT_FAILURE);
 	cub->img = mlx_new_image(cub->mlx, 800, 600);
 	if (!cub->img)
-		return (1);
+	{
+		free(cub->mlx);
+		exit(EXIT_FAILURE);
+	}
+}
+
+int	render_game(t_cub *cub)
+{
+	init_mlx(cub);
 	if (!load_textures(cub))
 		return (1);
 	render_frame(cub);
