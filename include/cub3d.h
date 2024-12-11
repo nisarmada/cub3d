@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/10 18:47:53 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/11 12:02:25 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_rgb
 }	t_rgb;
 
 void	parse_cub_file(char *filename, t_cub *cub);
-t_cub	*initialize_cub(void);
+t_cub	*initialize_cub(char *filename);
 int		valid_input(int ac, char **av);
 void 	parse_redirections(char *line, t_cub *cub);
 char *find_path(char *file);

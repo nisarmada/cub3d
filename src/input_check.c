@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:11:17 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/10 18:39:23 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/11 11:48:36 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	check_path_info(char *value)
 	// printf("int max path %i\n", PATH_MAX);
 	if (i > PATH_MAX)
 		return (printf("too long path\n"), 0);
-	printf("value %s\n", value);
+	// printf("value %s\n", value);
 	fd = open(value, O_RDONLY);
 	if (fd < 0)
 	{

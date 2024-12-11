@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/05 14:48:01 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/11 11:47:56 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,6 @@ int valid_map(t_cub *cub, int height, int width)
 	}
 	if (!cub->player->orientation)
 		return(printf("no player\n"), 0);	
-	printf("map checked ;)\n");
+	// printf("map checked ;)\n");
 	return (1);
 }

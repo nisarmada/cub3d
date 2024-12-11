@@ -6,18 +6,17 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/10 18:37:45 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/11 12:01:34 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-t_cub *initialize_cub(void)
+t_cub	*allocate_cub(void)
 {
 	t_cub *cub;
 
-    // Allocate memory for cub
-    cub = malloc(sizeof(t_cub));
+	cub = malloc(sizeof(t_cub));
     if (!cub)
         return (NULL);
 
@@ -36,30 +35,59 @@ t_cub *initialize_cub(void)
 		free(cub);
 		return (NULL);
 	}
-	cub->text->no = NULL;
-	cub->text->so = NULL;
-	cub->text->we = NULL;
-	cub->text->ea = NULL;
-	cub->text->no_img = NULL;
-	cub->text->we_img = NULL;
-	cub->text->so_img = NULL;
-	cub->text->ea_img = NULL;
-    // Initialize player fields to 0 or default values
-    cub->player->x = 0;
-    cub->player->y = 0;
-    cub->player->angle = 0;
-    cub->player->fov = 0;
-    cub->player->orientation = '\0';
+	return (cub);
+}
+
+t_cub *initialize_cub(char *filename)
+{
+	t_cub *cub;
+
+    // Allocate memory for cub
+	cub = allocate_cub();
+	parse_cub_file(filename, cub);
+    // cub = malloc(sizeof(t_cub));
+    // if (!cub)
+    //     return (NULL);
+
+    // // Allocate memory for player
+    // cub->player = malloc(sizeof(t_player));
+    // if (!cub->player)
+    // {
+    //     // If player allocation fails, free cub and return NULL
+    //     free(cub);
+    //     return (NULL);
+    // }
+	// cub->text = malloc(sizeof(t_text));
+	// if (!cub->text)
+	// {
+	// 	free(cub->player);
+	// 	free(cub);
+	// 	return (NULL);
+	// }
+	// cub->text->no = NULL;
+	// cub->text->so = NULL;
+	// cub->text->we = NULL;
+	// cub->text->ea = NULL;
+	// cub->text->no_img = NULL;
+	// cub->text->we_img = NULL;
+	// cub->text->so_img = NULL;
+	// cub->text->ea_img = NULL;
+    // // Initialize player fields to 0 or default values
+    // cub->player->x = 0;
+    // cub->player->y = 0;
+    // cub->player->angle = 0;
+    // cub->player->fov = 0;
+    // cub->player->orientation = '\0';
 	cub->player->changed = 0;
 
     // Initialize other fields
-    cub->east = NULL;
-    cub->west = NULL;
-    cub->north = NULL;
-    cub->south = NULL;
-    cub->map = NULL;
-    cub->mlx = NULL;
-    cub->img = NULL;
+    // cub->east = NULL;
+    // cub->west = NULL;
+    // cub->north = NULL;
+    // cub->south = NULL;
+    // cub->map = NULL;
+    // cub->mlx = NULL;
+    // cub->img = NULL;
 	// cub->text = NULL;
 	cub->dist_pplane = 692;
 	for (int i = 0; i < 256; i++)

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/10 18:47:23 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/11 11:48:10 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	render_frame(t_cub *cub)
 
 int	load_textures(t_cub *cub)
 {
-	printf("path: %s\n", cub->north);
-	printf("path: %s\n", cub->south);
-	printf("path: %s\n", cub->west);
-	printf("path: %s\n", cub->east);
+	// printf("path: %s\n", cub->north);
+	// printf("path: %s\n", cub->south);
+	// printf("path: %s\n", cub->west);
+	// printf("path: %s\n", cub->east);
 
 	cub->text->no = mlx_load_png(cub->north);
 	cub->text->so = mlx_load_png(cub->south);
@@ -53,7 +53,6 @@ int	render_game(t_cub *cub)
 	//void	*mlx;
 	//mlx_image_t *img;
 
-	(void)cub;
 	cub->mlx = mlx_init(800, 600, "Cub3d", true);
 	if (!cub->mlx)
 		return (1);

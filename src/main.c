@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/04 15:20:40 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/11 13:15:56 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,26 @@ int	main(int ac, char **av)
 	t_cub	*cub;
 
 	filename = av[1];
-	(void)ac;
 	if (!valid_input(ac, av))
 		return (1);
-	printf("input file is valid \n");
-	cub = initialize_cub();
-	parse_cub_file(filename, cub);
-	// find_player_position(cub);
+	cub = initialize_cub(filename);
+	if (!cub)
+		return (1);
+	// parse_cub_file(filename, cub);
 	// print_map(cub);
-	// printf()
 	if (!valid_map(cub, cub->map_height, cub->map_width))
 		return (1); 
-	printf("x->%i y->%i\n", cub->player->x, cub->player->y);
 	render_game(cub);
-	
-	//printf("paths %s", cub->north);
-	
+	mlx_terminate(cub->mlx);
+}
+void	free_and_exit(t_cub *cub, int status)
+{
+	if (cub->img)
+		mlx_delete_image(cub->mlx, cub->img);
+	mlx_close_window(cub->mlx);
+	mlx_terminate(cub->mlx);
+	if (status == 0)
+		exit(EXIT_FAILURE);
+	else
+		exit(EXIT_SUCCESS);
 }
