@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/10 18:44:59 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/11 16:17:59 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void render_3D_view(t_cub *cub, t_player *player)
 	float	ray_angle;
 	float	step;
 	int		x;
+	float	wall_hit_position;
+	t_wall_direction	wall_direction;
 
 	render_floor_ceiling(cub);
 	div = -M_PI / 6;
@@ -58,10 +60,10 @@ void render_3D_view(t_cub *cub, t_player *player)
 	{
 		ray_angle = player->angle + div;
 		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
-		distorted_distance = cast_single_ray(cub, player, ray_angle);
+		distorted_distance = cast_single_ray(cub, player, ray_angle, &wall_hit_position, &wall_direction);
 		correct_dist = distorted_distance * cos(div);
 		// printf("slice %f\n", round((div + M_PI / 6) / step));
-		render_wallslice(cub, correct_dist, x);
+		render_wallslice(cub, correct_dist, x, wall_hit_position, wall_direction);
 		div += step;
 		x++;
 	}
@@ -91,7 +93,20 @@ void	render_floor_ceiling(t_cub *cub)
 	}
 }
 
-void	render_wallslice(t_cub *cub, float dist, int x)
+mlx_texture_t *wall_texture_direction(t_cub *cub, t_wall_direction *wall_direction)
+{
+	if (*wall_direction == NORTH)
+		return (cub->text->no);
+	else if (*wall_direction == SOUTH)
+		return (cub->text->so);
+	else if (*wall_direction == WEST)
+		return (cub->text->we);
+	else if (*wall_direction == EAST)
+		return (cub->text->ea);
+	return (cub->text->no);
+}
+
+void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_wall_direction wall_direction)
 {
 	float	line_height;
     int		start_y;
@@ -100,7 +115,9 @@ void	render_wallslice(t_cub *cub, float dist, int x)
 	int		text_x;
 	int		text_y;
 	int		color;
+	mlx_texture_t *texture;
 
+	texture = wall_texture_direction(cub, &wall_direction);
 	// Calculate the projected wall slice height using the distance to the wall and distance to the projection plane
 	line_height = (TILE_SIZE / dist) * cub->dist_pplane;
 	if (line_height > WIN_HEIGHT) //make sure its not rendering off screen
@@ -114,11 +131,12 @@ void	render_wallslice(t_cub *cub, float dist, int x)
     if (end_y > WIN_HEIGHT)
 		end_y = WIN_HEIGHT;
 	text_x = (x % TILE_SIZE);
+	text_x = (int)(wall_hit_position * texture->width) % texture->width;
 	y = start_y;
 	// Render the wall slice as a vertical line on the screen
     while (y < end_y)
 	{
-		text_y = ((y - start_y) * TILE_SIZE) / (int)line_height;
+		text_y = ((y - start_y) * texture->height) / (int)line_height;
 		color = get_texture_color(cub, text_x, text_y);
 		// printf("color is %i\n", color);
         mlx_put_pixel(cub->img, x, y, color);
@@ -128,27 +146,36 @@ void	render_wallslice(t_cub *cub, float dist, int x)
 	// printf("height %f\n", line_height);
 }
 
-
+//Check this function again to understand
 int get_texture_color(t_cub *cub, int text_x, int text_y)
 {
     uint32_t *pixels;
+	uint32_t argb_color;
+	uint8_t		alpha;
+	uint8_t		red;
+	uint8_t		green;
+	uint8_t		blue;
 
-    // Bounds check
-    if (text_x < 0 || text_x >= (int)cub->text->no->width || text_y < 0 || text_y >= (int)cub->text->no->height)
-        return 0; // Default to black if out of bounds
+    // Bounds check (clamping to texture dimensions)
+    if (text_x < 0)
+		text_x = 0;
+    if (text_x >= (int)cub->text->no->width)
+		text_x = cub->text->no->width - 1;
+    if (text_y < 0)
+		text_y = 0;
+    if (text_y >= (int)cub->text->no->height)
+		text_y = cub->text->no->height - 1;
 
     pixels = (uint32_t *)cub->text->no_img->pixels;
-
-    // Extract alpha, red, green, blue components
-    unsigned char alpha = (pixels[text_y * cub->text->no->width + text_x] & 0xFF000000) >> 24;
-    unsigned char red = (pixels[text_y * cub->text->no->width + text_x] & 0x00FF0000) >> 16;
-    unsigned char green = (pixels[text_y * cub->text->no->width + text_x] & 0x0000FF00) >> 8; // look at it tomorrow I dont know what the fuck is going on
-    unsigned char blue = pixels[text_y * cub->text->no->width + text_x] & 0x000000FF;
-
-    // Recombine into MLX42 format
-    unsigned int mlx42_color = (alpha << 24) | (red << 16) | (green << 8) | blue;
-
-    return mlx42_color;
+	// Extract ARGB components
+	argb_color = pixels[text_y * cub->text->no->width + text_x];
+	//Convert to ABGR color
+	alpha = (argb_color >> 24) & 0xFF;
+	red = (argb_color >> 16) & 0xFF;
+	green = (argb_color >> 8) & 0xFF;
+	blue = argb_color & 0xFF;
+    // Return ABGR
+    return (alpha << 24) | (blue << 16) | (green << 8) | red;
 }
 
 /*

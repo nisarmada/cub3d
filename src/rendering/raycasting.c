@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/10 18:44:52 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/11 16:51:22 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ projected wall slice height = actual wall slice height / dist to the actual wall
 projected wall slice height = 32 / correct_dist * dist f. player to projection plane
 draw vertical line on the corresponding column on projection plane
 */
+
+typedef struct s_result
+{
+	float	distance;
+	float	wall_hit_position;
+} t_result;
 
 typedef struct s_ray
 {
@@ -139,26 +145,54 @@ void	calc_new_dist(t_ray *r, int is_x)
 	
 }
 
-float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle)
+float cast_single_ray(t_cub *cub, t_player *player, float ray_angle, float *wall_hit_position, t_wall_direction *wall_direction)
 {
-	t_ray	r;
+    t_ray r;
 
-	init_param_ray(player, &r, ray_angle);
-	calc_start_dist(&r);
-	while (1)
-	{
-		if (r.distance_x < r.distance_y)
-			calc_new_dist(&r, 1);
-		else
-			calc_new_dist(&r, 0);
-		// if (tile_x < 0 || tile_x >= cub->map_width || tile_y < 0 || tile_y >= cub->map_height)
-		// 	break;
-		if (cub->map[r.tile_y][r.tile_x] == '1')  // South wall
-		{
-			// draw_line(player, cub->img, r.tile_x * TILE_SIZE, r.tile_y * TILE_SIZE);
-			return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
-		}
-	}
-	// return (1);
-
+    init_param_ray(player, &r, ray_angle);
+    calc_start_dist(&r);
+    
+    while (1)
+    {
+        if (r.distance_x < r.distance_y)
+        {
+            calc_new_dist(&r, 1);
+            
+            // Consistent map access with y, x order
+            if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
+                r.tile_x >= 0 && r.tile_x < cub->map_width && 
+                cub->map[r.tile_y][r.tile_x] == '1') // Vertical wall
+            {
+                *wall_hit_position = (float)fmod(r.ray_y, TILE_SIZE) / TILE_SIZE;
+                if (r.dir_x < 0) // Left wall
+                {
+                    *wall_hit_position = 1.0 - *wall_hit_position;
+                    *wall_direction = WEST;
+                }
+                else
+                    *wall_direction = EAST;
+                return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
+            }
+        }
+        else // Horizontal wall
+        {
+            calc_new_dist(&r, 0);
+            
+            // Consistent map access with y, x order
+            if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
+                r.tile_x >= 0 && r.tile_x < cub->map_width && 
+                cub->map[r.tile_y][r.tile_x] == '1')  // wall hit
+            {
+                *wall_hit_position = (float)fmod(r.ray_x, TILE_SIZE) / TILE_SIZE;
+                if (r.dir_y > 0)
+                {
+                    *wall_hit_position = 1.0 - *wall_hit_position;                
+                    *wall_direction = SOUTH;
+                }
+                else
+                    *wall_direction = NORTH;
+                return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
+            }
+        }
+    }
 }

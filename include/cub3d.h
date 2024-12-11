@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/11 12:02:25 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/11 16:09:53 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,14 @@ typedef struct s_player
 	float	fov;
 	int		changed;
 }	t_player;
+
+typedef enum e_wall_direction
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+} t_wall_direction ;
 
 typedef struct s_text
 {
@@ -159,10 +167,10 @@ void	render_frame(t_cub *cub);
 
 /*raycasting*/
 void	render_3D_view(t_cub *cub, t_player *player);
-float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle);
+float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle, float *wall_hit_position, t_wall_direction *wall_direction);
 
 /* 3D_rendering */
-void	render_wallslice(t_cub *cub, float dist, int x);
+void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_wall_direction wall_direction);
 int		get_texture_color(t_cub *cub, int text_x, int text_y);
 void	print_map(t_cub *cub);
 void	render_floor_ceiling(t_cub *cub);
