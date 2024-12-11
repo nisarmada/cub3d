@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/11/22 17:39:40 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/11 15:40:13 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static t_rgb	get_rgb_values(char *line)
 	rgb.b = ft_atoi(color_string);
 	return (rgb);
 }
+
 void	parse_colors(char *line, t_cub *cub)
 {
 	t_rgb	floor;
