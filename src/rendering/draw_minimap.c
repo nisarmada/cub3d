@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 18:41:18 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/10 18:42:13 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 14:28:28 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ Memory Cleanup:
 */
 
 
-void draw_tile(mlx_image_t *img, int x, int y, int color)
+void draw_tile(mlx_image_t *img, int x, int y, float scale, int color)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (i < TILE_SIZE * MINIMAP_SCALE)
+	while (i < (TILE_SIZE * scale))
 	{
 		j = 0;
-		while (j < TILE_SIZE * MINIMAP_SCALE)
+		while (j < (TILE_SIZE * scale))
 		{
 			mlx_put_pixel(img, x + i, j + y, color);
 			j++;
@@ -41,40 +41,49 @@ void draw_tile(mlx_image_t *img, int x, int y, int color)
 	}
 }
 
-void render_map(mlx_image_t *img, t_cub *cub)
+float render_map(mlx_image_t *img, t_cub *cub)
 {
-	int row;
-	int column;
-	int	tile_x;
-	int	tile_y;
+	int		row;
+	int		column;
+	int		tile_x;
+	int		tile_y;
+	float	scale_x;
+	float	scale_y;
+	float	scale;
+	int		color;
 
+	scale_x = (float)300 / (cub->map_width * TILE_SIZE);
+	scale_y = (float)200 / (cub->map_height * TILE_SIZE);
+	scale = fminf(scale_x, scale_y);
 	row = 0;
-	while (cub->map[row])
+	while (row < cub->map_height)
 	{
 		column = 0;
 		while (column < cub->map_width)
 		{
-			tile_x = column * MINI_TILE;
-			tile_y = row * MINI_TILE;
+			tile_x = column * TILE_SIZE * scale;
+			tile_y = row * TILE_SIZE * scale;
 			if (cub->map[row][column] == '1') //wall
-				draw_tile(img, tile_x, tile_y, WALL_COLOR);
+				color = WALL_COLOR;
 			else if (cub->map[row][column] == '0')
-				draw_tile(img, tile_x, tile_y, FLOOR_COLOR);
+				color = FLOOR_COLOR;
 			else if (cub->map[row][column] == ' ')
-				draw_tile(img, tile_x, tile_y, INACCESSIBLE_COLOR);
+				color = INACCESSIBLE_COLOR;
 			else if (cub->map[row][column] == 'N' || cub->map[row][column] == 'S' || 
                      cub->map[row][column] == 'E' || cub->map[row][column] == 'W')
-				draw_tile(img, tile_x, tile_y, FLOOR_COLOR);
-				
+				color = FLOOR_COLOR;
+			draw_tile(img, tile_x, tile_y, scale, color);
 			column++;
 		}
 		row++;
 	}
-	render_fov(cub->player, img, cub);
+	// render_dir(cub->player, img, cub, scale);
+	render_fov(cub->player, img, cub, scale);
 	// raycasting(cub, cub->player);
+	return (scale);
 }
 
-void render_player(t_cub *cub, mlx_image_t *img)
+void render_player(t_cub *cub, mlx_image_t *img, float scale)
 {
 	int x;
 	int y;
@@ -82,9 +91,9 @@ void render_player(t_cub *cub, mlx_image_t *img)
 	int i;
 	int j;
 
-	x = cub->player->x * MINIMAP_SCALE;
-	y = cub->player->y * MINIMAP_SCALE;
-	r = (TILE_SIZE * MINIMAP_SCALE) / 4;
+	x = cub->player->x * scale;
+	y = cub->player->y * scale;
+	r = (TILE_SIZE * scale) / 4;
 	i = -r;
 	while (i <= r)
 	{
@@ -102,7 +111,13 @@ void render_player(t_cub *cub, mlx_image_t *img)
 	// render_fov(cub->player, img);
 }
 
-void render_fov(t_player *player, mlx_image_t *img, t_cub *cub)
+// void render_dir(t_player *player, mlx_image_t *img, t_cub *cub, float scale)
+// {
+
+// }
+
+
+void render_fov(t_player *player, mlx_image_t *img, t_cub *cub, float scale)
 {
 	int max_distance;
 	float	left_angle;
@@ -118,12 +133,12 @@ void render_fov(t_player *player, mlx_image_t *img, t_cub *cub)
 	right_angle = player->angle - player->fov / 2;
 	normalize_angle(&left_angle);
 	normalize_angle(&right_angle);
-	x_left = (int)player->x * MINIMAP_SCALE + cos(left_angle) * max_distance;
-	y_left = (int)player->y * MINIMAP_SCALE - sin(left_angle) * max_distance;
-	x_right = (int)player->x * MINIMAP_SCALE + cos(right_angle) * max_distance;
-	y_right = (int)player->y * MINIMAP_SCALE - sin(right_angle) * max_distance;
-	draw_line(player, img, x_left, y_left);
-	draw_line(player, img, x_right, y_right);
+	x_left = (int)player->x * (int)scale + cos(left_angle) * max_distance;
+	y_left = (int)player->y * (int)scale - sin(left_angle) * max_distance;
+	x_right = (int)player->x * (int)scale + cos(right_angle) * max_distance;
+	y_right = (int)player->y * (int)scale - sin(right_angle) * max_distance;
+	draw_line(player, img, x_left, y_left, scale);
+	draw_line(player, img, x_right, y_right, scale);
 	// raycasting(cub, cub->player);
 }
 

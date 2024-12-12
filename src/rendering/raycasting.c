@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/11 16:51:22 by nikos         ########   odam.nl         */
+/*   Updated: 2024/12/12 12:15:23 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,12 @@ void	calc_new_dist(t_ray *r, int is_x)
 	
 }
 
-float cast_single_ray(t_cub *cub, t_player *player, float ray_angle, float *wall_hit_position, t_wall_direction *wall_direction)
+float cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position, t_wall_direction *wall_direction)
 {
-    t_ray r;
+    t_ray 		r;
+	t_player	*player;
 
+	player = cub->player;
     init_param_ray(player, &r, ray_angle);
     calc_start_dist(&r);
     

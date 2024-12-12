@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/11 17:00:36 by nikos         ########   odam.nl         */
+/*   Updated: 2024/12/12 14:27:54 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@
 #define MINIMAP_SCALE 0.4
 #define MINIMAP_OFFSET_X 10
 #define MINIMAP_OFFSET_Y 10
-
+#define MINI_HEIGHT 200
+#define MINI_WIDTH 200
 
 typedef struct s_raycast
 {
@@ -159,13 +160,13 @@ int valid_map(t_cub *cub, int height, int width);
 /*rendering*/
 void	init_mlx(t_cub *cub);
 int	render_game(t_cub *cub);
-void draw_tile(mlx_image_t *img, int x, int y, int color);
-void render_map(mlx_image_t *img, t_cub *cub);
-void render_player(t_cub *cub, mlx_image_t *img);
-void render_fov(t_player *player, mlx_image_t *img, t_cub *cub);
+void draw_tile(mlx_image_t *img, int x, int y, float scale, int color);
+float render_map(mlx_image_t *img, t_cub *cub);
+void render_player(t_cub *cub, mlx_image_t *img, float scale);
+void render_fov(t_player *player, mlx_image_t *img, t_cub *cub, float scale);
 void normalize_angle(float *angle);
-void draw_line(t_player *player, mlx_image_t *img, int x, int y);
-void draw_line_float(t_player *player, mlx_image_t *img, int x, int y);
+void draw_line(t_player *player, mlx_image_t *img, int x, int y, float scale);
+void draw_line_float(t_player *player, mlx_image_t *img, int x, int y, float scale);
 void move_player(t_cub *cub, t_player *player, char direction);
 void rotate_player(t_player *player, char direction);
 void key_hook(mlx_key_data_t keycode, void *cub_ptr);
@@ -176,7 +177,7 @@ void	render_frame(t_cub *cub);
 
 /*raycasting*/
 void	render_3D_view(t_cub *cub, t_player *player);
-float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle, float *wall_hit_position, t_wall_direction *wall_direction);
+float	cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position, t_wall_direction *wall_direction);
 
 /* 3D_rendering */
 void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_wall_direction wall_direction);

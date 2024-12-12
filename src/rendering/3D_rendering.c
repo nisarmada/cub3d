@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/11 16:17:59 by nikos         ########   odam.nl         */
+/*   Updated: 2024/12/12 12:48:58 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void render_3D_view(t_cub *cub, t_player *player)
 	{
 		ray_angle = player->angle + div;
 		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
-		distorted_distance = cast_single_ray(cub, player, ray_angle, &wall_hit_position, &wall_direction);
+		distorted_distance = cast_single_ray(cub, ray_angle, &wall_hit_position, &wall_direction);
 		correct_dist = distorted_distance * cos(div);
 		// printf("slice %f\n", round((div + M_PI / 6) / step));
 		render_wallslice(cub, correct_dist, x, wall_hit_position, wall_direction);
@@ -80,13 +80,13 @@ void	render_floor_ceiling(t_cub *cub)
 		// Render the ceiling (top half of the screen)
 		y = 0;
 		while (y < WIN_HEIGHT / 2) {
-			mlx_put_pixel(cub->img, x, y, RED);
+			mlx_put_pixel(cub->img, x, y, MAGENTA);
 			y++;
 		}
 		// Render the floor (bottom half of the screen)
 		y = WIN_HEIGHT / 2;
 		while (y < WIN_HEIGHT) {
-			mlx_put_pixel(cub->img, x, y, GREEN);
+			mlx_put_pixel(cub->img, x, y, ORANGE);
 			y++;
 		}
 		x++;
@@ -175,7 +175,7 @@ int get_texture_color(t_cub *cub, int text_x, int text_y)
 	green = (argb_color >> 8) & 0xFF;
 	blue = argb_color & 0xFF;
     // Return ABGR
-    return (alpha << 24) | (blue << 16) | (green << 8) | red;
+    return (red << 24) | (green << 16) | (blue << 8) | alpha;
 }
 
 /*

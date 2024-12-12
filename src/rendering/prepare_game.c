@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/11 15:52:17 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/12 14:29:38 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,20 @@
 void	render_frame(t_cub *cub)
 {
 	render_3D_view(cub, cub->player);
-	render_map(cub->img, cub);
-	render_player(cub, cub->img);
+	float scale = render_map(cub->img, cub);
+	render_player(cub, cub->img, scale);
 	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
 }
 
 int	load_textures(t_cub *cub)
 {
-	// printf("path: %s\n", cub->north);
-	// printf("path: %s\n", cub->south);
-	// printf("path: %s\n", cub->west);
-	// printf("path: %s\n", cub->east);
-
 	cub->text->no = mlx_load_png(cub->north);
 	cub->text->so = mlx_load_png(cub->south);
 	cub->text->we = mlx_load_png(cub->west);
 	cub->text->ea = mlx_load_png(cub->east);
 	if (!cub->text->no || !cub->text->so || !cub->text->we || !cub->text->ea)						
 	{
-		printf("Failed to load XPM file.\n");
+		printf("Failed to load PNG file.\n");
 		return (0);
 	}
 	cub->text->no_img = mlx_texture_to_image(cub->mlx, cub->text->no);

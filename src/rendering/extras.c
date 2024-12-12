@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2024/12/10 17:59:04 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 14:27:34 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void normalize_angle(float *angle)
 		*angle -= 2 * M_PI;
 }
 
-void draw_line(t_player *player, mlx_image_t *img, int x, int y)
+void draw_line(t_player *player, mlx_image_t *img, int x, int y, float scale)
 {
 	int dx;
 	int	dy;
@@ -31,8 +31,8 @@ void draw_line(t_player *player, mlx_image_t *img, int x, int y)
 	int err;
 	int	err2;
 
-	x0 = player->x *MINIMAP_SCALE;
-	y0 = player->y *MINIMAP_SCALE;
+	x0 = player->x * scale;
+	y0 = player->y * scale;
 	dx = abs(x - x0); // x1 - x0
 	dy = abs(y - y0); // y1 - y0
 	err = dx - dy;
@@ -66,7 +66,7 @@ void draw_line(t_player *player, mlx_image_t *img, int x, int y)
 	}
 }
 
-void draw_line_float(t_player *player, mlx_image_t *img, int x, int y)
+void draw_line_float(t_player *player, mlx_image_t *img, int x, int y, float scale)
 {
 	float dx;
 	float dy;
@@ -77,8 +77,8 @@ void draw_line_float(t_player *player, mlx_image_t *img, int x, int y)
 	float err;
 	float err2;
 
-	x0 = player->x;
-	y0 = player->y;
+	x0 = player->x * scale;
+	y0 = player->y * scale;
 	dx = x - x0;
 	dy = y - y0;
 	if (x > x0)
