@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/12 14:29:38 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 15:16:08 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	load_textures(t_cub *cub)
 
 void	init_mlx(t_cub *cub)
 {
-	cub->mlx = mlx_init(800, 600, "Cub3d", true);
+	cub->mlx = mlx_init(cub->win_width, cub->win_height, "Cub3d", true);
 	if (!cub->mlx)
 		exit(EXIT_FAILURE);
-	cub->img = mlx_new_image(cub->mlx, 800, 600);
+	cub->img = mlx_new_image(cub->mlx, cub->win_width, cub->win_height);
 	if (!cub->img)
 	{
 		free(cub->mlx);
@@ -58,12 +58,14 @@ void	init_mlx(t_cub *cub)
 
 int	render_game(t_cub *cub)
 {
+	// printf("in render game\n");
 	init_mlx(cub);
 	if (!load_textures(cub))
 		return (1);
 	render_frame(cub);
 	mlx_key_hook(cub->mlx, key_hook, cub);
 	mlx_loop_hook(cub->mlx, hook_loop, cub);
+	mlx_resize_hook(cub->mlx, resize_callback, cub);
 	mlx_loop(cub->mlx);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   validate_map.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2024/12/11 15:38:32 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/12 15:10:55 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int valid_map(t_cub *cub, int height, int width)
 	int		i;
 	char	**map;
 
+	// printf("in valid map\n");
 	map = cub->map;
 	if (!valid_first_last_row(map, 0, width) || \
 	!valid_first_last_row(map, height, width))

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 18:41:18 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/12 14:28:28 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 15:14:37 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ float render_map(mlx_image_t *img, t_cub *cub)
 		row++;
 	}
 	// render_dir(cub->player, img, cub, scale);
-	render_fov(cub->player, img, cub, scale);
+	render_fov(cub->player, cub, scale);
 	// raycasting(cub, cub->player);
 	return (scale);
 }
@@ -117,7 +117,7 @@ void render_player(t_cub *cub, mlx_image_t *img, float scale)
 // }
 
 
-void render_fov(t_player *player, mlx_image_t *img, t_cub *cub, float scale)
+void render_fov(t_player *player, t_cub *cub, float scale)
 {
 	int max_distance;
 	float	left_angle;
@@ -137,8 +137,8 @@ void render_fov(t_player *player, mlx_image_t *img, t_cub *cub, float scale)
 	y_left = (int)player->y * (int)scale - sin(left_angle) * max_distance;
 	x_right = (int)player->x * (int)scale + cos(right_angle) * max_distance;
 	y_right = (int)player->y * (int)scale - sin(right_angle) * max_distance;
-	draw_line(player, img, x_left, y_left, scale);
-	draw_line(player, img, x_right, y_right, scale);
+	draw_line(cub, x_left, y_left, scale);
+	draw_line(cub, x_right, y_right, scale);
 	// raycasting(cub, cub->player);
 }
 

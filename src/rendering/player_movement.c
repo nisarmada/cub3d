@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2024/12/12 14:44:04 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 15:20:10 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,12 @@ void key_hook(mlx_key_data_t keycode, void *cub_ptr)
 			cub->keys[keycode.key] = false;
 	}
 	if (keycode.key == MLX_KEY_ESCAPE && keycode.action == MLX_RELEASE)
-		free_and_exit_game(cub, EXIT_SUCCESS);
+	{
+		mlx_delete_image(cub->mlx, cub->img);
+		mlx_close_window(cub->mlx);
+		mlx_terminate(cub->mlx);
+		exit(EXIT_SUCCESS);
+	}
 }
 
 void hook_loop(void *cub_ptr)
@@ -91,4 +96,23 @@ void hook_loop(void *cub_ptr)
 		render_frame(cub);
 		cub->player->changed = 0;
 	}
+}
+
+void	resize_callback(int32_t width, int32_t height, void* param)
+{
+	t_cub	*cub;
+
+	cub = (t_cub *)param;
+	// Update window dimensions in your application
+	cub->win_width = width;
+	cub->win_height = height;
+
+	// Recreate the image with the new size
+	if (cub->img)
+		mlx_delete_image(cub->mlx, cub->img);
+	cub->img = mlx_new_image(cub->mlx, cub->win_width, cub->win_height);
+	if (!cub->img)
+		free_and_exit_game(cub, EXIT_FAILURE);
+	cub->dist_pplane = ((cub->win_width / 2 ) / tan(0.524));
+	render_frame(cub);
 }

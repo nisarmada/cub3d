@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/12 12:48:58 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 15:11:26 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,12 @@ void render_3D_view(t_cub *cub, t_player *player)
 	float	wall_hit_position;
 	t_wall_direction	wall_direction;
 
+	// printf("hello\n");
 	render_floor_ceiling(cub);
 	div = -M_PI / 6;
-	step = (M_PI / 3) / WIN_WIDTH;
+	step = (M_PI / 3) / cub->win_width;
 	x = 0;
-	while (x < WIN_WIDTH)
+	while (x < cub->win_width)
 	{
 		ray_angle = player->angle + div;
 		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
@@ -75,17 +76,20 @@ void	render_floor_ceiling(t_cub *cub)
 	int		y;
 
 	x = 0;
-	while (x < WIN_WIDTH) 
+	while (x < cub->win_width) 
 	{
 		// Render the ceiling (top half of the screen)
 		y = 0;
-		while (y < WIN_HEIGHT / 2) {
+		// printf("cub win width %i\n", cub->win_width);
+		while (y < cub->win_height / 2)
+		{
 			mlx_put_pixel(cub->img, x, y, MAGENTA);
 			y++;
 		}
 		// Render the floor (bottom half of the screen)
-		y = WIN_HEIGHT / 2;
-		while (y < WIN_HEIGHT) {
+		y = cub->win_height / 2;
+		while (y < cub->win_height)
+		{
 			mlx_put_pixel(cub->img, x, y, ORANGE);
 			y++;
 		}
@@ -120,16 +124,16 @@ void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_
 	texture = wall_texture_direction(cub, &wall_direction);
 	// Calculate the projected wall slice height using the distance to the wall and distance to the projection plane
 	line_height = (TILE_SIZE / dist) * cub->dist_pplane;
-	if (line_height > WIN_HEIGHT) //make sure its not rendering off screen
-		line_height = WIN_HEIGHT;
+	if (line_height > cub->win_height) //make sure its not rendering off screen
+		line_height = cub->win_height;
 	// Calculate the vertical position (y-coordinates) on the screen to render the slice
-    start_y = (WIN_HEIGHT / 2) - ((int)line_height / 2);
+    start_y = (cub->win_height / 2) - ((int)line_height / 2);
     end_y = start_y + (int)line_height;
 	// Ensure the coordinates are within screen bounds
     if (start_y < 0)
 		start_y = 0;
-    if (end_y > WIN_HEIGHT)
-		end_y = WIN_HEIGHT;
+    if (end_y > cub->win_height)
+		end_y = cub->win_height;
 	text_x = (x % TILE_SIZE);
 	text_x = (int)(wall_hit_position * texture->width) % texture->width;
 	y = start_y;

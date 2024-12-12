@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/12 14:27:54 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 15:14:51 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ typedef struct s_cub
 	int		wall_color;
 	int		map_width;
 	int		map_height;
+	int		win_width;
+	int		win_height;
 	int		dist_pplane;
 	t_text	*text;
 	mlx_t	*mlx;
@@ -163,9 +165,9 @@ int	render_game(t_cub *cub);
 void draw_tile(mlx_image_t *img, int x, int y, float scale, int color);
 float render_map(mlx_image_t *img, t_cub *cub);
 void render_player(t_cub *cub, mlx_image_t *img, float scale);
-void render_fov(t_player *player, mlx_image_t *img, t_cub *cub, float scale);
+void render_fov(t_player *player, t_cub *cub, float scale);
 void normalize_angle(float *angle);
-void draw_line(t_player *player, mlx_image_t *img, int x, int y, float scale);
+void draw_line(t_cub *cub, int x, int y, float scale);
 void draw_line_float(t_player *player, mlx_image_t *img, int x, int y, float scale);
 void move_player(t_cub *cub, t_player *player, char direction);
 void rotate_player(t_player *player, char direction);
@@ -184,5 +186,7 @@ void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_
 int		get_texture_color(t_cub *cub, int text_x, int text_y);
 void	print_map(t_cub *cub);
 void	render_floor_ceiling(t_cub *cub);
+
+void	resize_callback(int32_t width, int32_t height, void* param);
 
 #endif
