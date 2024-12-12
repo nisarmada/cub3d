@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/11 16:17:59 by nikos         ########   odam.nl         */
+/*   Updated: 2024/12/12 13:01:38 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,19 @@ mlx_texture_t *wall_texture_direction(t_cub *cub, t_wall_direction *wall_directi
 	return (cub->text->no);
 }
 
+static uint32_t *wall_texture_direction_pixels(t_cub *cub, t_wall_direction wall_direction)
+{
+	if (wall_direction == NORTH)
+		return ((uint32_t *)cub->text->no_img);
+	else if (wall_direction == SOUTH)
+		return ((uint32_t *)cub->text->so_img);
+	else if (wall_direction == EAST)
+		return ((uint32_t *)cub->text->ea_img);
+	else if (wall_direction == WEST)
+		return ((uint32_t *)cub->text->we_img);
+	return ((uint32_t *)cub->text->no_img);
+}
+
 void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_wall_direction wall_direction)
 {
 	float	line_height;
@@ -137,7 +150,7 @@ void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_
     while (y < end_y)
 	{
 		text_y = ((y - start_y) * texture->height) / (int)line_height;
-		color = get_texture_color(cub, text_x, text_y);
+		color = get_texture_color(cub, text_x, text_y, texture, wall_direction);
 		// printf("color is %i\n", color);
         mlx_put_pixel(cub->img, x, y, color);
 		y++;
@@ -147,7 +160,7 @@ void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_
 }
 
 //Check this function again to understand
-int get_texture_color(t_cub *cub, int text_x, int text_y)
+int get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture, t_wall_direction wall_direction)
 {
     uint32_t *pixels;
 	uint32_t argb_color;
@@ -159,23 +172,23 @@ int get_texture_color(t_cub *cub, int text_x, int text_y)
     // Bounds check (clamping to texture dimensions)
     if (text_x < 0)
 		text_x = 0;
-    if (text_x >= (int)cub->text->no->width)
-		text_x = cub->text->no->width - 1;
+    if (text_x >= (int)texture->width)
+		text_x = texture->width - 1;
     if (text_y < 0)
 		text_y = 0;
-    if (text_y >= (int)cub->text->no->height)
-		text_y = cub->text->no->height - 1;
+    if (text_y >= (int)texture->height)
+		text_y = texture->height - 1;
 
-    pixels = (uint32_t *)cub->text->no_img->pixels;
+	pixels = wall_texture_direction_pixels(cub, wall_direction);
 	// Extract ARGB components
-	argb_color = pixels[text_y * cub->text->no->width + text_x];
+	argb_color = pixels[text_y * texture->width + text_x];
 	//Convert to ABGR color
 	alpha = (argb_color >> 24) & 0xFF;
 	red = (argb_color >> 16) & 0xFF;
 	green = (argb_color >> 8) & 0xFF;
 	blue = argb_color & 0xFF;
-    // Return ABGR
-    return (alpha << 24) | (blue << 16) | (green << 8) | red;
+    // Return RGBA
+    return (red << 24) | (green << 16) | (blue << 8) | alpha;
 }
 
 /*

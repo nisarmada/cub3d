@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/11 17:00:36 by nikos         ########   odam.nl         */
+/*   Updated: 2024/12/12 11:58:34 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ float	cast_single_ray(t_cub *cub, t_player *player, float ray_angle, float *wall
 
 /* 3D_rendering */
 void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_wall_direction wall_direction);
-int		get_texture_color(t_cub *cub, int text_x, int text_y);
+int 	get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture, t_wall_direction wall_direction);
 void	print_map(t_cub *cub);
 void	render_floor_ceiling(t_cub *cub);
 

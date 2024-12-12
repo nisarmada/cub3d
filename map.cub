@@ -1,7 +1,7 @@
 NO ./wall_texture.png
-SO ./wall_texture.png
-WE ./wall_texture.png
-EA ./wall_texture.png
+SO ./wooden_wall.png
+WE ./wooden_wall.png
+EA ./wooden_wall.png
 
 F 220,180,0
 C 225,30,0
