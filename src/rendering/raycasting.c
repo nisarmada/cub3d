@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/12 15:05:55 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 15:24:04 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,6 @@ projected wall slice height = 32 / correct_dist * dist f. player to projection p
 draw vertical line on the corresponding column on projection plane
 */
 
-typedef struct s_result
-{
-	float	distance;
-	float	wall_hit_position;
-} t_result;
 
 typedef struct s_ray
 {
@@ -166,6 +161,7 @@ float cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position, t_w
                 cub->map[r.tile_y][r.tile_x] == '1') // Vertical wall
             {
                 *wall_hit_position = (float)fmod(r.ray_y, TILE_SIZE) / TILE_SIZE;
+				// printf("wall hit position %f\n", *wall_hit_position);
                 if (r.dir_x < 0) // Left wall
                 {
                     *wall_hit_position = 1.0 - *wall_hit_position;
