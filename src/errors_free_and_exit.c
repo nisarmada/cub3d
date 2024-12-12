@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   erros_free_and_exit.c                              :+:    :+:            */
+/*   errors_free_and_exit.c                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 14:12:13 by elleneklund   #+#    #+#                 */
-/*   Updated: 2024/12/11 14:26:01 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/12 14:35:44 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_and_exit_game(t_cub *cub, int status)
 	free(cub->player);
 	free_map(cub->map);
 	// implent error msg system
-	if (status == 0)
+	if (status == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
 	else
 		exit(EXIT_SUCCESS);

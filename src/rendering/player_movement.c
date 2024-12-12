@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2024/12/10 14:31:03 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/12 14:44:04 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,18 @@ void rotate_player(t_player *player, char direction)
 void key_hook(mlx_key_data_t keycode, void *cub_ptr)
 {
 	t_cub *cub;
+	const int max_keys = sizeof(cub->keys) / sizeof(cub->keys[0]);
 
 	cub = (t_cub *)cub_ptr;
-	if (keycode.action == MLX_PRESS)
-		cub->keys[keycode.key] = true;
-	else if (keycode.action == MLX_RELEASE)
-		cub->keys[keycode.key] = false;
-	if (keycode.key == MLX_KEY_ESCAPE && keycode.action == MLX_RELEASE)
+	if (keycode.key >= 0 && keycode.key < max_keys) //no keys out of bounds
 	{
-		mlx_delete_image(cub->mlx, cub->img);
-		mlx_close_window(cub->mlx);
-		mlx_terminate(cub->mlx);
-		exit(EXIT_SUCCESS);
+		if (keycode.action == MLX_PRESS)
+			cub->keys[keycode.key] = true;
+		else if (keycode.action == MLX_RELEASE)
+			cub->keys[keycode.key] = false;
 	}
+	if (keycode.key == MLX_KEY_ESCAPE && keycode.action == MLX_RELEASE)
+		free_and_exit_game(cub, EXIT_SUCCESS);
 }
 
 void hook_loop(void *cub_ptr)

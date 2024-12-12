@@ -15,7 +15,7 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT) -L/opt/home
 SRCS_DIR = src
 OBJ_DIR = obj
 
-SRCS	= $(addprefix $(SRCS_DIR)/, main.c input_check.c parsing/parsing.c parsing/color_conversion.c \
+SRCS	= $(addprefix $(SRCS_DIR)/, main.c input_check.c errors_free_and_exit.c parsing/parsing.c parsing/color_conversion.c \
 parsing/map_parsing.c parsing/directions_parsing.c parsing/validate_map.c utils/extra.c rendering/prepare_game.c rendering/extras.c rendering/player_movement.c \
 rendering/raycasting.c rendering/3D_rendering.c rendering/draw_minimap.c)
 
