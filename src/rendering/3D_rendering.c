@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/13 16:43:01 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/13 17:38:03 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,13 @@ mlx_texture_t *wall_texture_direction(t_cub *cub, t_wall_direction *wall_directi
 static uint32_t *wall_texture_direction_pixels(t_cub *cub, t_wall_direction wall_direction)
 {
 	if (wall_direction == NORTH)
-		return ((uint32_t *)cub->text->no_img);
+		return ((uint32_t *)cub->text->no_img->pixels);
 	else if (wall_direction == SOUTH)
-		return ((uint32_t *)cub->text->so_img);
+		return ((uint32_t *)cub->text->so_img->pixels);
 	else if (wall_direction == EAST)
-		return ((uint32_t *)cub->text->ea_img);
-	else if (wall_direction == WEST)
-		return ((uint32_t *)cub->text->we_img);
-	return ((uint32_t *)cub->text->no_img);
+		return ((uint32_t *)cub->text->ea_img->pixels);
+	else
+		return ((uint32_t *)cub->text->we_img->pixels);
 }
 
 void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_wall_direction wall_direction)
@@ -187,11 +186,11 @@ int get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture
 	// Extract RGBA components
 	argb_color = pixels[text_y * texture->width + text_x];
 	//Convert to RGBA color
-	alpha = (argb_color >> 24) & 0xFF;
-	// printf("alpha %i\n", alpha);
-	red = (argb_color >> 16) & 0xFF;
-	green = (argb_color >> 8) & 0xFF;
-	blue = argb_color & 0xFF;
+	red = (argb_color >> 0) & 0xFF;    // Blue channel
+	blue = (argb_color >> 16) & 0xFF; // Red channel
+	green = (argb_color >> 8) & 0xFF; // Green channel
+	alpha = (argb_color >> 24) & 0xFF; // Alpha channel
+
     // Return RGBA
     return (red << 24) | (green << 16) | (blue << 8) | alpha;
 }

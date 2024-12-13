@@ -1,10 +1,10 @@
 NO ./wall_texture.png
-SO ./wooden_wall.png
-WE ./wooden_wall.png
-EA ./wooden_wall.png
+SO ./wall_texture.png
+WE ./redbrick.png
+EA ./redbrick.png
 
-F 220,180,0
-C 0,255,0
+F 160,120,60
+C 135,206,235
 
 
 111111111111111111111111111111
