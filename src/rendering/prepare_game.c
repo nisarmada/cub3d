@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/12 15:16:08 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/13 16:52:11 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	render_frame(t_cub *cub)
 	render_3D_view(cub, cub->player);
 	float scale = render_map(cub->img, cub);
 	render_player(cub, cub->img, scale);
-	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
+	if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
+		exit(EXIT_FAILURE);
 }
 
 int	load_textures(t_cub *cub)

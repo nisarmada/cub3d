@@ -6,16 +6,16 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/13 16:44:00 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/13 16:51:09 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
 # include <stddef.h>
 # include <limits.h>
 # include <math.h>
