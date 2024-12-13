@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/12 15:23:51 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/13 17:13:02 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,14 @@ void	render_floor_ceiling(t_cub *cub)
 	{
 		// Render the ceiling (top half of the screen)
 		y = 0;
-		// printf("cub win width %i\n", cub->win_width);
-		while (y < cub->win_height / 2)
-		{
-			mlx_put_pixel(cub->img, x, y, MAGENTA);
+		while (y < WIN_HEIGHT / 2) {
+			mlx_put_pixel(cub->img, x, y, cub->wall_color);
 			y++;
 		}
 		// Render the floor (bottom half of the screen)
-		y = cub->win_height / 2;
-		while (y < cub->win_height)
-		{
-			mlx_put_pixel(cub->img, x, y, ORANGE);
+		y = WIN_HEIGHT / 2;
+		while (y < WIN_HEIGHT) {
+			mlx_put_pixel(cub->img, x, y, cub->floor_color);
 			y++;
 		}
 		x++;
@@ -184,10 +181,11 @@ int get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture
 		text_y = texture->height - 1;
 
 	pixels = wall_texture_direction_pixels(cub, wall_direction);
-	// Extract ARGB components
+	// Extract RGBA components
 	argb_color = pixels[text_y * texture->width + text_x];
-	//Convert to ABGR color
+	//Convert to RGBA color
 	alpha = (argb_color >> 24) & 0xFF;
+	// printf("alpha %i\n", alpha);
 	red = (argb_color >> 16) & 0xFF;
 	green = (argb_color >> 8) & 0xFF;
 	blue = argb_color & 0xFF;

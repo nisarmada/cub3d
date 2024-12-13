@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/12 15:23:41 by eeklund       ########   odam.nl         */
+/*   Updated: 2024/12/13 17:13:13 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-#define WHITE 0xFFFFFFFF
+#define WHITE 0xFFFFffFF
 #define BLACK 0x000000FF
 #define RED 0xFF0000FF
 # define ORANGE 0xFFA500FF
