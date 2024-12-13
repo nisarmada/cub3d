@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/13 17:26:15 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/12/13 17:31:54 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,11 +183,11 @@ int get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture
 	// Extract RGBA components
 	argb_color = pixels[text_y * texture->width + text_x];
 	//Convert to RGBA color
-	alpha = (argb_color >> 24) & 0xFF;
-	// printf("alpha %i\n", alpha);
-	red = (argb_color >> 16) & 0xFF;
-	green = (argb_color >> 8) & 0xFF;
-	blue = argb_color & 0xFF;
+	red = (argb_color >> 0) & 0xFF;    // Blue channel
+	blue = (argb_color >> 16) & 0xFF; // Red channel
+	green = (argb_color >> 8) & 0xFF; // Green channel
+	alpha = (argb_color >> 24) & 0xFF; // Alpha channel
+
     // Return RGBA
     return (red << 24) | (green << 16) | (blue << 8) | alpha;
 }
