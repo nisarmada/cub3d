@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   color_conversion.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/11 15:40:13 by elleneklund   ########   odam.nl         */
+/*   Updated: 2024/12/13 16:36:49 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int convert_rgb_to_int(int r, int g, int b)
 {
-    return (r << 16) | (g << 8) | b;
+    return (r << 24) | (g << 16) | (b << 8) | 255;
 }
 
 static t_rgb	get_rgb_values(char *line)
