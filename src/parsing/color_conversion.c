@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/13 16:36:49 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/06 14:22:59 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,26 @@ static t_rgb	get_rgb_values(char *line)
 	start = 1;
 	while (line[start] && is_whitespace(line[start]))
 		start++;
-	while (line[start] && (line[start] >= '0' && line[start] <= '9'))
-		start++;
-	color_string = ft_substr(line, 2, start - 2);
-	rgb.r = ft_atoi(color_string);
-	free(color_string);
-	end = start + 1;
+	end = start;
 	while (line[end] && (line[end] >= '0' && line[end] <= '9'))
 		end++;
-	color_string = ft_substr(line, start + 1, end - start - 1);
+	color_string = ft_substr(line, start, end - start);
+	rgb.r = ft_atoi(color_string);
+	free(color_string);
+	end = end + 1;
+	start = end;
+	while (line[end] && (line[end] >= '0' && line[end] <= '9'))
+		end++;
+	color_string = ft_substr(line, start, end - start);
 	rgb.g = ft_atoi(color_string);
 	free(color_string);
-	start = end + 1;
+	end = end + 1;
+	start = end;
 	while (line[end] && (line[end] >= '0' && line[end] <= '9'))
 		end++;
 	color_string = ft_substr(line, start, end - start);
 	rgb.b = ft_atoi(color_string);
+	free(color_string);
 	return (rgb);
 }
 

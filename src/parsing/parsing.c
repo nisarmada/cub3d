@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/12 14:58:33 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/06 14:36:29 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static t_cub	*allocate_cub(void)
 	cub = malloc(sizeof(t_cub));
     if (!cub)
         return (NULL);
-
     // Allocate memory for player
     cub->player = malloc(sizeof(t_player));
     if (!cub->player)
@@ -28,6 +27,7 @@ static t_cub	*allocate_cub(void)
         free(cub);
         return (NULL);
     }
+	cub->player->orientation = '\0';
 	cub->text = malloc(sizeof(t_text));
 	if (!cub->text)
 	{
@@ -35,6 +35,7 @@ static t_cub	*allocate_cub(void)
 		free(cub);
 		return (NULL);
 	}
+	cub->map_width = 0;
 	return (cub);
 }
 
