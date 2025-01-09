@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2024/12/12 15:10:55 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/09 14:10:38 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ static int	check_surrounding(char **map, int row, int i, int width)
 		return (0);
 	if (i != width && (cur[i + 1] != '1'  && cur[i + 1] != ' '))
 		return (0);
-	if ((up[i] != '1' && up[i] != ' ') || (down[i] != '1'))
+	if ((up[i] != '1' && up[i] != ' '))
+		return (0);
+	if (down[i] != '1' && (down[i] != ' '))
 		return (0);
 	return (1);
 }
