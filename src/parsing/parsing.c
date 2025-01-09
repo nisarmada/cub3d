@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/06 14:36:29 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/09 14:28:27 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,15 @@ static void parse_cub_file(char *filename, t_cub *cub)
 		parse_directions(line, cub);
 		parse_colors(line, cub);
 		if (is_map_line(line))
-			break;
+			break ;
+		free(line);
 		line = get_next_line(fd);
 	}
 	while (line)
 	{
 		map_parsing(line, cub, j);
 		j++;
+		free(line);
 		line = get_next_line(fd);
 	}
 	cub->map[j] = NULL;

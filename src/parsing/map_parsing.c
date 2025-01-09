@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/06 14:34:12 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/09 14:29:42 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,14 @@ void	allocate_map(char *filename, t_cub *cub)
 	{
 		if (is_map_line(line))
 			break;
+		free(line);
 		line = get_next_line(fd);
 	}
 	while (line)
 	{
 		if (!cub->map_width || ft_strlen(line) - 1 > (size_t)cub->map_width)
 			cub->map_width = ft_strlen(line) - 1;
+		free(line);
 		line = get_next_line(fd);
 		rows++;
 	}

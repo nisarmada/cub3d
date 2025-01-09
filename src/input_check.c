@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:11:17 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/11 15:54:14 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/09 15:21:59 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	check_path_info(char *value)
 	if (fd < 0)
 	{
 		perror("error opening file\n");
+		// free(value);
 		return (0);
 	}
 	close (fd);
@@ -211,7 +212,7 @@ static int	valid_id_and_value(t_key_value *info, t_string *op_line)
 		if (is_path_id(key) && elemnt_not_found(key, op_line))
 		{
 			if (!check_path_info(value))
-				return (0);
+				return (0); // value and key needs to be freed
 			set_element_as_found(key, op_line);
 			return (1);
 		}
@@ -237,7 +238,7 @@ static int	check_line(t_string *op_line)
 	t_key_value	info;
 
 	i = 0;
-	str = op_line->line;
+	str = op_line->line; //(malloced from gnl)
 	while (is_whitespace(str[i])) // take away whitespace in beginning of line
 		i++;
 	if (str[i])
@@ -248,8 +249,8 @@ static int	check_line(t_string *op_line)
 		// printf("id: %s\ninfo: %s\n", info.key, info.value);
 		if (!valid_id_and_value(&info, op_line)) // validate the identifier
 		{
-			// free(info.key);
-			// free(info.value);
+			free(info.key);
+			free(info.value);
 			return (0);
 		}
 		op_line->elem_count++;
@@ -257,8 +258,8 @@ static int	check_line(t_string *op_line)
 		// free(info.value);
 		return (1);
 	}
-	// free(info.key);
-	// free(info.value);
+	free(info.key);
+	free(info.value);
 	return (printf("only whitespace on line\n"), 0); // maybe we say this is fine?? 
 }
 
@@ -305,19 +306,15 @@ int	valid_input(int ac, char **av)
 		if (!check_line(&op_line))
 			return (free (line), 0); //error handling msg and close fd
 		free (line);
-		// printf("line is gooood\n ----------------------------------- \n");
+		if (op_line.elem_count == 6) // can be above the while loop and the get_next_line
+			break ;
 		line = get_next_line(fd);
 		while (line && !ft_strcmp(line, "\n"))
 		{
 			free(line);
 			line = get_next_line(fd);
 		}
-		if (op_line.elem_count == 6) // can be above the while loop and the get_next_line
-			break ;
 	}
-	// op_line.line = line;
-	// printf("line %s\n", line);
-
 	// if (!check_map(line, fd))
 	// 	return (0); // error handling msg
 	close(fd);
