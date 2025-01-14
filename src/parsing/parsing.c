@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/09 14:28:27 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/14 13:04:31 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_cub	*init_parse_cub(char *filename)
 	//distance from player to projection plan = (projectionplan width / 2) / tan(30 (half of fov)) --> 692
 	// printf("dist: %i\n", cub->dist_pplane);
 	i = 0;
-	while (i < 256)
+	while (i < 512)
 	{
 		cub->keys[i] = false;
 		i++;

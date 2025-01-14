@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2024/12/12 15:20:10 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/14 13:02:34 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ void move_player(t_cub *cub, t_player *player, char direction)
 		move_x = -cos(player->angle) * MOVE_SPEED;
 		move_y = sin(player->angle) * MOVE_SPEED;
 	}
+	else if (direction == 'A')
+    {
+        move_x = -sin(player->angle) * MOVE_SPEED;
+        move_y = -cos(player->angle) * MOVE_SPEED;
+    }
+	else if (direction == 'D')
+    {
+        move_x = sin(player->angle) * MOVE_SPEED;
+        move_y = cos(player->angle) * MOVE_SPEED;
+    }
 	new_x = player->x + move_x;
 	new_y = player->y + move_y;
 	x_tile = new_x / TILE_SIZE; // Convert new position to tile coordinates
@@ -83,13 +93,18 @@ void hook_loop(void *cub_ptr)
 	t_cub *cub;
 
 	cub = (t_cub *)cub_ptr;
+	// printf("key is %i\n", )
 	if (cub->keys[MLX_KEY_W])
 		move_player(cub, cub->player, 'W');
 	if (cub->keys[MLX_KEY_S])
 		move_player(cub, cub->player, 'S');
 	if (cub->keys[MLX_KEY_A])
-		rotate_player(cub->player, 'L');
+		move_player(cub, cub->player, 'A');
 	if (cub->keys[MLX_KEY_D])
+		move_player(cub, cub->player, 'D');	
+	if (cub->keys[MLX_KEY_LEFT])
+		rotate_player(cub->player, 'L');
+	if (cub->keys[MLX_KEY_RIGHT])
 		rotate_player(cub->player, 'R');
 	if (cub->player->changed == 1)
 	{

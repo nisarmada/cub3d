@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/13 17:37:15 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/14 13:04:00 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_text
 
 typedef struct s_cub
 {
-	bool	keys[256];
+	bool	keys[512];
 	char	*north;
 	char	*south;
 	char	*west;
