@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/14 13:02:34 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/14 13:09:51 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void move_player(t_cub *cub, t_player *player, char direction)
 	}
 	else if (direction == 'A')
     {
-        move_x = -sin(player->angle) * MOVE_SPEED;
-        move_y = -cos(player->angle) * MOVE_SPEED;
+        move_x = sin(player->angle) * MOVE_SPEED;
+        move_y = cos(player->angle) * MOVE_SPEED;
     }
 	else if (direction == 'D')
     {
-        move_x = sin(player->angle) * MOVE_SPEED;
-        move_y = cos(player->angle) * MOVE_SPEED;
+        move_x = -sin(player->angle) * MOVE_SPEED;
+        move_y = -cos(player->angle) * MOVE_SPEED;
     }
 	new_x = player->x + move_x;
 	new_y = player->y + move_y;

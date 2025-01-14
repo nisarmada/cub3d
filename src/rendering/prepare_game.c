@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/13 16:52:11 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/14 13:32:08 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@ void	init_mlx(t_cub *cub)
 	}
 }
 
+void close_window(void* cub_ptr)
+{
+    t_cub *cub;
+
+    cub = (t_cub *)cub_ptr;
+    mlx_delete_image(cub->mlx, cub->img);
+    mlx_close_window(cub->mlx);
+    mlx_terminate(cub->mlx);
+    exit(EXIT_SUCCESS);
+}
+
 int	render_game(t_cub *cub)
 {
 	// printf("in render game\n");
@@ -67,6 +78,7 @@ int	render_game(t_cub *cub)
 	mlx_key_hook(cub->mlx, key_hook, cub);
 	mlx_loop_hook(cub->mlx, hook_loop, cub);
 	mlx_resize_hook(cub->mlx, resize_callback, cub);
+	mlx_close_hook(cub->mlx, close_window, cub);
 	mlx_loop(cub->mlx);
 	return (0);
 }
