@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   check_line.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 16:24:23 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/15 20:01:26 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_key_value	*split_in_two(char *str)
 void	free_info(t_key_value *info)
 {
 	free(info->key);
-	free(info->value);
+	// free(info->value); // this was the thing giving the double free, but whyyyyy??
 	free(info);
 }
 
@@ -61,6 +61,8 @@ int	check_line(t_string *line)
 		if (!valid_key_and_value(info, line)) // validate the identifier
 			return (free_info(info), 0);
 		line->elem_count++;
+		free_info(info);
+		// printf("hello\n");
 		return (1);
 	}
 	free_info(info);

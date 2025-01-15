@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   directions_parsing.c                               :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:15:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2024/12/11 15:21:55 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/15 19:36:28 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static char *find_path(char *file)
         end++;
 	//printf("start %i end %i\n", start, end);
 	path = ft_substr(file, start, end - start);
+	if (!path)
+		return (NULL);
 	// printf("path %s\n", path);
 	return (path);
 }

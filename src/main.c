@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/14 13:23:00 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/15 18:58:21 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int ac, char **av)
 	if (!cub)
 		return (1);
 	if (!valid_map(cub, cub->map_height, cub->map_width))
-		return (1);
+		return (free_cub(cub), 1);
 	render_game(cub);
 	mlx_terminate(cub->mlx);
 }

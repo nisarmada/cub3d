@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/15 16:02:47 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/15 18:55:00 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ typedef struct s_raycast
 	int		tile_y;
 }	t_raycast;
 
+typedef struct s_key_value
+{
+	char	*key;
+	char	*value;
+}	t_key_value;
+
 typedef struct	s_string
 {
 	char	*line;
@@ -69,13 +75,8 @@ typedef struct	s_string
 	int		EA;
 	int		F;
 	int		C;
+	t_key_value	*info;
 }	t_string;
-
-typedef struct s_key_value
-{
-	char	*key;
-	char	*value;
-}	t_key_value;
 
 typedef struct s_player
 {
@@ -147,6 +148,8 @@ void 	parse_redirections(char *line, t_cub *cub);
 void	parse_colors(char *line, t_cub *cub);
 void	allocate_map(char *filename, t_cub *cub);
 void	map_parsing(char *line, t_cub *cub, int j);
+void	free_map(char **map);
+void	free_cub(t_cub *cub);
 void	free_and_exit_game(t_cub *cub, int status);
 t_cub	*init_parse_cub(char *filename);
 
@@ -154,6 +157,7 @@ t_cub	*init_parse_cub(char *filename);
 char	*trim_spaces(char *str);
 int		check_line(t_string *op_line);
 int		valid_key_and_value(t_key_value *info, t_string *op_line);
+void	free_info(t_key_value *info);
 
 /* utils/extra */
 char	*ft_strndup(const char *s1, size_t n);

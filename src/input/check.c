@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   check.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 16:35:10 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/15 19:02:57 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

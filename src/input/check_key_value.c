@@ -3,14 +3,27 @@
 /*                                                        ::::::::            */
 /*   check_key_value.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 16:40:35 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/15 20:00:50 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_colors(char **colors)
+{
+	int	i;
+
+	i = 0;
+	while (colors[i])
+	{
+		free(colors[i]);
+		i++;
+	}
+	free(colors);
+}
 
 static int	check_color_value(char *value)
 {
@@ -35,26 +48,20 @@ static int	check_color_value(char *value)
 		while (colors[i][j])
 		{
 			if (!ft_isdigit(colors[i][j]))
-				return (printf("nonnumeric char\n"), 0);
+				return (printf("nonnumeric char\n"), 0); //free
 			j++;
 		}
 		if (ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
-			return (printf("to big nubmers\n"), 0);
+			return (printf("to big nubmers\n"), 0); //free
 		i++;
 	}
 	if (i > 3)
 	{
-		printf("too many color args\n");
-		free (colors); // also free all the elements in colors
+		printf("too many color args\n"); 
+		free_colors(colors); // also free all the elements in colors
 		return (0);
 	}
-	i = 0;
-	// while (colors[i])
-	// {
-	// 	printf("|%s| ", colors[i]);
-	// 	i++;
-	// }
-	free (colors);
+	free_colors(colors);
 	return (1);
 	// colors: split only numeric chars and commas else error and then split further by commas, 
 	// see thet it is valid numbers (0 - 255) 
@@ -63,8 +70,8 @@ static int	check_color_value(char *value)
 char	*trim_spaces(char *str)
 {
 	int		i;
-	int		end;
 	int		j;
+	int		end;
 	char	*tmp;
 
 	end = ft_strlen(str) - 1;
@@ -72,7 +79,7 @@ char	*trim_spaces(char *str)
 	i = 0;
 	while (is_whitespace(str[i]))
 		i++;
-	while (is_whitespace(str[j]))
+	while (j >= i && is_whitespace(str[j]))
 		j--;
 	// printf("int i: %i, int j: %i, int end: %i\n", i, j, end);
 	// if (i + j >= end)
@@ -80,32 +87,44 @@ char	*trim_spaces(char *str)
 	// 	printf("only spaces\n");
 	// 	return ;
 	// }
-	tmp = ft_strndup(&str[i],j);
+	if (i > j)
+	{
+		tmp = (char *)malloc(1);
+		if (!tmp)
+			return NULL; // malloc failed
+		tmp[0] = '\0';
+	}
+	else
+	{
+		// Correct length to allocate (j - i + 1) for inclusive range
+		tmp = ft_strndup(&str[i], j - i + 1);
+		if (!tmp) return NULL; // malloc failed
+	}
 	free (str);
-	str = tmp;
 	// printf("str in trim spaces: %s\n", str);
-	return (str);
+	return (tmp);
 }
 
 static int	check_path_value(char *value)
 {
-	int	i;
-	int	fd;
+	int		i;
+	int		fd;
+	char	*trimmed_value;
 
-	value = trim_spaces(value);
+	trimmed_value = trim_spaces(value);
 	i = 0;
 	// printf("str after trim spaces: %s\n", value);
-	while (value[i])
+	while (trimmed_value[i])
 	{
-		if (!ft_isvalid_path_chars(value[i]))
-			return (printf("invalid char in path, value[i] %c\n", value[i]), 0);
+		if (!ft_isvalid_path_chars(trimmed_value[i]))
+			return (printf("invalid char in path, value[i] %c\n", trimmed_value[i]), 0);
 		i++;
 	}
 	// printf("int max path %i\n", PATH_MAX);
 	if (i > PATH_MAX)
 		return (printf("too long path\n"), 0);
 	// printf("value %s\n", value);
-	fd = open(value, O_RDONLY);
+	fd = open(trimmed_value, O_RDONLY);
 	if (fd < 0)
 	{
 		perror("error opening file\n");
