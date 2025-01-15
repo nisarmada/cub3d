@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/14 13:32:08 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/15 19:09:22 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void close_window(void* cub_ptr)
 
 int	render_game(t_cub *cub)
 {
-	// printf("in render game\n");
 	init_mlx(cub);
 	if (!load_textures(cub))
 		return (1);
