@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/14 13:04:00 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/15 16:02:47 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ typedef struct s_raycast
 	int		tile_x;
 	int		tile_y;
 }	t_raycast;
+
+typedef struct	s_string
+{
+	char	*line;
+	int		elem_count;
+	int		SO;
+	int		NO;
+	int		WE;
+	int		EA;
+	int		F;
+	int		C;
+}	t_string;
 
 typedef struct s_key_value
 {
@@ -140,6 +152,8 @@ t_cub	*init_parse_cub(char *filename);
 
 /* inout_check */
 char	*trim_spaces(char *str);
+int		check_line(t_string *op_line);
+int		valid_key_and_value(t_key_value *info, t_string *op_line);
 
 /* utils/extra */
 char	*ft_strndup(const char *s1, size_t n);
