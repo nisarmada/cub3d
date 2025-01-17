@@ -1,0 +1,15 @@
+
+-moving back and forth after rotating is weird
+fix:
+	- something with move_x and move_y, player->angle in player_movement.c
+
+-textures get distorted when coming to close to the wall, now it looks like the thing goes a bit into the wall.
+fix:
+	- only go up to the wall, eyes can touch, thats it
+
+-program gets slower when running it for a longer time
+fix:
+	- look if memory is allocated while running the program, if so --> change so it doesnt
+	- optimize so no place on the screen is drawn more times than one
+
+
