@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/09 14:10:38 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/15 18:39:33 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ int valid_map(t_cub *cub, int height, int width)
 	map = cub->map;
 	if (!valid_first_last_row(map, 0, width) || \
 	!valid_first_last_row(map, height, width))
+	{
 		return (printf("wrong first or last line\n"), 0); //errr func with nice error msgs
+	}
 	row = 1;
 	while (row < height - 1)
 	{
@@ -97,19 +99,25 @@ int valid_map(t_cub *cub, int height, int width)
 			if (map[row][i] == ' ')
 			{
 				if (!check_surrounding(map, row, i, cub->map_width - 1))
+				{
 					return (printf("leak in map, row: %i, index: %i\n", row, i), 0);
+				}
 			}
 			else
 			{
 				if (!check_char(cub, row, i))
+				{
 					return (printf("invalid char %i %i\n", row, i), 0);
+				}
 			}
 			i++;
 		}
 		row++;
 	}
 	if (!cub->player->orientation)
-		return(printf("no player\n"), 0);	
+	{
+		return(printf("no player\n"), 0);
+	}
 	// printf("map checked ;)\n");
 	return (1);
 }
