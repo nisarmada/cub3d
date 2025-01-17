@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 20:08:46 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/17 12:43:30 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	valid_input(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		return (printf("Invalid file format"), 0); // error handling msg
-	next_line = get_next_line(fd);
 	init_line_struct(&line);
+	next_line = get_next_line(fd);
 	while (next_line != NULL)
 	{
 		line.line = next_line;

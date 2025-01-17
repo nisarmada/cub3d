@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 20:00:50 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/17 12:51:33 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	check_color_value(char *value)
 		return (0);
 	}
 	free_colors(colors);
+	free(value);
 	return (1);
 	// colors: split only numeric chars and commas else error and then split further by commas, 
 	// see thet it is valid numbers (0 - 255) 
@@ -132,6 +133,7 @@ static int	check_path_value(char *value)
 		return (0);
 	}
 	close (fd);
+	free(trimmed_value);
 	return (1);
 	// paths: validate the path and if there are more paths also error
 }
