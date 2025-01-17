@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/14 13:09:51 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/17 15:28:12 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void move_player(t_cub *cub, t_player *player, char direction)
     }
 	new_x = player->x + move_x;
 	new_y = player->y + move_y;
+	// printf("Angle: %f, Direction: %c, Move_X: %f, Move_Y: %f\n", player->angle, direction, move_x, move_y);
 	x_tile = new_x / TILE_SIZE; // Convert new position to tile coordinates
 	player->changed = 1;
 	y_tile = new_y / TILE_SIZE;

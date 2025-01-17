@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 20:00:50 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/17 13:07:02 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,30 @@ static int	check_color_value(char *value)
 		while (colors[i][j])
 		{
 			if (!ft_isdigit(colors[i][j]))
+			{
+				free_colors(colors);
+				free(value);
 				return (printf("nonnumeric char\n"), 0); //free
+			}
 			j++;
 		}
 		if (ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
+		{
+			free_colors(colors);
+			free(value);
 			return (printf("to big nubmers\n"), 0); //free
+		}
 		i++;
 	}
 	if (i > 3)
 	{
 		printf("too many color args\n"); 
-		free_colors(colors); // also free all the elements in colors
+		free_colors(colors);
+		free(value);
 		return (0);
 	}
 	free_colors(colors);
+	free(value);
 	return (1);
 	// colors: split only numeric chars and commas else error and then split further by commas, 
 	// see thet it is valid numbers (0 - 255) 
@@ -117,21 +127,29 @@ static int	check_path_value(char *value)
 	while (trimmed_value[i])
 	{
 		if (!ft_isvalid_path_chars(trimmed_value[i]))
-			return (printf("invalid char in path, value[i] %c\n", trimmed_value[i]), 0);
+		{
+			printf("invalid char in path, value[i] %c\n", trimmed_value[i]);
+			free(trimmed_value);
+			return (0);
+		}
 		i++;
 	}
 	// printf("int max path %i\n", PATH_MAX);
 	if (i > PATH_MAX)
+	{
+		free(trimmed_value);
 		return (printf("too long path\n"), 0);
+	}
 	// printf("value %s\n", value);
 	fd = open(trimmed_value, O_RDONLY);
 	if (fd < 0)
 	{
 		perror("error opening file\n");
-		// free(value);
+		free(trimmed_value);
 		return (0);
 	}
 	close (fd);
+	free(trimmed_value);
 	return (1);
 	// paths: validate the path and if there are more paths also error
 }

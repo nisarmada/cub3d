@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 18:39:33 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/17 13:22:25 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ static int	check_surrounding(char **map, int row, int i, int width)
 	cur = map[row];
 	up = map[row - 1];
 	down = map[row + 1];
+	if (i == width && cur[i] == '0') // maybe fixed the small error of having last one a 0 but in line with the 1s with this
+		return (0);
+
 	if (i != 0 && (cur[i - 1] != '1' && cur[i - 1] != ' '))
 		return (0);
 	if (i != width && (cur[i + 1] != '1'  && cur[i + 1] != ' '))
@@ -61,7 +64,7 @@ static void define_field_of_vision(t_cub *cub)
 
 static int	check_char(t_cub *cub, int row, int i)
 {
-	if (i == 0 && cub->map[row][i] != '1')
+	if ((i == 0 && cub->map[row][i] != '1'))
 		return (printf("wrong, \n"), 0);
 	if (!ft_strchr("NSEW01", cub->map[row][i]))
 		return (printf("invalid char: %c\n", cub->map[row][i]), 0);
@@ -107,7 +110,7 @@ int valid_map(t_cub *cub, int height, int width)
 			{
 				if (!check_char(cub, row, i))
 				{
-					return (printf("invalid char %i %i\n", row, i), 0);
+					return (printf("invalid char in row:%i index:%i\n", row, i), 0);
 				}
 			}
 			i++;
