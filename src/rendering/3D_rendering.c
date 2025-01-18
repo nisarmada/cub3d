@@ -6,21 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/18 15:09:56 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/18 17:51:53 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-typedef  struct  s_slice
-{
-	int  x; //the x coordinate of line relative to screen
-	int  y; //the current pixel index of the line (along y axis)
-	int  start_y; //y start index of drawing texture
-	int  end_y; //y end index of drawing texture
-	int  text_x; //x coordinate of texture to draw
-	int  text_y; //y coordinate of texture to draw
-} t_slice;
 
 // correct_dist = distorted_dist * cos(angle_from distorted ray to middle_ray) because: cos(b) = correct_dist/distorted_dist
 // (30 degrees for the leftmost ray and -30 degrees for the right most ray)
@@ -41,7 +31,7 @@ projected wall slice height = 32 / correct_dist * dist f. player to projection p
 draw vertical line on the corresponding column on projection plane
 */
 
-void render_3D_view(t_cub *cub, t_player *player)
+void	render_view(t_cub *cub, t_player *player)
 {
 	float	distorted_distance;
 	float	correct_dist;
@@ -52,7 +42,6 @@ void render_3D_view(t_cub *cub, t_player *player)
 	float	wall_hit_position;
 	t_wall_direction	wall_direction;
 
-	// printf("hello\n");
 	render_floor_ceiling(cub);
 	div = -M_PI / 6;
 	step = (M_PI / 3) / cub->win_width;
@@ -60,11 +49,12 @@ void render_3D_view(t_cub *cub, t_player *player)
 	while (x < cub->win_width)
 	{
 		ray_angle = player->angle + div;
-		normalize_angle(&(ray_angle)); // Ensure the angle is within -2PI to 2*PI
-		distorted_distance = cast_single_ray(cub, ray_angle, &wall_hit_position, &wall_direction);
+		normalize_angle(&(ray_angle));
+		distorted_distance = cast_single_ray(cub, ray_angle,
+				&wall_hit_position, &wall_direction);
 		correct_dist = distorted_distance * cos(div);
-		// printf("slice %f\n", round((div + M_PI / 6) / step));
-		render_wallslice(cub, correct_dist, x, wall_hit_position, wall_direction);
+		render_wallslice(cub, correct_dist, x,
+			wall_hit_position, wall_direction);
 		div += step;
 		x++;
 	}

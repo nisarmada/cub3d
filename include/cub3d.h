@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/15 18:55:00 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/18 17:35:22 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,24 +114,34 @@ typedef struct s_text
 
 typedef struct s_cub
 {
-	bool	keys[512];
-	char	*north;
-	char	*south;
-	char	*west;
-	char	*east;
-	char	**map;
-	int		floor_color;
-	int		wall_color;
-	int		map_width;
-	int		map_height;
-	int		win_width;
-	int		win_height;
-	int		dist_pplane;
-	t_text	*text;
-	mlx_t	*mlx;
+	bool		keys[512];
+	char		*north;
+	char		*south;
+	char		*west;
+	char		*east;
+	char		**map;
+	int			floor_color;
+	int			wall_color;
+	int			map_width;
+	int			map_height;
+	int			win_width;
+	int			win_height;
+	int			dist_pplane;
+	t_text		*text;
+	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_player	*player;
 }	t_cub;
+
+typedef struct s_slice
+{
+	int	x; //the x coordinate of line relative to screen
+	int	y; //the current pixel index of the line (along y axis)
+	int	start_y; //y start index of drawing texture
+	int	end_y; //y end index of drawing texture
+	int	text_x; //x coordinate of texture to draw
+	int	text_y; //y coordinate of texture to draw
+}	t_slice;
 
 typedef struct s_rgb
 {
@@ -140,11 +150,9 @@ typedef struct s_rgb
 	int	b;
 }	t_rgb;
 
-// t_cub	*allocate_cub(void);
-// void	parse_cub_file(char *filename, t_cub *cub);
 t_cub	*initialize_cub(char *filename);
 int		valid_input(int ac, char **av);
-void 	parse_redirections(char *line, t_cub *cub);
+void	parse_redirections(char *line, t_cub *cub);
 void	parse_colors(char *line, t_cub *cub);
 void	allocate_map(char *filename, t_cub *cub);
 void	map_parsing(char *line, t_cub *cub, int j);
@@ -165,46 +173,44 @@ int		is_whitespace(char file);
 int		ft_isvalid_path_chars(int c);
 int		ft_strcmp(const char *s1, const char *s2);
 
-
 /* PARSING */
 
 /* directions_parsing */
-void parse_directions(char *line, t_cub *cub);
+void	parse_directions(char *line, t_cub *cub);
 
 /* map parsing*/
-int is_map_line(char *line);
-// void find_player_position(t_cub *cub);
-// void define_field_of_vision(t_cub *cub);
-int valid_map(t_cub *cub, int height, int width);
+int		is_map_line(char *line);
+int		valid_map(t_cub *cub, int height, int width);
 
 /*rendering*/
 void	init_mlx(t_cub *cub);
-int	render_game(t_cub *cub);
-void draw_tile(mlx_image_t *img, int x, int y, float scale, int color);
-float render_map(mlx_image_t *img, t_cub *cub);
-void render_player(t_cub *cub, mlx_image_t *img, float scale);
-void render_fov(t_player *player, t_cub *cub, float scale);
-void normalize_angle(float *angle);
-void draw_line(t_cub *cub, int x, int y, float scale);
-void draw_line_float(t_player *player, mlx_image_t *img, int x, int y, float scale);
-void move_player(t_cub *cub, t_player *player, char direction);
-void rotate_player(t_player *player, char direction);
-void key_hook(mlx_key_data_t keycode, void *cub_ptr);
-void hook_loop(void *cub_ptr);
+int		render_game(t_cub *cub);
+void	draw_tile(mlx_image_t *img, int x, int y, float scale, int color);
+float	render_map(mlx_image_t *img, t_cub *cub);
+void	render_player(t_cub *cub, mlx_image_t *img, float scale);
+void	render_fov(t_player *player, t_cub *cub, float scale);
+void	normalize_angle(float *angle);
+void	draw_line(t_cub *cub, int x, int y, float scale);
+void	draw_line_float(t_player *player, mlx_image_t *img, int x, int y, float scale);
+void	move_player(t_cub *cub, t_player *player, char direction);
+void	rotate_player(t_player *player, char direction);
+void	key_hook(mlx_key_data_t keycode, void *cub_ptr);
+void	hook_loop(void *cub_ptr);
 
 /*prepare game */
 void	render_frame(t_cub *cub);
 
 /*raycasting*/
-void	render_3D_view(t_cub *cub, t_player *player);
-float	cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position, t_wall_direction *wall_direction);
+void	render_view(t_cub *cub, t_player *player);
+float	cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position,
+			t_wall_direction *wall_direction);
 
 /* 3D_rendering */
-void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_wall_direction wall_direction);
+void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position,t_wall_direction wall_direction);
 int 	get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture, t_wall_direction wall_direction);
 void	print_map(t_cub *cub);
 void	render_floor_ceiling(t_cub *cub);
 
-void	resize_callback(int32_t width, int32_t height, void* param);
+void	resize_callback(int32_t width, int32_t height, void *param);
 
 #endif

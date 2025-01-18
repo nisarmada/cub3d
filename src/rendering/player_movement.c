@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/18 16:00:47 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/18 17:35:22 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	resize_callback(int32_t width, int32_t height, void* param)
     if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
         free_and_exit_game(cub, EXIT_FAILURE);
 	ft_memset(cub->img->pixels, 0, cub->img->width * cub->img->height * sizeof(int32_t));
-	render_3D_view(cub, cub->player);
+	render_view(cub, cub->player);
 	float scale = render_map(cub->img, cub);
 	render_player(cub, cub->img, scale);
 }

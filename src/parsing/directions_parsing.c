@@ -6,13 +6,13 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:15:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 19:36:28 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/18 17:27:11 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char *find_path(char *file)
+static	char	*find_path(char *file)
 {
 	int		start;
 	int		end;
@@ -20,25 +20,21 @@ static char *find_path(char *file)
 
 	start = 2;
 	path = NULL;
-	// printf("whitespace %i\n", is_whitespace(file[start]));
 	while (is_whitespace(file[start]))
 		start++;
 	end = start;
 	while (file[end] && !is_whitespace(file[end]))
-        end++;
-	//printf("start %i end %i\n", start, end);
+		end++;
 	path = ft_substr(file, start, end - start);
 	if (!path)
 		return (NULL);
-	// printf("path %s\n", path);
 	return (path);
 }
 
-void parse_directions(char *line, t_cub *cub)
+void	parse_directions(char *line, t_cub *cub)
 {
-	char *path;
-	
-	// printf("line: %s\n", line);
+	char	*path;
+
 	if (!ft_strncmp(line, "NO", 2))
 	{
 		path = find_path(line);
