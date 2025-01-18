@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/12/12 15:24:04 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/18 18:19:35 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ projected wall slice height = 32 / correct_dist * dist f. player to projection p
 draw vertical line on the corresponding column on projection plane
 */
 
-
 typedef struct s_ray
 {
 	float	ray_x; // starting position x
@@ -104,19 +103,22 @@ void	init_param_ray(t_player *player, t_ray *ray, float ray_angle)
 		ray->step_y = 1; // we move down
 	else
 		ray->step_y = -1; // we move up
-
 }
 
 void	calc_start_dist(t_ray *ray)
 {
-	if (ray->dir_x > 0) // we can also say if cos(x) > 0
-		ray->distance_x = ((ray->tile_x + 1) * TILE_SIZE - ray->ray_x) / fabs(ray->dir_x);
-	else 
-		ray->distance_x = (ray->ray_x - TILE_SIZE * ray->tile_x) / fabs(ray->dir_x);		// why do we have ray->different formulas for ray->different ray->directions?
-	if (ray->dir_y > 0)
-		ray->distance_y = ((ray->tile_y + 1) * TILE_SIZE - ray->ray_y) / fabs(ray->dir_y);
+	if (ray->dir_x > 0)
+		ray->distance_x = ((ray->tile_x + 1)
+				* TILE_SIZE - ray->ray_x) / fabs(ray->dir_x);
 	else
-		ray->distance_y = (ray->ray_y - TILE_SIZE * ray->tile_y) / fabs(ray->dir_y);
+		ray->distance_x = (ray->ray_x - TILE_SIZE
+				* ray->tile_x) / fabs(ray->dir_x);
+	if (ray->dir_y > 0)
+		ray->distance_y = ((ray->tile_y + 1)
+				* TILE_SIZE - ray->ray_y) / fabs(ray->dir_y);
+	else
+		ray->distance_y = (ray->ray_y - TILE_SIZE
+				* ray->tile_y) / fabs(ray->dir_y);
 }
 
 void	calc_new_dist(t_ray *r, int is_x)
@@ -137,60 +139,60 @@ void	calc_new_dist(t_ray *r, int is_x)
 		r->distance_x -= r->distance_y;
 		r->distance_y = r->delta_y;
 	}
-	
 }
 
-float cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position, t_wall_direction *wall_direction)
+float	cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position,
+	t_wall_direction *wall_direction)
 {
-    t_ray 		r;
+	t_ray		r;
 	t_player	*player;
 
 	player = cub->player;
-    init_param_ray(player, &r, ray_angle);
-    calc_start_dist(&r);
-    
-    while (1)
-    {
-        if (r.distance_x < r.distance_y)
-        {
-            calc_new_dist(&r, 1);
-            
-            // Consistent map access with y, x order
-            if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
-                r.tile_x >= 0 && r.tile_x < cub->map_width && 
-                cub->map[r.tile_y][r.tile_x] == '1') // Vertical wall
-            {
-                *wall_hit_position = (float)fmod(r.ray_y, TILE_SIZE) / TILE_SIZE;
-				// printf("wall hit position %f\n", *wall_hit_position);
-                if (r.dir_x < 0) // Left wall
-                {
-                    *wall_hit_position = 1.0 - *wall_hit_position;
-                    *wall_direction = WEST;
-                }
-                else
-                    *wall_direction = EAST;
-                return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
-            }
-        }
-        else // Horizontal wall
-        {
-            calc_new_dist(&r, 0);
-            
-            // Consistent map access with y, x order
-            if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
-                r.tile_x >= 0 && r.tile_x < cub->map_width && 
-                cub->map[r.tile_y][r.tile_x] == '1')  // wall hit
-            {
-                *wall_hit_position = (float)fmod(r.ray_x, TILE_SIZE) / TILE_SIZE;
-                if (r.dir_y > 0)
-                {
-                    *wall_hit_position = 1.0 - *wall_hit_position;                
-                    *wall_direction = SOUTH;
-                }
-                else
-                    *wall_direction = NORTH;
-                return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
-            }
-        }
-    }
+	init_param_ray(player, &r, ray_angle);
+	calc_start_dist(&r);
+	while (1)
+	{
+		if (r.distance_x < r.distance_y)
+		{
+			calc_new_dist(&r, 1);
+			// Consistent map access with y, x order
+			if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
+				r.tile_x >= 0 && r.tile_x < cub->map_width && 
+				cub->map[r.tile_y][r.tile_x] == '1') // Vertical wall
+			{
+				*wall_hit_position = (float)fmod(r.ray_y,
+						TILE_SIZE) / TILE_SIZE;
+				if (r.dir_x < 0) // Left wall
+				{
+					*wall_hit_position = 1.0 - *wall_hit_position;
+					*wall_direction = WEST;
+				}
+				else
+					*wall_direction = EAST;
+				return (calc_ray_distance(player->x,
+						player->y, r.ray_x, r.ray_y));
+			}
+		}
+		else // Horizontal wall
+		{
+			calc_new_dist(&r, 0);
+			// Consistent map access with y, x order
+			if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
+				r.tile_x >= 0 && r.tile_x < cub->map_width && 
+				cub->map[r.tile_y][r.tile_x] == '1')  // wall hit
+			{
+				*wall_hit_position = (float)fmod(r.ray_x,
+						TILE_SIZE) / TILE_SIZE;
+				if (r.dir_y > 0)
+				{
+					*wall_hit_position = 1.0 - *wall_hit_position;
+					*wall_direction = SOUTH;
+				}
+				else
+					*wall_direction = NORTH;
+				return (calc_ray_distance(player->x,
+						player->y, r.ray_x, r.ray_y));
+			}
+		}
+	}
 }

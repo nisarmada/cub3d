@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 14:12:13 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 19:38:09 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/18 18:19:55 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	free_map(char **map)
 	}
 	free (map);
 }
+
 void	delete_text_img(mlx_t *mlx, t_text *texture)
 {
 	mlx_delete_image(mlx, texture->ea_img);
@@ -50,7 +51,6 @@ void	free_and_exit_game(t_cub *cub, int status)
 	mlx_terminate(cub->mlx);
 	free(cub->player);
 	free_map(cub->map);
-	// implent error msg system
 	if (status == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
 	else

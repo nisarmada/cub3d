@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/18 17:35:22 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/18 18:13:44 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	render_frame(t_cub *cub)
 {
-	static bool first_render = true;
+	float		scale;
+	static bool	first_render = true;
 
 	if (first_render)
 	{
@@ -22,12 +23,11 @@ void	render_frame(t_cub *cub)
 			exit(EXIT_FAILURE);
 		first_render = false;
 	}
-	ft_memset(cub->img->pixels, 0, cub->img->width * cub->img->height * sizeof(int32_t));
+	ft_memset(cub->img->pixels, 0,
+		cub->img->width * cub->img->height * sizeof(int32_t));
 	render_view(cub, cub->player);
-	float scale = render_map(cub->img, cub);
+	scale = render_map(cub->img, cub);
 	render_player(cub, cub->img, scale);
-	// if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
-	// 	exit(EXIT_FAILURE);
 }
 
 int	load_textures(t_cub *cub)
@@ -36,7 +36,8 @@ int	load_textures(t_cub *cub)
 	cub->text->so = mlx_load_png(cub->south);
 	cub->text->we = mlx_load_png(cub->west);
 	cub->text->ea = mlx_load_png(cub->east);
-	if (!cub->text->no || !cub->text->so || !cub->text->we || !cub->text->ea)						
+	if (!cub->text->no || !cub->text->so
+		|| !cub->text->we || !cub->text->ea)
 	{
 		printf("Failed to load PNG file.\n");
 		return (0);
@@ -45,7 +46,8 @@ int	load_textures(t_cub *cub)
 	cub->text->so_img = mlx_texture_to_image(cub->mlx, cub->text->so);
 	cub->text->we_img = mlx_texture_to_image(cub->mlx, cub->text->we);
 	cub->text->ea_img = mlx_texture_to_image(cub->mlx, cub->text->ea);
-	if (!cub->text->no_img || !cub->text->so_img || !cub->text->we_img || !cub->text->ea_img)
+	if (!cub->text->no_img || !cub->text->so_img
+		|| !cub->text->we_img || !cub->text->ea_img)
 	{
 		printf("Failed to convert PNG texture to image.\n");
 		return (0);
@@ -66,15 +68,15 @@ void	init_mlx(t_cub *cub)
 	}
 }
 
-void close_window(void* cub_ptr)
+void	close_window(void *cub_ptr)
 {
-    t_cub *cub;
+	t_cub	*cub;
 
-    cub = (t_cub *)cub_ptr;
-    mlx_delete_image(cub->mlx, cub->img);
-    mlx_close_window(cub->mlx);
-    mlx_terminate(cub->mlx);
-    exit(EXIT_SUCCESS);
+	cub = (t_cub *)cub_ptr;
+	mlx_delete_image(cub->mlx, cub->img);
+	mlx_close_window(cub->mlx);
+	mlx_terminate(cub->mlx);
+	exit(EXIT_SUCCESS);
 }
 
 int	render_game(t_cub *cub)

@@ -6,13 +6,13 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/18 17:35:22 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/18 18:09:51 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void move_player(t_cub *cub, t_player *player, char direction)
+void	move_player(t_cub *cub, t_player *player, char direction)
 {
 	float	move_x;
 	float	move_y;
@@ -47,17 +47,16 @@ void move_player(t_cub *cub, t_player *player, char direction)
     }
 	new_x = player->x + move_x;
 	new_y = player->y + move_y;
-	// printf("Angle: %f, Direction: %c, Move_X: %f, Move_Y: %f\n", player->angle, direction, move_x, move_y);
-	x_tile = floor(new_x / TILE_SIZE); // Convert new position to tile coordinates
+	x_tile = floor(new_x / TILE_SIZE);
 	player->changed = 1;
 	y_tile = floor(new_y / TILE_SIZE);
-	if (cub->map[y_tile][x_tile] != '1') // if there's no wall in x axis update x-coordinate
-        player->x = new_x;
-    if (cub->map[y_tile][x_tile] != '1') // if there's no wall in y axis update y-coordinate
-        player->y = new_y;
+	if (cub->map[y_tile][x_tile] != '1')
+		player->x = new_x;
+	if (cub->map[y_tile][x_tile] != '1')
+		player->y = new_y;
 }
 
-void rotate_player(t_player *player, char direction)
+void	rotate_player(t_player *player, char direction)
 {
 	if (direction == 'L')
 		player->angle -= ROTATION_SPEED;
@@ -67,13 +66,13 @@ void rotate_player(t_player *player, char direction)
 	player->changed = 1;
 }
 
-void key_hook(mlx_key_data_t keycode, void *cub_ptr)
+void	key_hook(mlx_key_data_t keycode, void *cub_ptr)
 {
-	t_cub *cub;
-	const int max_keys = sizeof(cub->keys) / sizeof(cub->keys[0]);
+	t_cub		*cub;
+	const int	max_keys = sizeof(cub->keys) / sizeof(cub->keys[0]);
 
 	cub = (t_cub *)cub_ptr;
-	if (keycode.key >= 0 && keycode.key < max_keys) //no keys out of bounds
+	if (keycode.key >= 0 && keycode.key < max_keys)
 	{
 		if (keycode.action == MLX_PRESS)
 			cub->keys[keycode.key] = true;
@@ -89,12 +88,11 @@ void key_hook(mlx_key_data_t keycode, void *cub_ptr)
 	}
 }
 
-void hook_loop(void *cub_ptr)
+void	hook_loop(void *cub_ptr)
 {
-	t_cub *cub;
+	t_cub	*cub;
 
 	cub = (t_cub *)cub_ptr;
-	// printf("key is %i\n", )
 	if (cub->keys[MLX_KEY_W])
 		move_player(cub, cub->player, 'W');
 	if (cub->keys[MLX_KEY_S])
@@ -102,7 +100,7 @@ void hook_loop(void *cub_ptr)
 	if (cub->keys[MLX_KEY_A])
 		move_player(cub, cub->player, 'A');
 	if (cub->keys[MLX_KEY_D])
-		move_player(cub, cub->player, 'D');	
+		move_player(cub, cub->player, 'D');
 	if (cub->keys[MLX_KEY_LEFT])
 		rotate_player(cub->player, 'L');
 	if (cub->keys[MLX_KEY_RIGHT])
@@ -117,6 +115,7 @@ void hook_loop(void *cub_ptr)
 void	resize_callback(int32_t width, int32_t height, void* param)
 {
 	t_cub	*cub;
+	float	scale;
 
 	cub = (t_cub *)param;
 	// Recreate the image with the new size
@@ -133,10 +132,11 @@ void	resize_callback(int32_t width, int32_t height, void* param)
 	if (!cub->img)
 		free_and_exit_game(cub, EXIT_FAILURE);
 	cub->dist_pplane = ((cub->win_width / 2 ) / tan(0.524));
-    if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
-        free_and_exit_game(cub, EXIT_FAILURE);
-	ft_memset(cub->img->pixels, 0, cub->img->width * cub->img->height * sizeof(int32_t));
+	if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
+		free_and_exit_game(cub, EXIT_FAILURE);
+	ft_memset(cub->img->pixels, 0,
+		cub->img->width * cub->img->height * sizeof(int32_t));
 	render_view(cub, cub->player);
-	float scale = render_map(cub->img, cub);
+	scale = render_map(cub->img, cub);
 	render_player(cub, cub->img, scale);
 }

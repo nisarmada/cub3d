@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/18 17:28:33 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/18 18:02:11 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	is_map_line(char *line)
 	}
 	return (1);
 }
+
 void	allocate_map(char *filename, t_cub *cub)
 {
 	int		fd;

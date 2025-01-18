@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 18:41:18 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/18 17:48:11 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/18 18:04:39 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,9 @@ void render_player(t_cub *cub, mlx_image_t *img, float scale)
 	}
 }
 
-// void render_dir(t_player *player, mlx_image_t *img, t_cub *cub, float scale)
-// {
-
-// }
-
-
-void render_fov(t_player *player, t_cub *cub, float scale)
+void	render_fov(t_player *player, t_cub *cub, float scale)
 {
-	int max_distance;
+	int		max_distance;
 	float	left_angle;
 	float	right_angle;
 	int		x_left;

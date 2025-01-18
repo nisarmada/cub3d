@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/18 17:51:53 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/18 18:03:51 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ int get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture
 	alpha = (argb_color >> 24) & 0xFF; // Alpha channel
 
     // Return RGBA
-    return (red << 24) | (green << 16) | (blue << 8) | alpha;
+	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
 }
 
 /*
