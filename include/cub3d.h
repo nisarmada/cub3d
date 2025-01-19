@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 18:34:27 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 19:23:16 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,28 @@ typedef struct s_slice
 	int	text_y; //y coordinate of texture to draw
 }	t_slice;
 
+typedef struct s_raycasting
+{
+	float           ray_angle;
+	float           wall_hit_position;
+	t_wall_direction wall_direction;
+	float           distorted_distance;
+	float           correct_dist;
+	int             x;              // For render_wallslice
+	float           line_height;    // For render_wallslice
+	int             text_x;         // For render_wallslice
+	int             text_y;         // For render_wallslice
+} t_raycasting;
+
 typedef struct s_rgb
 {
-	int	r;
-	int	g;
-	int	b;
+	int			r;
+	int			g;
+	int			b;
+	uint8_t		alpha;
+	uint8_t		red;
+	uint8_t		green;
+	uint8_t		blue;
 }	t_rgb;
 
 t_cub	*initialize_cub(char *filename);
@@ -215,13 +232,12 @@ void	hook_loop(void *cub_ptr);
 void	render_frame(t_cub *cub);
 
 /*raycasting*/
-void	render_view(t_cub *cub, t_player *player);
-float	cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position,
-			t_wall_direction *wall_direction);
+void    render_view(t_cub *cub, t_player *player);
+float   cast_single_ray(t_cub *cub, t_raycasting *rc);
 
 /* 3D_rendering */
-void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position,t_wall_direction wall_direction);
-int 	get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture, t_wall_direction wall_direction);
+void	render_wallslice(t_cub *cub, t_raycasting *rc);
+int		get_texture_color(t_cub *cub, mlx_texture_t *texture, t_raycasting *rc);
 void	print_map(t_cub *cub);
 void	render_floor_ceiling(t_cub *cub);
 
