@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 19:31:02 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 19:55:01 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,19 @@ typedef struct s_raycasting
 	int             text_y;         // For render_wallslice
 } t_raycasting;
 
+typedef struct s_line
+{
+    int x0;
+    int y0;
+    int x;
+    int y;
+    int dx;
+    int dy;
+    int sx;
+    int sy;
+    int err;
+} t_line;
+
 typedef struct s_rgb
 {
 	int			r;
@@ -242,6 +255,13 @@ void	move_player(t_cub *cub, t_player *player, char direction);
 void	rotate_player(t_player *player, char direction);
 void	key_hook(mlx_key_data_t keycode, void *cub_ptr);
 void	hook_loop(void *cub_ptr);
+
+/*draw line*/
+void	init_line_1(t_line *line, t_cub *cub, float scale);
+void	init_line_2(t_line *line, int dest_x, int dest_y);
+void	init_line_direction(t_line *line);
+void	draw_line_pixel(t_line *line, t_cub *cub);
+void	update_line_position(t_line *line);
 
 /*prepare game */
 void	render_frame(t_cub *cub);

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 19:19:37 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 19:55:55 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,56 +19,19 @@ void	normalize_angle(float *angle)
 		*angle += 2 * M_PI;
 }
 
-// void normalize_angle(float *angle)
-// {
-//     while (*angle < 0)
-//         *angle += 2 * M_PI;
-//     while (*angle > 2 * M_PI)
-//         *angle -= 2 * M_PI;
-// }
-
-
-void	draw_line(t_cub *cub, int x, int y, float scale)
+void draw_line(t_cub *cub, int x, int y, float scale)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	x0;
-	int	y0;
-	int	err;
-	int	err2;
+	t_line	line;
 
-	x0 = cub->player->x * scale;
-	y0 = cub->player->y * scale;
-	dx = abs(x - x0); // x1 - x0
-	dy = abs(y - y0); // y1 - y0
-	err = dx - dy;
-	if (x > x0)
-		sx = 1;
-	else
-		sx = -1;
-	if (y > y0)
-		sy = 1;
-	else
-		sy = -1;
+	init_line_1(&line, cub, scale);
+	init_line_2(&line, x, y);
+	init_line_direction(&line);
 	while (1)
 	{
-		if (x0 >= 0 && x0 < cub->win_width && y0 >= 0 && y0 < cub->win_height)
-			mlx_put_pixel(cub->img, x0, y0, GREEN);
-		if (x0 == x && y0 == y)
+		draw_line_pixel(&line, cub);
+		if (line.x0 == x && line.y0 == y)
 			break ;
-		err2 = err * 2;
-		if (err2 > -dy)
-		{
-			err -= dy;
-			x0 += sx;
-		}
-		if (err2 < dx)
-		{
-			err += dx;
-			y0 += sy;
-		}
+		update_line_position(&line);
 	}
 }
 

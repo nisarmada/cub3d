@@ -6,22 +6,22 @@
 /*   By: nikos <nikos@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 19:23:47 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 19:28:43 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 19:44:16 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void handle_horizontal_hit(t_ray *r, t_raycasting *rc)
+void	handle_horizontal_hit(t_ray *r, t_raycasting *rc)
 {
-    rc->wall_hit_position = (float)fmod(r->ray_y, TILE_SIZE) / TILE_SIZE;
-    if (r->dir_x < 0)
-    {
-        rc->wall_hit_position = 1.0 - rc->wall_hit_position;
-        rc->wall_direction = WEST;
-    }
-    else
-        rc->wall_direction = EAST;
+	rc->wall_hit_position = (float)fmod(r->ray_y, TILE_SIZE) / TILE_SIZE;
+	if (r->dir_x < 0)
+	{
+		rc->wall_hit_position = 1.0 - rc->wall_hit_position;
+		rc->wall_direction = WEST;
+	}
+	else
+		rc->wall_direction = EAST;
 }
 
 void	handle_vertical_hit(t_ray *r, t_raycasting *rc)
