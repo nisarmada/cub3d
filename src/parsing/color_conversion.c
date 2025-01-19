@@ -6,23 +6,23 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/06 14:22:59 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/18 17:26:26 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int convert_rgb_to_int(int r, int g, int b)
+static	int	convert_rgb_to_int(int r, int g, int b)
 {
-    return (r << 24) | (g << 16) | (b << 8) | 255;
+	return ((r << 24) | (g << 16) | (b << 8) | 255);
 }
 
-static t_rgb	get_rgb_values(char *line)
+static	t_rgb	get_rgb_values(char *line)
 {
-	int	start;
-	char *color_string;
+	int		start;
+	char	*color_string;
 	t_rgb	rgb;
-	int end;
+	int		end;
 
 	color_string = NULL;
 	start = 1;

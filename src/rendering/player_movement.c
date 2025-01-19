@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 16:25:53 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 16:37:51 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void move_player(t_cub *cub, t_player *player, char direction)
 	player->changed = 1;
 }
 
-void rotate_player(t_player *player, char direction)
+void	rotate_player(t_player *player, char direction)
 {
 	if (direction == 'L')
 		player->angle -= ROTATION_SPEED;
@@ -90,13 +90,13 @@ void rotate_player(t_player *player, char direction)
 	player->changed = 1;
 }
 
-void key_hook(mlx_key_data_t keycode, void *cub_ptr)
+void	key_hook(mlx_key_data_t keycode, void *cub_ptr)
 {
-	t_cub *cub;
-	const int max_keys = sizeof(cub->keys) / sizeof(cub->keys[0]);
+	t_cub		*cub;
+	const int	max_keys = sizeof(cub->keys) / sizeof(cub->keys[0]);
 
 	cub = (t_cub *)cub_ptr;
-	if (keycode.key >= 0 && keycode.key < max_keys) //no keys out of bounds
+	if (keycode.key >= 0 && keycode.key < max_keys)
 	{
 		if (keycode.action == MLX_PRESS)
 			cub->keys[keycode.key] = true;
@@ -112,12 +112,11 @@ void key_hook(mlx_key_data_t keycode, void *cub_ptr)
 	}
 }
 
-void hook_loop(void *cub_ptr)
+void	hook_loop(void *cub_ptr)
 {
-	t_cub *cub;
+	t_cub	*cub;
 
 	cub = (t_cub *)cub_ptr;
-	// printf("key is %i\n", )
 	if (cub->keys[MLX_KEY_W])
 		move_player(cub, cub->player, 'W');
 	if (cub->keys[MLX_KEY_S])
@@ -125,7 +124,7 @@ void hook_loop(void *cub_ptr)
 	if (cub->keys[MLX_KEY_A])
 		move_player(cub, cub->player, 'A');
 	if (cub->keys[MLX_KEY_D])
-		move_player(cub, cub->player, 'D');	
+		move_player(cub, cub->player, 'D');
 	if (cub->keys[MLX_KEY_LEFT])
 		rotate_player(cub->player, 'L');
 	if (cub->keys[MLX_KEY_RIGHT])
@@ -140,6 +139,7 @@ void hook_loop(void *cub_ptr)
 void	resize_callback(int32_t width, int32_t height, void* param)
 {
 	t_cub	*cub;
+	float	scale;
 
 	cub = (t_cub *)param;
 	if (cub->img)
@@ -157,10 +157,11 @@ void	resize_callback(int32_t width, int32_t height, void* param)
 	if (!cub->img)
 		free_and_exit_game(cub, EXIT_FAILURE);
 	cub->dist_pplane = ((cub->win_width / 2 ) / tan(0.524));
-    if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
-        free_and_exit_game(cub, EXIT_FAILURE);
-	ft_memset(cub->img->pixels, 0, cub->img->width * cub->img->height * sizeof(int32_t));
-	render_3D_view(cub, cub->player);
-	float scale = render_map(cub->img, cub);
+	if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
+		free_and_exit_game(cub, EXIT_FAILURE);
+	ft_memset(cub->img->pixels, 0,
+		cub->img->width * cub->img->height * sizeof(int32_t));
+	render_view(cub, cub->player);
+	scale = render_map(cub->img, cub);
 	render_player(cub, cub->img, scale);
 }

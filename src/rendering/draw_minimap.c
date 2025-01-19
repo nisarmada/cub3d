@@ -6,27 +6,16 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 18:41:18 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/12/12 15:14:37 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/18 18:04:39 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*OPTIMIZATION
-Optimize Loops:
-
-    Avoid redundant operations in nested loops by caching results or breaking early when possible.
-
-Memory Cleanup:
-
-    Ensure all dynamically loaded resources are freed appropriately to avoid memory leaks.
-*/
-
-
 void draw_tile(mlx_image_t *img, int x, int y, float scale, int color)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < (TILE_SIZE * scale))
@@ -41,7 +30,14 @@ void draw_tile(mlx_image_t *img, int x, int y, float scale, int color)
 	}
 }
 
-float render_map(mlx_image_t *img, t_cub *cub)
+static	int	is_nswe(char str)
+{
+	if (str == 'N' || str == 'S' || str == 'W' || str == 'E')
+		return (1);
+	return (0);
+}
+
+float	render_map(mlx_image_t *img, t_cub *cub)
 {
 	int		row;
 	int		column;
@@ -69,17 +65,14 @@ float render_map(mlx_image_t *img, t_cub *cub)
 				color = FLOOR_COLOR;
 			else if (cub->map[row][column] == ' ')
 				color = INACCESSIBLE_COLOR;
-			else if (cub->map[row][column] == 'N' || cub->map[row][column] == 'S' || 
-                     cub->map[row][column] == 'E' || cub->map[row][column] == 'W')
+			else if (is_nswe(cub->map[row][column]))
 				color = FLOOR_COLOR;
 			draw_tile(img, tile_x, tile_y, scale, color);
 			column++;
 		}
 		row++;
 	}
-	// render_dir(cub->player, img, cub, scale);
 	render_fov(cub->player, cub, scale);
-	// raycasting(cub, cub->player);
 	return (scale);
 }
 
@@ -108,18 +101,11 @@ void render_player(t_cub *cub, mlx_image_t *img, float scale)
 		}
 		i++;
 	}
-	// render_fov(cub->player, img);
 }
 
-// void render_dir(t_player *player, mlx_image_t *img, t_cub *cub, float scale)
-// {
-
-// }
-
-
-void render_fov(t_player *player, t_cub *cub, float scale)
+void	render_fov(t_player *player, t_cub *cub, float scale)
 {
-	int max_distance;
+	int		max_distance;
 	float	left_angle;
 	float	right_angle;
 	int		x_left;
@@ -139,6 +125,4 @@ void render_fov(t_player *player, t_cub *cub, float scale)
 	y_right = (int)player->y * (int)scale - sin(right_angle) * max_distance;
 	draw_line(cub, x_left, y_left, scale);
 	draw_line(cub, x_right, y_right, scale);
-	// raycasting(cub, cub->player);
 }
-

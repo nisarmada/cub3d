@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/09 14:29:42 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/18 18:02:11 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,27 @@ int	is_map_char(char c)
 	|| c == 'W' || c == 'E' || c == ' ');
 }
 
-int is_map_line(char *line)
+int	is_map_line(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '\0' || line[i] == '\n')
-        return (0);
+		return (0);
 	while (line[i])
 	{
 		if (!is_map_char(line[i]) && line[i] != '\n')
-			{
-				//printf("line[%i] %c\n", i, line[i]);
-				return (0);
-			}
+			return (0);
 		i++;
 	}
 	return (1);
 }
+
 void	allocate_map(char *filename, t_cub *cub)
 {
-	int fd;
+	int		fd;
 	char	*line;
 	int		rows;
 
@@ -50,7 +48,7 @@ void	allocate_map(char *filename, t_cub *cub)
 	while (line)
 	{
 		if (is_map_line(line))
-			break;
+			break ;
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -62,24 +60,20 @@ void	allocate_map(char *filename, t_cub *cub)
 		line = get_next_line(fd);
 		rows++;
 	}
-	// printf("this many rows %i\n", rows);
 	cub->map_height = rows - 1;
-	// printf("map height: %i\n", cub->map_height);
-	// printf("map width: %i\n", cub->map_width);
 	cub->map = malloc(sizeof(char *) * (rows + 1));
 	close(fd);
 }
 
-void map_parsing(char *line, t_cub *cub, int j)
+void	map_parsing(char *line, t_cub *cub, int j)
 {
-	int i;
-	//char *final_line;
+	int	i;
 
 	i = 0;
 	(void)j;
 	cub->map[j] = malloc(sizeof(char) * cub->map_width + 1);
 	if (!cub->map[j])
-	return ;
+		return ;
 	while (i < (int)(ft_strlen(line) - 1))
 	{
 		cub->map[j][i] = line[i];
@@ -91,6 +85,4 @@ void map_parsing(char *line, t_cub *cub, int j)
 		i++;
 	}
 	cub->map[j][i] = '\0';
-	// print_map(cub);
 }
-

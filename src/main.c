@@ -6,16 +6,17 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/15 18:58:21 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/18 18:20:36 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void print_map(t_cub *cub)
+void	print_map(t_cub *cub)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	printf("printing map\n");
 	while (cub->map[i])
 	{

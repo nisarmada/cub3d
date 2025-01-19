@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 15:33:34 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 16:36:48 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void normalize_angle(float *angle)
 
 void draw_line(t_cub *cub, int x, int y, float scale)
 {
-	int dx;
+	int	dx;
 	int	dy;
-	int sx;
+	int	sx;
 	int	sy;
-	int x0;
-	int y0;
-	int err;
+	int	x0;
+	int	y0;
+	int	err;
 	int	err2;
 
 	x0 = cub->player->x * scale;
@@ -54,12 +54,10 @@ void draw_line(t_cub *cub, int x, int y, float scale)
 		sy = -1;
 	while (1)
 	{
-		if (x0 >= 0 && x0 < cub->win_width  && y0 >= 0 && y0 < cub->win_height)
+		if (x0 >= 0 && x0 < cub->win_width && y0 >= 0 && y0 < cub->win_height)
 			mlx_put_pixel(cub->img, x0, y0, GREEN);
-
 		if (x0 == x && y0 == y)
-			break;
-
+			break ;
 		err2 = err * 2;
 		if (err2 > -dy)
 		{
@@ -76,14 +74,14 @@ void draw_line(t_cub *cub, int x, int y, float scale)
 
 void draw_line_float(t_player *player, mlx_image_t *img, int x, int y, float scale)
 {
-	float dx;
-	float dy;
-	float x0;
-	float y0;
-	float sx;
-	float sy;
-	float err;
-	float err2;
+	float	dx;
+	float	dy;
+	float	x0;
+	float	y0;
+	float	sx;
+	float	sy;
+	float	err;
+	float	err2;
 
 	x0 = player->x * scale;
 	y0 = player->y * scale;
@@ -101,11 +99,9 @@ void draw_line_float(t_player *player, mlx_image_t *img, int x, int y, float sca
 	while (1)
 	{
 		if (x0 >= 0 && x0 < 800 && y0 >= 0 && y0 < 600)
-        {
-            mlx_put_pixel(img, (int)x0, (int)y0, GREEN);
-        }
+			mlx_put_pixel(img, (int)x0, (int)y0, GREEN);
 		if ((int)x0 == (int)x && (int)y0 == (int)y)
-			break;
+			break ;
 		err2 = err * 2;
 		if (err2 > -dy)
 		{
