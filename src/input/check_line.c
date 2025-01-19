@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 16:23:14 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 16:55:35 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ int	check_line(t_string *line)
 	t_key_value	*info;
 
 	i = 0;
-	cur_fileline = line->line; //(malloced from gnl)
+	cur_fileline = line->line;
 	info = NULL;
-	while (is_whitespace(cur_fileline[i])) // take away whitespace in beginning of line
+	while (is_whitespace(cur_fileline[i]))
 		i++;
 	if (cur_fileline[i])
 	{
 		info = split_in_two(&cur_fileline[i]);
 		if (!info)
-			return (error_msg("have to divide id and info with space\n", 0)); // split the line in two parts, by the first whitespace/ space
-		if (!valid_key_and_value(info, line)) // validate the identifier
+			return (error_msg("have to divide id and info with space\n", 0));
+		if (!valid_key_and_value(info, line))
 			return (free_info(info), 0);
 		line->elem_count++;
 		free_info(info);

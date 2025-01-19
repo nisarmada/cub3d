@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/17 13:22:25 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/19 17:12:12 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	valid_first_last_row(char **map, int row, int width)
 
 static int	check_surrounding(char **map, int row, int i, int width)
 {
-	char	*cur; 
+	char	*cur;
 	char	*up;
 	char	*down;
 
@@ -37,10 +37,9 @@ static int	check_surrounding(char **map, int row, int i, int width)
 	down = map[row + 1];
 	if (i == width && cur[i] == '0') // maybe fixed the small error of having last one a 0 but in line with the 1s with this
 		return (0);
-
 	if (i != 0 && (cur[i - 1] != '1' && cur[i - 1] != ' '))
 		return (0);
-	if (i != width && (cur[i + 1] != '1'  && cur[i + 1] != ' '))
+	if (i != width && (cur[i + 1] != '1' && cur[i + 1] != ' '))
 		return (0);
 	if ((up[i] != '1' && up[i] != ' '))
 		return (0);
@@ -49,7 +48,7 @@ static int	check_surrounding(char **map, int row, int i, int width)
 	return (1);
 }
 
-static void define_field_of_vision(t_cub *cub)
+static void	define_field_of_vision(t_cub *cub)
 {
 	cub->player->fov = M_PI / 3; //60o
 	if (cub->player->orientation == 'E')
@@ -86,12 +85,11 @@ int valid_map(t_cub *cub, int height, int width)
 	int		i;
 	char	**map;
 
-	// printf("in valid map\n");
 	map = cub->map;
 	if (!valid_first_last_row(map, 0, width) || \
 	!valid_first_last_row(map, height, width))
 	{
-		return (printf("wrong first or last line\n"), 0); //errr func with nice error msgs
+		return (error_msg("wrong first or last line\n", 0));
 	}
 	row = 1;
 	while (row < height - 1)
@@ -118,9 +116,6 @@ int valid_map(t_cub *cub, int height, int width)
 		row++;
 	}
 	if (!cub->player->orientation)
-	{
-		return(printf("no player\n"), 0);
-	}
-	// printf("map checked ;)\n");
+		return (error_msg("no player\n", 0));
 	return (1);
 }

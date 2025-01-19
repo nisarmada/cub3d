@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 16:34:02 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 17:04:23 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,16 @@ void	free_and_exit_game(t_cub *cub, int status);
 t_cub	*init_parse_cub(char *filename);
 
 /* inout_check */
+//check_key_extras
+int		elemnt_not_found(char *key, t_string *op_line);
+void	set_element_as_found(char *key, t_string *op_line);
+int		is_path_key(char *str);
+
+//free and error
+void	free_colors(char **colors, char *value);
 int		error_msg(char *msg, int status);
+
+
 char	*trim_spaces(char *str);
 int		check_line(t_string *op_line);
 int		valid_key_and_value(t_key_value *info, t_string *op_line);

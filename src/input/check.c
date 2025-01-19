@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 15:54:27 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 16:55:05 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_file(int ac, char **av)
 		return (printf("Wrong file type, need .cub\n"), 0);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
-		return (printf("Invalid file format"), 0); // error handling msg
+		return (printf("Invalid file format"), 0);
 	return (fd);
 }
 
@@ -53,7 +53,7 @@ char	*skip_empty_lines(int fd)
 	char	*next_line;
 
 	next_line = get_next_line(fd);
-	while (next_line && !ft_strcmp(next_line, "\n")) //skipping empty lines
+	while (next_line && !ft_strcmp(next_line, "\n"))
 	{
 		free(next_line);
 		next_line = get_next_line(fd);

@@ -6,13 +6,13 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 16:36:48 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 17:11:38 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void normalize_angle(float *angle)
+void	normalize_angle(float *angle)
 {
 	*angle = fmod(*angle, 2 * M_PI);
 	if (*angle < 0)
@@ -28,7 +28,7 @@ void normalize_angle(float *angle)
 // }
 
 
-void draw_line(t_cub *cub, int x, int y, float scale)
+void	draw_line(t_cub *cub, int x, int y, float scale)
 {
 	int	dx;
 	int	dy;

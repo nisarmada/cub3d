@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/19 16:34:48 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 17:09:57 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ static t_cub	*allocate_cub(void)
 	return (cub);
 }
 
-static	void	parse_cub_file(char *filename, t_cub *cub)
+static	void	parse_cub_file(char *filename, t_cub *cub) //check with error handling also
 {
 	int		fd;
 	char	*line;
 	int		j;
 
 	j = 0;
-	(void)cub;
 	allocate_map(filename, cub);
 	fd = open(filename, O_RDONLY);
 	line = get_next_line(fd);
@@ -76,7 +75,7 @@ t_cub	*init_parse_cub(char *filename)
 	cub = allocate_cub();
 	parse_cub_file(filename, cub);
 	cub->player->changed = 0;
-	cub->dist_pplane = ((WIN_WIDTH / 2 ) / tan(0.524));
+	cub->dist_pplane = ((WIN_WIDTH / 2) / tan(0.524));
 	cub->win_height = WIN_HEIGHT;
 	cub->win_width = WIN_WIDTH;
 	cub->first_render = true;
@@ -90,4 +89,3 @@ t_cub	*init_parse_cub(char *filename)
 	}
 	return (cub);
 }
-

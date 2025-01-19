@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 16:35:32 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 17:11:11 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ mlx_texture_t *wall_texture_direction(t_cub *cub, t_wall_direction *wall_directi
 	return (cub->text->no);
 }
 
-static uint32_t *wall_texture_direction_pixels(t_cub *cub, t_wall_direction wall_direction)
+static uint32_t	*wall_text_dir_pixels(t_cub *cub, t_wall_direction wall_direction)
 {
 	if (wall_direction == NORTH)
 		return ((uint32_t *)cub->text->no_img->pixels);
@@ -172,7 +172,7 @@ int get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture
     if (text_y >= (int)texture->height)
 		text_y = texture->height - 1;
 
-	pixels = wall_texture_direction_pixels(cub, wall_direction);
+	pixels = wall_text_dir_pixels(cub, wall_direction);
 	// Extract RGBA components
 	argb_color = pixels[text_y * texture->width + text_x];
 	//Convert to RGBA color
