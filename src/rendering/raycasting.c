@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/19 18:53:32 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 19:25:43 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,7 @@ projected wall slice height = 32 / correct_dist * dist f. player to projection p
 draw vertical line on the corresponding column on projection plane
 */
 
-typedef struct s_ray
-{
-	float	ray_x; // starting position x
-	float	ray_y; // starting poisition y
-	float	dir_x; // direction in x axis
-	float	dir_y; // direction in y axis
-	int		tile_x; // tile normalization
-	int		tile_y;
-	int		step_x; // determine if we're moving in x or y axis
-	int		step_y;
-	float	delta_x; // differential with respect to x
-	float	delta_y;
-	float	distance_x; //distance to next vertical border
-	float	distance_y; // d3istance to next horizontal border
-}	t_ray;
-
-static float	calc_ray_distance(float x1, float y1, float x2, float y2)
+float	calc_ray_distance(float x1, float y1, float x2, float y2)
 {
 	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
 }
@@ -141,51 +125,28 @@ void	calc_new_dist(t_ray *r, int is_x)
 	}
 }
 
-float   cast_single_ray(t_cub *cub, t_raycasting *rc)
+float	cast_single_ray(t_cub *cub, t_raycasting *rc)
 {
-    t_ray       r;
-    t_player    *player;
+	t_ray	r;
+	float	hit_distance;
 
-    player = cub->player;
-    init_param_ray(player, &r, rc->ray_angle);
-    calc_start_dist(&r);
-    while (1)
-    {
-        if (r.distance_x < r.distance_y)
-        {
-            calc_new_dist(&r, 1);
-            if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
-                r.tile_x >= 0 && r.tile_x < cub->map_width && 
-                cub->map[r.tile_y][r.tile_x] == '1')
-            {
-                rc->wall_hit_position = (float)fmod(r.ray_y, TILE_SIZE) / TILE_SIZE;
-                if (r.dir_x < 0)
-                {
-                    rc->wall_hit_position = 1.0 - rc->wall_hit_position;
-                    rc->wall_direction = WEST;
-                }
-                else
-                    rc->wall_direction = EAST;
-                return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
-            }
-        }
-        else
-        {
-            calc_new_dist(&r, 0);
-            if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
-                r.tile_x >= 0 && r.tile_x < cub->map_width && 
-                cub->map[r.tile_y][r.tile_x] == '1')
-            {
-                rc->wall_hit_position = (float)fmod(r.ray_x, TILE_SIZE) / TILE_SIZE;
-                if (r.dir_y > 0)
-                {
-                    rc->wall_hit_position = 1.0 - rc->wall_hit_position;
-                    rc->wall_direction = SOUTH;
-                }
-                else
-                    rc->wall_direction = NORTH;
-                return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
-            }
-        }
-    }
+	init_param_ray(cub->player, &r, rc->ray_angle);
+	calc_start_dist(&r);
+	while (1)
+	{
+		if (r.distance_x < r.distance_y)
+		{
+			calc_new_dist(&r, 1);
+			hit_distance = process_ray_hit(cub, &r, rc, true);
+			if (hit_distance >= 0)
+				return (hit_distance);
+		}
+		else
+		{
+			calc_new_dist(&r, 0);
+			hit_distance = process_ray_hit(cub, &r, rc, false);
+			if (hit_distance >= 0)
+				return (hit_distance);
+		}
+	}
 }

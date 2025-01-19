@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 19:09:11 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 19:29:33 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,22 @@ typedef struct s_cub
 	t_player	*player;
 }	t_cub;
 
+typedef struct s_ray
+{
+	float	ray_x; // starting position x
+	float	ray_y; // starting poisition y
+	float	dir_x; // direction in x axis
+	float	dir_y; // direction in y axis
+	int		tile_x; // tile normalization
+	int		tile_y;
+	int		step_x; // determine if we're moving in x or y axis
+	int		step_y;
+	float	delta_x; // differential with respect to x
+	float	delta_y;
+	float	distance_x; //distance to next vertical border
+	float	distance_y; // d3istance to next horizontal border
+}	t_ray;
+
 typedef struct s_slice
 {
 	int	x; //the x coordinate of line relative to screen
@@ -219,7 +235,6 @@ void	render_player(t_cub *cub, mlx_image_t *img, float scale);
 void	render_fov(t_player *player, t_cub *cub, float scale);
 void	normalize_angle(float *angle);
 void	draw_line(t_cub *cub, int x, int y, float scale);
-void	draw_line_float(t_player *player, mlx_image_t *img, int x, int y, float scale);
 void	move_player(t_cub *cub, t_player *player, char direction);
 void	rotate_player(t_player *player, char direction);
 void	key_hook(mlx_key_data_t keycode, void *cub_ptr);
@@ -229,8 +244,16 @@ void	hook_loop(void *cub_ptr);
 void	render_frame(t_cub *cub);
 
 /*raycasting*/
-void    render_view(t_cub *cub, t_player *player);
-float   cast_single_ray(t_cub *cub, t_raycasting *rc);
+void	render_view(t_cub *cub, t_player *player);
+float	cast_single_ray(t_cub *cub, t_raycasting *rc);
+float	calc_ray_distance(float x1, float y1, float x2, float y2);
+
+/*raycasting_helper*/
+void	handle_vertical_hit(t_ray *r, t_raycasting *rc);
+bool	check_wall_collision(t_cub *cub, t_ray *r);
+float	process_ray_hit(t_cub *cub, t_ray *r,
+			t_raycasting *rc, bool is_horizontal);
+void	handle_horizontal_hit(t_ray *r, t_raycasting *rc);
 
 /* 3D_rendering */
 void	render_wallslice(t_cub *cub, t_raycasting *rc);

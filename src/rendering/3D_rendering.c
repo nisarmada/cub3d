@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 19:13:35 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 19:18:50 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	render_floor_ceiling(t_cub *cub)
 	}
 }
 
-mlx_texture_t *wall_texture_direction(t_cub *cub, t_wall_direction *wall_direction)
+mlx_texture_t	*wall_texture_direction(t_cub *cub,
+	t_wall_direction *wall_direction)
 {
 	if (*wall_direction == NORTH)
 		return (cub->text->no);
