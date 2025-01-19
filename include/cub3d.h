@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 19:23:16 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 20:00:57 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ typedef struct s_key_value
 	char	*key;
 	char	*value;
 }	t_key_value;
+
+typedef struct s_coord
+{
+	float	x;
+	float	y;
+}	t_coord;
 
 typedef struct	s_string
 {
@@ -216,7 +222,7 @@ int		valid_map(t_cub *cub, int height, int width);
 /*rendering*/
 void	init_mlx(t_cub *cub);
 int		render_game(t_cub *cub);
-void	draw_tile(mlx_image_t *img, int x, int y, float scale, int color);
+void	draw_tile(mlx_image_t *img, t_coord *tile, float scale, int color);
 float	render_map(mlx_image_t *img, t_cub *cub);
 void	render_player(t_cub *cub, mlx_image_t *img, float scale);
 void	render_fov(t_player *player, t_cub *cub, float scale);

@@ -6,17 +6,12 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 19:06:25 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 19:33:38 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-typedef struct s_coord
-{
-	float	x;
-	float	y;
-}	t_coord;
 
 void	movement(char direction, float player_angle, t_coord *move)
 {
