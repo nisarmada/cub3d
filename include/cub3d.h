@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 20:15:12 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 20:38:40 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,9 +203,6 @@ typedef struct s_rgb
 	uint8_t		blue;
 }	t_rgb;
 
-t_cub	*initialize_cub(char *filename);
-int		valid_input(int ac, char **av);
-void	parse_redirections(char *line, t_cub *cub);
 void	parse_colors(char *line, t_cub *cub);
 void	allocate_map(char *filename, t_cub *cub);
 void	map_parsing(char *line, t_cub *cub, int j);
@@ -214,7 +211,10 @@ void	free_cub(t_cub *cub);
 void	free_and_exit_game(t_cub *cub, int status);
 t_cub	*init_parse_cub(char *filename);
 
-/* inout_check */
+/* INPUT */
+
+int		valid_input(int ac, char **av);
+
 //check_key_extras
 int		elemnt_not_found(char *key, t_string *op_line);
 void	set_element_as_found(char *key, t_string *op_line);
@@ -231,13 +231,6 @@ int		is_cub_file(char *str);
 char	*trim_spaces(char *str);
 int		check_line(t_string *op_line);
 int		valid_key_and_value(t_key_value *info, t_string *op_line);
-void	free_info(t_key_value *info);
-
-/* utils/extra */
-char	*ft_strndup(const char *s1, size_t n);
-int		is_whitespace(char file);
-int		ft_isvalid_path_chars(int c);
-int		ft_strcmp(const char *s1, const char *s2);
 
 /* PARSING */
 
@@ -248,19 +241,22 @@ void	parse_directions(char *line, t_cub *cub);
 int		is_map_line(char *line);
 int		valid_map(t_cub *cub, int height, int width);
 
-/*rendering*/
-void	init_mlx(t_cub *cub);
+
+/* RENDERING */
+
+/*prepare game */
+void	render_frame(t_cub *cub);
 int		render_game(t_cub *cub);
+void	init_mlx(t_cub *cub);
+
+/*draw minimap*/
 void	draw_tile(mlx_image_t *img, t_coord *tile, float scale, int color);
 float	render_map(mlx_image_t *img, t_cub *cub);
+
+/*draw miniplayer*/
+float	calculate_scale(int map_width, int map_height);
 void	render_player(t_cub *cub, mlx_image_t *img, float scale);
 void	render_fov(t_player *player, t_cub *cub, float scale);
-void	normalize_angle(float *angle);
-void	draw_line(t_cub *cub, int x, int y, float scale);
-void	move_player(t_cub *cub, t_player *player, char direction);
-void	rotate_player(t_player *player, char direction);
-void	key_hook(mlx_key_data_t keycode, void *cub_ptr);
-void	hook_loop(void *cub_ptr);
 
 /*draw line*/
 void	init_line_1(t_line *line, t_cub *cub, float scale);
@@ -269,8 +265,18 @@ void	init_line_direction(t_line *line);
 void	draw_line_pixel(t_line *line, t_cub *cub);
 void	update_line_position(t_line *line);
 
-/*prepare game */
-void	render_frame(t_cub *cub);
+/*player_movement*/
+void	move_player(t_cub *cub, t_player *player, char direction);
+void	rotate_player(t_player *player, char direction);
+
+/*hooks*/
+void	key_hook(mlx_key_data_t keycode, void *cub_ptr);
+void	hook_loop(void *cub_ptr);
+void	resize_callback(int32_t width, int32_t height, void *param);
+
+/*extras*/
+void	normalize_angle(float *angle);
+void	draw_line(t_cub *cub, int x, int y, float scale);
 
 /*raycasting*/
 void	render_view(t_cub *cub, t_player *player);
@@ -290,6 +296,10 @@ int		get_texture_color(t_cub *cub, mlx_texture_t *texture, t_raycasting *rc);
 void	print_map(t_cub *cub);
 void	render_floor_ceiling(t_cub *cub);
 
-void	resize_callback(int32_t width, int32_t height, void *param);
+/* UTILS/extra */
+char	*ft_strndup(const char *s1, size_t n);
+int		is_whitespace(char file);
+int		ft_isvalid_path_chars(int c);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

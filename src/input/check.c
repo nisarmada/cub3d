@@ -6,13 +6,13 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 18:35:30 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 20:34:16 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_file(int ac, char **av)
+static int	check_file(int ac, char **av)
 {
 	int	fd;
 
@@ -26,7 +26,7 @@ int	check_file(int ac, char **av)
 	return (fd);
 }
 
-char	*skip_empty_lines(int fd)
+static char	*skip_empty_lines(int fd)
 {
 	char	*next_line;
 
@@ -39,7 +39,7 @@ char	*skip_empty_lines(int fd)
 	return (next_line);
 }
 
-int	process_line(int fd, t_string *line, char *next_line)
+static int	process_line(int fd, t_string *line, char *next_line)
 {
 	line->line = next_line;
 	if (!check_line(line))
@@ -52,7 +52,7 @@ int	process_line(int fd, t_string *line, char *next_line)
 	return (1);
 }
 
-int	process_file(int fd)
+static int	process_file(int fd)
 {
 	t_string	line;
 	char		*next_line;

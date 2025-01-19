@@ -6,7 +6,7 @@
 /*   By: nikos <nikos@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 19:23:47 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 19:44:16 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 20:25:11 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ float	process_ray_hit(t_cub *cub, t_ray *r,
 			handle_horizontal_hit(r, rc);
 		else
 			handle_vertical_hit(r, rc);
-		return (calc_ray_distance(cub->player->x, cub->player->y, 
+		return (calc_ray_distance(cub->player->x, cub->player->y,
 				r->ray_x, r->ray_y));
 	}
 	return (-1);

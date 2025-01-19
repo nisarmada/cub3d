@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/19 17:09:57 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 20:17:27 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_cub	*allocate_cub(void)
 	return (cub);
 }
 
-static	void	parse_cub_file(char *filename, t_cub *cub) //check with error handling also
+static void	parse_cub_file(char *filename, t_cub *cub) //check with error handling also
 {
 	int		fd;
 	char	*line;

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 18:34:00 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 20:37:00 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,16 @@ int	is_cub_file(char *str)
 	return (1);
 }
 
-t_key_value	*split_in_two(char *str)
+static void	free_info(t_key_value *info)
+{
+	if (info)
+	{
+		free(info->key);
+		free(info);
+	}
+}
+
+static t_key_value	*split_in_two(char *str)
 {
 	int			i;
 	int			start;
@@ -56,14 +65,6 @@ t_key_value	*split_in_two(char *str)
 	return (free(info), NULL);
 }
 
-void	free_info(t_key_value *info)
-{
-	if (info)
-	{
-		free(info->key);
-		free(info);
-	}
-}
 
 int	check_line(t_string *line)
 {

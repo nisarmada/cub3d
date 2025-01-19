@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 18:52:46 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 20:23:32 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	check_surrounding(char **map, int row, int i, int width)
 
 static void	define_field_of_vision(t_cub *cub)
 {
-	cub->player->fov = M_PI / 3; //60o
+	cub->player->fov = M_PI / 3;
 	if (cub->player->orientation == 'E')
 		cub->player->angle = 0;
 	else if (cub->player->orientation == 'N')
@@ -101,7 +101,7 @@ int	valid_map_row(t_cub	*cub, int row)
 	return (1);
 }
 
-int valid_map(t_cub *cub, int height, int width)
+int	valid_map(t_cub *cub, int height, int width)
 {
 	int	row;
 

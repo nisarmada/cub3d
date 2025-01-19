@@ -6,11 +6,22 @@
 /*   By: elleneklund <elleneklund@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 20:11:20 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 20:11:40 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 20:26:52 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+float	calculate_scale(int map_width, int map_height)
+{
+	t_coord	scale_coord;
+	float	scale;
+
+	scale_coord.x = (float)300 / (map_width * TILE_SIZE);
+	scale_coord.y = (float)200 / (map_height * TILE_SIZE);
+	scale = fminf(scale_coord.x, scale_coord.y);
+	return (scale);
+}
 
 void	render_player(t_cub *cub, mlx_image_t *img, float scale)
 {
@@ -44,10 +55,8 @@ void	render_fov(t_player *player, t_cub *cub, float scale)
 	int		max_distance;
 	float	left_angle;
 	float	right_angle;
-	int		x_left;
-	int		y_left;
-	int		x_right;
-	int		y_right;
+	t_coord	left;
+	t_coord	right;
 
 	(void)cub;
 	max_distance = 400;
@@ -55,10 +64,10 @@ void	render_fov(t_player *player, t_cub *cub, float scale)
 	right_angle = player->angle - player->fov / 2;
 	normalize_angle(&left_angle);
 	normalize_angle(&right_angle);
-	x_left = (int)player->x * (int)scale + cos(left_angle) * max_distance;
-	y_left = (int)player->y * (int)scale - sin(left_angle) * max_distance;
-	x_right = (int)player->x * (int)scale + cos(right_angle) * max_distance;
-	y_right = (int)player->y * (int)scale - sin(right_angle) * max_distance;
-	draw_line(cub, x_left, y_left, scale);
-	draw_line(cub, x_right, y_right, scale);
+	left.x = (int)player->x * (int)scale + cos(left_angle) * max_distance;
+	left.y = (int)player->y * (int)scale - sin(left_angle) * max_distance;
+	right.x = (int)player->x * (int)scale + cos(right_angle) * max_distance;
+	right.y = (int)player->y * (int)scale - sin(right_angle) * max_distance;
+	draw_line(cub, (int)left.x, (int)left.y, scale);
+	draw_line(cub, (int)right.x, (int)right.y, scale);
 }

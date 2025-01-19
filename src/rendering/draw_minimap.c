@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 18:41:18 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 20:11:09 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 20:26:42 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,6 @@ void	draw_tile(mlx_image_t *img, t_coord *tile, float scale, int color)
 		}
 		i++;
 	}
-}
-
-
-float	 calculate_scale(int map_width, int map_height)
-{
-	t_coord	scale_coord;
-	float	scale;
-
-	scale_coord.x = (float)300 / (map_width * TILE_SIZE);
-	scale_coord.y = (float)200 / (map_height * TILE_SIZE);
-	scale = fminf(scale_coord.x, scale_coord.y);
-	return (scale);
 }
 
 int	determine_tile_color(char tile)

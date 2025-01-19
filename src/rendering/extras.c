@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 19:55:55 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 20:24:43 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	normalize_angle(float *angle)
 		*angle += 2 * M_PI;
 }
 
-void draw_line(t_cub *cub, int x, int y, float scale)
+void	draw_line(t_cub *cub, int x, int y, float scale)
 {
 	t_line	line;
 
