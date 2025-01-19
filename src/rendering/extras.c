@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/18 14:49:46 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 15:33:34 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,19 @@
 
 void normalize_angle(float *angle)
 {
-	while (*angle < 2 * M_PI)
+	*angle = fmod(*angle, 2 * M_PI);
+	if (*angle < 0)
 		*angle += 2 * M_PI;
-	while (*angle > 2 * M_PI)
-		*angle -= 2 * M_PI;
 }
+
+// void normalize_angle(float *angle)
+// {
+//     while (*angle < 0)
+//         *angle += 2 * M_PI;
+//     while (*angle > 2 * M_PI)
+//         *angle -= 2 * M_PI;
+// }
+
 
 void draw_line(t_cub *cub, int x, int y, float scale)
 {

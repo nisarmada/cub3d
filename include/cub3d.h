@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/15 18:55:00 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/19 15:09:51 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_cub
 	int		win_width;
 	int		win_height;
 	int		dist_pplane;
+	bool	first_render;
 	t_text	*text;
 	mlx_t	*mlx;
 	mlx_image_t	*img;

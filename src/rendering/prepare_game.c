@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/19 11:24:05 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 13:25:26 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,15 @@
 
 void	render_frame(t_cub *cub)
 {
-	static bool first_render = true;
+	// static bool first_render = true;
 
-	if (first_render)
+	if (cub->first_render)
 	{
 		if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
 			exit(EXIT_FAILURE);
-		first_render = false;
+		cub->first_render = false;
 	}
 	ft_memset(cub->img->pixels, 0, cub->img->width * cub->img->height * sizeof(int32_t));
-	// if (first_render)
-	// {
-	// 	render_floor_ceiling(cub); // maybe only need to be put one time
-	// 	first_render = false;
-	// }
 	render_3D_view(cub, cub->player);
 	float scale = render_map(cub->img, cub);
 	render_player(cub, cub->img, scale);
