@@ -6,7 +6,7 @@
 /*   By: elleneklund <elleneklund@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 16:57:31 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 17:03:30 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 18:21:10 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,32 @@ void	set_element_as_found(char *key, t_string *op_line)
 
 int	is_path_key(char *str)
 {
-	if(!ft_strcmp(str, "NO") || (!ft_strcmp(str, "SO")) \
+	if (!ft_strcmp(str, "NO") || (!ft_strcmp(str, "SO")) \
 	|| (!ft_strcmp(str, "WE")) || (!ft_strcmp(str, "EA")))
 		return (1);
 	return (0);
+}
+
+char	*trim_spaces(char *str)
+{
+	int		i;
+	int		j;
+	int		end;
+	char	*tmp;
+
+	end = ft_strlen(str) - 1;
+	j = end;
+	i = 0;
+	while (is_whitespace(str[i]))
+		i++;
+	while (j >= i && is_whitespace(str[j]))
+		j--;
+	if (i > j)
+		tmp = ft_strdup("");
+	else
+		tmp = ft_strndup(&str[i], j - i + 1);
+	if (!tmp)
+		return (NULL);
+	free (str);
+	return (tmp);
 }

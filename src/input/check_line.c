@@ -6,11 +6,33 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 16:55:35 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 18:34:00 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	init_line_struct(t_string *op_line)
+{
+	op_line->elem_count = 0;
+	op_line->SO = 0;
+	op_line->NO = 0;
+	op_line->EA = 0;
+	op_line->WE = 0;
+	op_line->F = 0;
+	op_line->C = 0;
+}
+
+int	is_cub_file(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (str[len - 1] != 'b' || str[len - 2] != 'u' || str[len - 3] != 'c' \
+	|| str[len - 4] != '.')
+		return (0);
+	return (1);
+}
 
 t_key_value	*split_in_two(char *str)
 {
@@ -36,8 +58,11 @@ t_key_value	*split_in_two(char *str)
 
 void	free_info(t_key_value *info)
 {
-	free(info->key);
-	free(info);
+	if (info)
+	{
+		free(info->key);
+		free(info);
+	}
 }
 
 int	check_line(t_string *line)
@@ -62,6 +87,8 @@ int	check_line(t_string *line)
 		free_info(info);
 		return (1);
 	}
-	free_info(info);
-	return (error_msg("only whitespace on line\n", 0)); // maybe we say this is fine?? 
+	// printf("should come here\n");
+	// free_info(info); //not allocated for if it doesnt enter the while loop
+	// error_msg("only whitespace on line\n", 0);
+	return (1); // maybe we say this is fine?? 
 }

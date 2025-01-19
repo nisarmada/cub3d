@@ -6,34 +6,33 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 17:03:25 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 18:24:51 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*trim_spaces(char *str)
+int	check_color_interval(char **colors, int i, char *value)
 {
-	int		i;
-	int		j;
-	int		end;
-	char	*tmp;
+	int	color_int;
 
-	end = ft_strlen(str) - 1;
-	j = end;
-	i = 0;
-	while (is_whitespace(str[i]))
-		i++;
-	while (j >= i && is_whitespace(str[j]))
-		j--;
-	if (i > j)
-		tmp = ft_strdup("");
-	else
-		tmp = ft_strndup(&str[i], j - i + 1);
-	if (!tmp)
-		return (NULL);
-	free (str);
-	return (tmp);
+	color_int = ft_atoi(colors[i]);
+	if (color_int > 255 || color_int < 0)
+	{
+		free_colors(colors, value);
+		return (error_msg("to big numbers\n", 0));
+	}
+	return (1);
+}
+
+int	check_arg_count(int i, char **colors, char *value)
+{
+	if (i > 3)
+	{
+		free_colors(colors, value); //this might not work.. 
+		return (error_msg("too many color args\n", 0));
+	}
+	return (1);
 }
 
 static int	check_color_value(char *value)
@@ -51,17 +50,16 @@ static int	check_color_value(char *value)
 		while (colors[i][j])
 		{
 			if (!ft_isdigit(colors[i][j]))
-				return (free_colors(colors, value), error_msg("nonnumeric char\n", 0)); //free 2 commas or more alters the color.. 
+				return (free_colors(colors, value), \
+				error_msg("nonnumeric char in color value\n", 0)); //2 commas or more alters the color.. 
 			j++;
 		}
-		if (ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
-			return (free_colors(colors, value), \
-			error_msg("to big numbers\n", 0));
+		if (!check_color_interval(colors, i, value))
+			return (0);
 		i++;
 	}
-	if (i > 3)
-		return (free_colors(colors, value), \
-		error_msg("too many color args\n", 0));
+	if (!check_arg_count(i, colors, value))
+		return (0);
 	free_colors(colors, value);
 	return (1);
 }
@@ -104,19 +102,18 @@ int	valid_key_and_value(t_key_value *info, t_string *line)
 		{
 			if (check_path_value(info->value))
 				return (set_element_as_found(info->key, line), 1);
-			return (0); // error msg?
+			return (0);
 		}
 	}
 	else if (len == 1)
 	{
-		if ((!ft_strcmp(info->key, "F") || !ft_strcmp(info->key, "C")) && elemnt_not_found(info->key, line))
+		if ((!ft_strcmp(info->key, "F") || !ft_strcmp(info->key, "C")) && \
+		elemnt_not_found(info->key, line))
 		{
 			if (check_color_value(info->value))
 				return (set_element_as_found(info->key, line), 1);
-			return (0); //error msg?
+			return (0);
 		}
 	}
 	return (printf("invalid id, %s\n", info->key), 0);
 }
-
-//11,460 def losxt

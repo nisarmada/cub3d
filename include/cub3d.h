@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 17:04:23 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 18:34:27 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,9 @@ int		is_path_key(char *str);
 void	free_colors(char **colors, char *value);
 int		error_msg(char *msg, int status);
 
+//check_line
+void	init_line_struct(t_string *op_line);
+int		is_cub_file(char *str);
 
 char	*trim_spaces(char *str);
 int		check_line(t_string *op_line);
