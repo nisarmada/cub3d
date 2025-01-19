@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/18 16:00:47 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 11:45:34 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void move_player(t_cub *cub, t_player *player, char direction)
 	int		y_tile;
 	float	new_x;
 	float	new_y;
+	float	padding;
+	float	check_x;
+	float	check_y;
 
 	move_x = 0;
 	move_y = 0;
@@ -48,13 +51,22 @@ void move_player(t_cub *cub, t_player *player, char direction)
 	new_x = player->x + move_x;
 	new_y = player->y + move_y;
 	// printf("Angle: %f, Direction: %c, Move_X: %f, Move_Y: %f\n", player->angle, direction, move_x, move_y);
-	x_tile = floor(new_x / TILE_SIZE); // Convert new position to tile coordinates
+	padding = TILE_SIZE * 0.2;
+	if (move_x > 0)
+    	check_x = new_x + padding;
+	else
+		check_x = new_x - padding;
+	if (move_y > 0)
+		check_y = new_y + padding;
+	else
+		check_y = new_y - padding;
+	x_tile = floor(check_x / TILE_SIZE); // Convert new position to tile coordinates
+	y_tile = floor(check_y / TILE_SIZE);
+	if (cub->map[y_tile][(int)floor(player->x / TILE_SIZE)] != '1')
+		player->y = new_y;
+	if (cub->map[(int)floor(player->y / TILE_SIZE)][x_tile] != '1')
+		player->x = new_x;
 	player->changed = 1;
-	y_tile = floor(new_y / TILE_SIZE);
-	if (cub->map[y_tile][x_tile] != '1') // if there's no wall in x axis update x-coordinate
-        player->x = new_x;
-    if (cub->map[y_tile][x_tile] != '1') // if there's no wall in y axis update y-coordinate
-        player->y = new_y;
 }
 
 void rotate_player(t_player *player, char direction)
@@ -119,14 +131,15 @@ void	resize_callback(int32_t width, int32_t height, void* param)
 	t_cub	*cub;
 
 	cub = (t_cub *)param;
-	// Recreate the image with the new size
 	if (cub->img)
 	{
 		mlx_delete_image(cub->mlx, cub->img);
 		cub->img = NULL;
 	}
-	// Update window dimensions in your application
-	//maybe add minimum width
+	if (width < 200)
+		width = 200;
+	if (height < 200)
+		height = 200;
 	cub->win_width = width;
 	cub->win_height = height;
 	cub->img = mlx_new_image(cub->mlx, cub->win_width, cub->win_height);
@@ -136,6 +149,7 @@ void	resize_callback(int32_t width, int32_t height, void* param)
     if (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0)
         free_and_exit_game(cub, EXIT_FAILURE);
 	ft_memset(cub->img->pixels, 0, cub->img->width * cub->img->height * sizeof(int32_t));
+	// render_floor_ceiling(cub);
 	render_3D_view(cub, cub->player);
 	float scale = render_map(cub->img, cub);
 	render_player(cub, cub->img, scale);

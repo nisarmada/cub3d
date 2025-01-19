@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/18 15:09:56 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 11:21:21 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void render_3D_view(t_cub *cub, t_player *player)
 	t_wall_direction	wall_direction;
 
 	// printf("hello\n");
-	render_floor_ceiling(cub);
+	render_floor_ceiling(cub); // maybe only need to be put one time
 	div = -M_PI / 6;
 	step = (M_PI / 3) / cub->win_width;
 	x = 0;

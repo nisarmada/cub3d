@@ -7,9 +7,8 @@ fix:
 fix:
 	- only go up to the wall, eyes can touch, thats it
 
--program gets slower when running it for a longer time
+-not optimized
 fix:
-	- look if memory is allocated while running the program, if so --> change so it doesnt
-	- optimize so no place on the screen is drawn more times than one
+	- optimize so no place on the screen is drawn more times than one, ceiling & floor only needs to be rendered once
 
 
