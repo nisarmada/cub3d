@@ -6,13 +6,13 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 17:12:12 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 18:52:46 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	valid_first_last_row(char **map, int row, int width)
+static int	valid_outer_row(char **map, int row, int width)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ static int	check_surrounding(char **map, int row, int i, int width)
 	cur = map[row];
 	up = map[row - 1];
 	down = map[row + 1];
-	if (i == width && cur[i] == '0') // maybe fixed the small error of having last one a 0 but in line with the 1s with this
+	if (i == width && cur[i] == '0')
 		return (0);
 	if (i != 0 && (cur[i - 1] != '1' && cur[i - 1] != ' '))
 		return (0);
@@ -79,40 +79,40 @@ static int	check_char(t_cub *cub, int row, int i)
 	return (1);
 }
 
+int	valid_map_row(t_cub	*cub, int row)
+{
+	int	i;
+
+	i = 0;
+	while (i < cub->map_width)
+	{
+		if (cub->map[row][i] == ' ')
+		{
+			if (!check_surrounding(cub->map, row, i, cub->map_width - 1))
+				return (printf("leak in map, row: %i, index: %i\n", row, i), 0);
+		}
+		else
+		{
+			if (!check_char(cub, row, i))
+				return (printf("invalid char in row:%i index:%i\n", row, i), 0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int valid_map(t_cub *cub, int height, int width)
 {
-	int		row;
-	int		i;
-	char	**map;
+	int	row;
 
-	map = cub->map;
-	if (!valid_first_last_row(map, 0, width) || \
-	!valid_first_last_row(map, height, width))
-	{
+	if (!valid_outer_row(cub->map, 0, width) || \
+	!valid_outer_row(cub->map, height, width))
 		return (error_msg("wrong first or last line\n", 0));
-	}
 	row = 1;
 	while (row < height - 1)
 	{
-		i = 0;
-		while (i < width)
-		{
-			if (map[row][i] == ' ')
-			{
-				if (!check_surrounding(map, row, i, cub->map_width - 1))
-				{
-					return (printf("leak in map, row: %i, index: %i\n", row, i), 0);
-				}
-			}
-			else
-			{
-				if (!check_char(cub, row, i))
-				{
-					return (printf("invalid char in row:%i index:%i\n", row, i), 0);
-				}
-			}
-			i++;
-		}
+		if (!valid_map_row(cub, row))
+			return (0);
 		row++;
 	}
 	if (!cub->player->orientation)
