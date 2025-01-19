@@ -6,66 +6,75 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 11:45:34 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 11:59:09 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void move_player(t_cub *cub, t_player *player, char direction)
+typedef struct s_float_x_y
 {
-	float	move_x;
-	float	move_y;
-	int		x_tile;
-	int		y_tile;
-	float	new_x;
-	float	new_y;
-	float	padding;
-	float	check_x;
-	float	check_y;
+	float	x;
+	float	y;
+}	t_float_x_y;
 
-	move_x = 0;
-	move_y = 0;
-	new_x = 0;
-	new_y = 0;
+void	movement(char direction, float player_angle, t_float_x_y *move)
+{
 	if (direction == 'W')
 	{
-		move_x = cos(player->angle) * MOVE_SPEED;
-		move_y = -sin(player->angle) * MOVE_SPEED;
+		move->x = cos(player_angle) * MOVE_SPEED;
+		move->y = -sin(player_angle) * MOVE_SPEED;
 	}
 	else if (direction == 'S')
 	{
-		move_x = -cos(player->angle) * MOVE_SPEED;
-		move_y = sin(player->angle) * MOVE_SPEED;
+		move->x = -cos(player_angle) * MOVE_SPEED;
+		move->y = sin(player_angle) * MOVE_SPEED;
 	}
 	else if (direction == 'A')
     {
-        move_x = sin(player->angle) * MOVE_SPEED;
-        move_y = cos(player->angle) * MOVE_SPEED;
+        move->x = sin(player_angle) * MOVE_SPEED;
+        move->y = cos(player_angle) * MOVE_SPEED;
     }
 	else if (direction == 'D')
     {
-        move_x = -sin(player->angle) * MOVE_SPEED;
-        move_y = -cos(player->angle) * MOVE_SPEED;
+        move->x = -sin(player_angle) * MOVE_SPEED;
+        move->y = -cos(player_angle) * MOVE_SPEED;
     }
-	new_x = player->x + move_x;
-	new_y = player->y + move_y;
-	// printf("Angle: %f, Direction: %c, Move_X: %f, Move_Y: %f\n", player->angle, direction, move_x, move_y);
+}
+
+void	get_check_pos(float new_x, float new_y, t_float_x_y *move, t_float_x_y *check)
+{
+	float	padding;
+
 	padding = TILE_SIZE * 0.2;
-	if (move_x > 0)
-    	check_x = new_x + padding;
+	if (move->x > 0)
+    	check->x = new_x + padding;
 	else
-		check_x = new_x - padding;
-	if (move_y > 0)
-		check_y = new_y + padding;
+		check->x = new_x - padding;
+	if (move->y > 0)
+		check->y = new_y + padding;
 	else
-		check_y = new_y - padding;
-	x_tile = floor(check_x / TILE_SIZE); // Convert new position to tile coordinates
-	y_tile = floor(check_y / TILE_SIZE);
+		check->y = new_y - padding;
+}
+
+void move_player(t_cub *cub, t_player *player, char direction)
+{
+	t_float_x_y move;
+	t_float_x_y	check;
+	t_float_x_y	new;
+	int		x_tile;
+	int		y_tile;
+
+	movement(direction, player->angle, &move);
+	new.x = player->x + move.x;
+	new.y = player->y + move.y;
+	get_check_pos(new.x, new.y, &move, &check);
+	x_tile = floor(check.x / TILE_SIZE); // Convert new position to tile coordinates
+	y_tile = floor(check.y / TILE_SIZE);
 	if (cub->map[y_tile][(int)floor(player->x / TILE_SIZE)] != '1')
-		player->y = new_y;
+		player->y = new.y;
 	if (cub->map[(int)floor(player->y / TILE_SIZE)][x_tile] != '1')
-		player->x = new_x;
+		player->x = new.x;
 	player->changed = 1;
 }
 
