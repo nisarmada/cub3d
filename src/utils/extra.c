@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/18 17:32:07 by eeklund       #+#    #+#                 */
-/*   Updated: 2024/11/18 19:46:28 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/19 18:53:27 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strndup(const char *s1, size_t n)
 	return (dup);
 }
 
-int is_whitespace(char c)
+int	is_whitespace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\f' || c == '\v'
 		|| c == '\n' || c == '\r');
@@ -61,4 +61,3 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
-
