@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 15:09:51 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 16:22:40 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void	free_and_exit_game(t_cub *cub, int status);
 t_cub	*init_parse_cub(char *filename);
 
 /* inout_check */
+int		error_msg(char *msg, int status);
 char	*trim_spaces(char *str);
 int		check_line(t_string *op_line);
 int		valid_key_and_value(t_key_value *info, t_string *op_line);

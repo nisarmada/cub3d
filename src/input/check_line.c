@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/15 20:01:26 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/19 16:23:14 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_key_value	*split_in_two(char *str)
 	{
 		info->key = ft_strndup(&str[start], i);
 		info->value = ft_strndup(&str[i], ft_strlen(str) - i);
-		// printf("in split\nid: %s\ninfo: %s\n", id_info->id, id_info->info);
 		return (info);
 	}
 	return (free(info), NULL);
@@ -38,7 +37,6 @@ t_key_value	*split_in_two(char *str)
 void	free_info(t_key_value *info)
 {
 	free(info->key);
-	// free(info->value); // this was the thing giving the double free, but whyyyyy??
 	free(info);
 }
 
@@ -57,14 +55,13 @@ int	check_line(t_string *line)
 	{
 		info = split_in_two(&cur_fileline[i]);
 		if (!info)
-			return (printf("have to divide id and info with space\n"), 0); // split the line in two parts, by the first whitespace/ space
+			return (error_msg("have to divide id and info with space\n", 0)); // split the line in two parts, by the first whitespace/ space
 		if (!valid_key_and_value(info, line)) // validate the identifier
 			return (free_info(info), 0);
 		line->elem_count++;
 		free_info(info);
-		// printf("hello\n");
 		return (1);
 	}
 	free_info(info);
-	return (printf("only whitespace on line\n"), 0); // maybe we say this is fine?? 
+	return (error_msg("only whitespace on line\n", 0)); // maybe we say this is fine?? 
 }

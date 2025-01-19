@@ -6,13 +6,13 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 15:32:10 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 16:21:11 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_colors(char **colors)
+void	free_colors(char **colors, char *value)
 {
 	int	i;
 
@@ -23,6 +23,13 @@ void	free_colors(char **colors)
 		i++;
 	}
 	free(colors);
+	free(value); // double check at codam
+}
+
+int	error_msg(char *msg, int status)
+{
+	ft_putstr_fd(msg, STDERR_FILENO);
+	return (status);
 }
 
 static int	check_color_value(char *value)
@@ -31,15 +38,7 @@ static int	check_color_value(char *value)
 	int			j;
 	char		**colors;
 
-	i = 0;
 	value = trim_spaces(value);
-	// printf("string after trim spaces |%s|\n", value);
-	// while (value[i])
-	// {
-	// 	if (!ft_isvalid_path_chars(value[i]))
-	// 		return (printf("invalid char in path\n"), 0);
-	// 	i++;
-	// }
 	colors = ft_split(value, ',');
 	i = 0;
 	while (colors[i])
@@ -48,33 +47,17 @@ static int	check_color_value(char *value)
 		while (colors[i][j])
 		{
 			if (!ft_isdigit(colors[i][j]))
-			{
-				free_colors(colors);
-				free(value);
-				return (printf("nonnumeric char\n"), 0); //free
-			}
+				return (free_colors(colors, value), error_msg("nonnumeric char\n", 0)); //free 2 commas or more alters the color.. 
 			j++;
 		}
 		if (ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
-		{
-			free_colors(colors);
-			free(value);
-			return (printf("to big nubmers\n"), 0); //free
-		}
+			return (free_colors(colors, value), error_msg("to big numbers\n", 0)); //free
 		i++;
 	}
 	if (i > 3)
-	{
-		printf("too many color args\n"); 
-		free_colors(colors);
-		free(value);
-		return (0);
-	}
-	free_colors(colors);
-	free(value);
+		return (free_colors(colors, value), error_msg("too many color args\n", 0));
+	free_colors(colors, value);
 	return (1);
-	// colors: split only numeric chars and commas else error and then split further by commas, 
-	// see thet it is valid numbers (0 - 255) 
 }
 
 char	*trim_spaces(char *str)
@@ -91,27 +74,13 @@ char	*trim_spaces(char *str)
 		i++;
 	while (j >= i && is_whitespace(str[j]))
 		j--;
-	// printf("int i: %i, int j: %i, int end: %i\n", i, j, end);
-	// if (i + j >= end)
-	// {
-	// 	printf("only spaces\n");
-	// 	return ;
-	// }
 	if (i > j)
-	{
-		tmp = (char *)malloc(1);
-		if (!tmp)
-			return NULL; // malloc failed
-		tmp[0] = '\0';
-	}
+		tmp = ft_strdup("");
 	else
-	{
-		// Correct length to allocate (j - i + 1) for inclusive range
 		tmp = ft_strndup(&str[i], j - i + 1);
-		if (!tmp) return NULL; // malloc failed
-	}
+	if (!tmp)
+		return (NULL); // malloc failed
 	free (str);
-	// printf("str in trim spaces: %s\n", str);
 	return (tmp);
 }
 
@@ -123,35 +92,23 @@ static int	check_path_value(char *value)
 
 	trimmed_value = trim_spaces(value);
 	i = 0;
-	// printf("str after trim spaces: %s\n", value);
 	while (trimmed_value[i])
 	{
 		if (!ft_isvalid_path_chars(trimmed_value[i]))
 		{
 			printf("invalid char in path, value[i] %c\n", trimmed_value[i]);
-			free(trimmed_value);
-			return (0);
+			return (free(trimmed_value), 0);
 		}
 		i++;
 	}
-	// printf("int max path %i\n", PATH_MAX);
 	if (i > PATH_MAX)
-	{
-		free(trimmed_value);
-		return (printf("too long path\n"), 0);
-	}
-	// printf("value %s\n", value);
+		return (free(trimmed_value), error_msg("too long path\n", 0));
 	fd = open(trimmed_value, O_RDONLY);
 	if (fd < 0)
-	{
-		perror("error opening file\n");
-		free(trimmed_value);
-		return (0);
-	}
+		return (free(trimmed_value), error_msg("error opening file\n", 0));
 	close (fd);
 	free(trimmed_value);
 	return (1);
-	// paths: validate the path and if there are more paths also error
 }
 
 int	elemnt_not_found(char *key, t_string *op_line)
@@ -206,7 +163,7 @@ int	valid_key_and_value(t_key_value *info, t_string *line)
 		{
 			if (check_path_value(info->value))
 				return (set_element_as_found(info->key, line), 1);
-			return (0);
+			return (0); // error msg?
 		}
 	}
 	else if (len == 1)
@@ -215,7 +172,7 @@ int	valid_key_and_value(t_key_value *info, t_string *line)
 		{
 			if (check_color_value(info->value))
 				return (set_element_as_found(info->key, line), 1);
-			return (0);
+			return (0); //error msg?
 		}
 	}
 	return (printf("invalid id, %s\n", info->key), 0);
