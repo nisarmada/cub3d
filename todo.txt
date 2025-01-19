@@ -12,3 +12,8 @@ fix:
 	- optimize so no place on the screen is drawn more times than one, ceiling & floor only needs to be rendered once
 
 
+input
+validate map
+utils
+rendering
+player move
