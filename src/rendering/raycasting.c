@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/18 18:19:35 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/19 18:53:32 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,58 +141,51 @@ void	calc_new_dist(t_ray *r, int is_x)
 	}
 }
 
-float	cast_single_ray(t_cub *cub, float ray_angle, float *wall_hit_position,
-	t_wall_direction *wall_direction)
+float   cast_single_ray(t_cub *cub, t_raycasting *rc)
 {
-	t_ray		r;
-	t_player	*player;
+    t_ray       r;
+    t_player    *player;
 
-	player = cub->player;
-	init_param_ray(player, &r, ray_angle);
-	calc_start_dist(&r);
-	while (1)
-	{
-		if (r.distance_x < r.distance_y)
-		{
-			calc_new_dist(&r, 1);
-			// Consistent map access with y, x order
-			if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
-				r.tile_x >= 0 && r.tile_x < cub->map_width && 
-				cub->map[r.tile_y][r.tile_x] == '1') // Vertical wall
-			{
-				*wall_hit_position = (float)fmod(r.ray_y,
-						TILE_SIZE) / TILE_SIZE;
-				if (r.dir_x < 0) // Left wall
-				{
-					*wall_hit_position = 1.0 - *wall_hit_position;
-					*wall_direction = WEST;
-				}
-				else
-					*wall_direction = EAST;
-				return (calc_ray_distance(player->x,
-						player->y, r.ray_x, r.ray_y));
-			}
-		}
-		else // Horizontal wall
-		{
-			calc_new_dist(&r, 0);
-			// Consistent map access with y, x order
-			if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
-				r.tile_x >= 0 && r.tile_x < cub->map_width && 
-				cub->map[r.tile_y][r.tile_x] == '1')  // wall hit
-			{
-				*wall_hit_position = (float)fmod(r.ray_x,
-						TILE_SIZE) / TILE_SIZE;
-				if (r.dir_y > 0)
-				{
-					*wall_hit_position = 1.0 - *wall_hit_position;
-					*wall_direction = SOUTH;
-				}
-				else
-					*wall_direction = NORTH;
-				return (calc_ray_distance(player->x,
-						player->y, r.ray_x, r.ray_y));
-			}
-		}
-	}
+    player = cub->player;
+    init_param_ray(player, &r, rc->ray_angle);
+    calc_start_dist(&r);
+    while (1)
+    {
+        if (r.distance_x < r.distance_y)
+        {
+            calc_new_dist(&r, 1);
+            if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
+                r.tile_x >= 0 && r.tile_x < cub->map_width && 
+                cub->map[r.tile_y][r.tile_x] == '1')
+            {
+                rc->wall_hit_position = (float)fmod(r.ray_y, TILE_SIZE) / TILE_SIZE;
+                if (r.dir_x < 0)
+                {
+                    rc->wall_hit_position = 1.0 - rc->wall_hit_position;
+                    rc->wall_direction = WEST;
+                }
+                else
+                    rc->wall_direction = EAST;
+                return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
+            }
+        }
+        else
+        {
+            calc_new_dist(&r, 0);
+            if (r.tile_y >= 0 && r.tile_y < cub->map_height && 
+                r.tile_x >= 0 && r.tile_x < cub->map_width && 
+                cub->map[r.tile_y][r.tile_x] == '1')
+            {
+                rc->wall_hit_position = (float)fmod(r.ray_x, TILE_SIZE) / TILE_SIZE;
+                if (r.dir_y > 0)
+                {
+                    rc->wall_hit_position = 1.0 - rc->wall_hit_position;
+                    rc->wall_direction = SOUTH;
+                }
+                else
+                    rc->wall_direction = NORTH;
+                return (calc_ray_distance(player->x, player->y, r.ray_x, r.ray_y));
+            }
+        }
+    }
 }

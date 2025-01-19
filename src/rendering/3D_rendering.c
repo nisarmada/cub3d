@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 17:11:11 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/19 19:13:35 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,23 @@ draw vertical line on the corresponding column on projection plane
 
 void	render_view(t_cub *cub, t_player *player)
 {
-	float	distorted_distance;
-	float	correct_dist;
-	float	div;
-	float	ray_angle;
-	float	step;
-	int		x;
-	float	wall_hit_position;
-	t_wall_direction	wall_direction;
+	t_raycasting	rc;
+	float			div;
+	float			step;
 
 	render_floor_ceiling(cub);
 	div = -M_PI / 6;
 	step = (M_PI / 3) / cub->win_width;
-	x = 0;
-	while (x < cub->win_width)
+	rc.x = 0;
+	while (rc.x < cub->win_width)
 	{
-		ray_angle = player->angle + div;
-		normalize_angle(&(ray_angle));
-		distorted_distance = cast_single_ray(cub, ray_angle,
-				&wall_hit_position, &wall_direction);
-		correct_dist = distorted_distance * cos(div);
-		render_wallslice(cub, correct_dist, x,
-			wall_hit_position, wall_direction);
+		rc.ray_angle = player->angle + div;
+		normalize_angle(&(rc.ray_angle));
+		rc.distorted_distance = cast_single_ray(cub, &rc);
+		rc.correct_dist = rc.distorted_distance * cos(div);
+		render_wallslice(cub, &rc);
 		div += step;
-		x++;
+		rc.x++;
 	}
 }
 
@@ -66,9 +59,8 @@ void	render_floor_ceiling(t_cub *cub)
 	int		y;
 
 	x = 0;
-	while (x < cub->win_width) 
+	while (x < cub->win_width)
 	{
-		// Render the ceiling (top half of the screen)
 		y = 0;
 		// printf("cub win width %i\n", cub->win_width);
 		while (y < cub->win_height / 2)
@@ -100,90 +92,64 @@ mlx_texture_t *wall_texture_direction(t_cub *cub, t_wall_direction *wall_directi
 	return (cub->text->no);
 }
 
-static uint32_t	*wall_text_dir_pixels(t_cub *cub, t_wall_direction wall_direction)
+void	render_wallslice(t_cub *cub, t_raycasting *rc)
 {
-	if (wall_direction == NORTH)
-		return ((uint32_t *)cub->text->no_img->pixels);
-	else if (wall_direction == SOUTH)
-		return ((uint32_t *)cub->text->so_img->pixels);
-	else if (wall_direction == EAST)
-		return ((uint32_t *)cub->text->ea_img->pixels);
-	else
-		return ((uint32_t *)cub->text->we_img->pixels);
-}
+	int				start_y;
+	int				end_y;
+	int				y;
+	int				color;
+	mlx_texture_t	*texture;
 
-void	render_wallslice(t_cub *cub, float dist, int x, float wall_hit_position, t_wall_direction wall_direction)
-{
-	float	line_height;
-    int		start_y;
-    int		end_y;
-	int		y;
-	int		text_x;
-	int		text_y;
-	int		color;
-	mlx_texture_t *texture;
-
-	texture = wall_texture_direction(cub, &wall_direction);
-	// Calculate the projected wall slice height using the distance to the wall and distance to the projection plane
-	line_height = (TILE_SIZE / dist) * cub->dist_pplane;
-	if (line_height > cub->win_height) //make sure its not rendering off screen
-		line_height = cub->win_height;
-	// Calculate the vertical position (y-coordinates) on the screen to render the slice
-    start_y = (cub->win_height / 2) - ((int)line_height / 2);
-    end_y = start_y + (int)line_height;
-	// Ensure the coordinates are within screen bounds
-    if (start_y < 0)
+	texture = wall_texture_direction(cub, &rc->wall_direction);
+	rc->line_height = (TILE_SIZE / rc->correct_dist) * cub->dist_pplane;
+	if (rc->line_height > cub->win_height)
+		rc->line_height = cub->win_height;
+	start_y = (cub->win_height / 2) - ((int)rc->line_height / 2);
+	end_y = start_y + (int)rc->line_height;
+	if (start_y < 0)
 		start_y = 0;
-    if (end_y > cub->win_height)
+	if (end_y > cub->win_height)
 		end_y = cub->win_height;
-	text_x = (x % TILE_SIZE);
-	text_x = (int)(wall_hit_position * texture->width) % texture->width;
+	rc->text_x = (int)(rc->wall_hit_position * texture->width) % texture->width;
 	y = start_y;
-	// Render the wall slice as a vertical line on the screen
-    while (y < end_y)
+	while (y < end_y)
 	{
-		text_y = ((y - start_y) * texture->height) / (int)line_height;
-		color = get_texture_color(cub, text_x, text_y, texture, wall_direction);
-		// printf("color is %i\n", color);
-        mlx_put_pixel(cub->img, x, y, color);
+		rc->text_y = ((y - start_y) * texture->height) / (int)rc->line_height;
+		color = get_texture_color(cub, texture, rc);
+		mlx_put_pixel(cub->img, rc->x, y, color);
 		y++;
 	}
-	//closer to the wall --> bigger number
-	// printf("height %f\n", line_height);
 }
 
 //Check this function again to understand
-int get_texture_color(t_cub *cub, int text_x, int text_y, mlx_texture_t *texture, t_wall_direction wall_direction)
-{
-    uint32_t *pixels;
-	uint32_t argb_color;
-	uint8_t		alpha;
-	uint8_t		red;
-	uint8_t		green;
-	uint8_t		blue;
+// int get_texture_color(t_cub *cub, mlx_texture_t *texture, t_raycasting *rc)
+// {
+//     uint32_t *pixels;
+// 	uint32_t argb_color;
+// 	uint8_t		alpha;
+// 	uint8_t		red;
+// 	uint8_t		green;
+// 	uint8_t		blue;
 
-    // Bounds check (clamping to texture dimensions)
-    if (text_x < 0)
-		text_x = 0;
-    if (text_x >= (int)texture->width)
-		text_x = texture->width - 1;
-    if (text_y < 0)
-		text_y = 0;
-    if (text_y >= (int)texture->height)
-		text_y = texture->height - 1;
-
-	pixels = wall_text_dir_pixels(cub, wall_direction);
-	// Extract RGBA components
-	argb_color = pixels[text_y * texture->width + text_x];
-	//Convert to RGBA color
-	red = (argb_color >> 0) & 0xFF;    // Blue channel
-	blue = (argb_color >> 16) & 0xFF; // Red channel
-	green = (argb_color >> 8) & 0xFF; // Green channel
-	alpha = (argb_color >> 24) & 0xFF; // Alpha channel
-
-    // Return RGBA
-	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
-}
+//     // Bounds check (clamping to texture dimensions)
+//     if (rc->text_x < 0)
+// 		rc->text_x = 0;
+//     if (rc->text_x >= (int)texture->width)
+// 		rc->text_x = texture->width - 1;
+//     if (rc->text_y < 0)
+// 		rc->text_y = 0;
+//     if (rc->text_y >= (int)texture->height)
+// 		rc->text_y = texture->height - 1;
+// 	pixels = wall_text_dir_pixels(cub, rc->wall_direction);
+// 	// Extract RGBA components
+// 	argb_color = pixels[rc->text_y * texture->width + rc->text_x];
+// 	//Convert to RGBA color
+// 	red = (argb_color >> 0) & 0xFF;    // Blue channel
+// 	blue = (argb_color >> 16) & 0xFF; // Red channel
+// 	green = (argb_color >> 8) & 0xFF; // Green channel
+// 	alpha = (argb_color >> 24) & 0xFF; // Alpha channel
+// 	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
+// }
 
 /*
 OPTIMIZATON
