@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   draw_miniplayer.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 20:11:20 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 20:26:52 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 12:17:42 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 float	calculate_scale(int map_width, int map_height)
 {

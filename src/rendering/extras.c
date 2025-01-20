@@ -6,11 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 20:24:43 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 12:16:32 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 void	normalize_angle(float *angle)
 {
@@ -19,21 +19,6 @@ void	normalize_angle(float *angle)
 		*angle += 2 * M_PI;
 }
 
-void	draw_line(t_cub *cub, int x, int y, float scale)
-{
-	t_line	line;
-
-	init_line_1(&line, cub, scale);
-	init_line_2(&line, x, y);
-	init_line_direction(&line);
-	while (1)
-	{
-		draw_line_pixel(&line, cub);
-		if (line.x0 == x && line.y0 == y)
-			break ;
-		update_line_position(&line);
-	}
-}
 
 static uint32_t	*wall_text_dir_pixels(t_cub *cub,
 	t_wall_direction wall_direction)
@@ -73,4 +58,20 @@ int	get_texture_color(t_cub *cub, mlx_texture_t *texture, t_raycasting *rc)
 	color.alpha = (argb_color >> 24) & 0xFF; // Alpha channel
 	return ((color.red << 24) | (color.green << 16)
 		| (color.blue << 8) | color.alpha);
+}
+
+void	draw_line(t_cub *cub, int x, int y, float scale)
+{
+	t_line	line;
+
+	init_line_1(&line, cub, scale);
+	init_line_2(&line, x, y);
+	init_line_direction(&line);
+	while (1)
+	{
+		draw_line_pixel(&line, cub);
+		if (line.x0 == x && line.y0 == y)
+			break ;
+		update_line_position(&line);
+	}
 }

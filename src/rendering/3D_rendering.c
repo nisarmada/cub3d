@@ -6,11 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 19:18:50 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/20 11:46:26 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 // correct_dist = distorted_dist * cos(angle_from distorted ray to middle_ray) because: cos(b) = correct_dist/distorted_dist
 // (30 degrees for the leftmost ray and -30 degrees for the right most ray)

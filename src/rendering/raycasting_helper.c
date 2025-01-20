@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   raycasting_helper.c                                :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nikos <nikos@student.codam.nl>               +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 19:23:47 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 20:25:11 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 11:40:36 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 void	handle_horizontal_hit(t_ray *r, t_raycasting *rc)
 {

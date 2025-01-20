@@ -6,11 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 18:41:18 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 20:26:42 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 11:39:19 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 void	draw_tile(mlx_image_t *img, t_coord *tile, float scale, int color)
 {
@@ -37,17 +37,11 @@ int	determine_tile_color(char tile)
 	else if (tile == '0')
 		return (FLOOR_COLOR);
 	else if (tile == ' ')
-		return (INACCESSIBLE_COLOR);
+		return (WALL_COLOR);
 	else if (!ft_strchr("NSWE", tile))
 		return (FLOOR_COLOR);
 	return (FLOOR_COLOR);
 }
-
-typedef struct s_render_context
-{
-	float		scale;
-	mlx_image_t	*img;
-}	t_render_context;
 
 void	render_map_tile(int row, int col, t_cub *cub, t_render_context *context)
 {

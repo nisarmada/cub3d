@@ -6,11 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/19 19:59:00 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/20 12:04:39 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 void	render_frame(t_cub *cub)
 {
@@ -55,7 +55,7 @@ int	load_textures(t_cub *cub)
 	return (1);
 }
 
-void	init_mlx(t_cub *cub)
+static void	init_mlx(t_cub *cub)
 {
 	cub->mlx = mlx_init(cub->win_width, cub->win_height, "Cub3d", true);
 	if (!cub->mlx)

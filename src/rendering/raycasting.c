@@ -6,11 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/19 19:25:43 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/20 11:43:48 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 /* OPTIMIZATION
 all calcs that are same every rendering should be caluclated only once!

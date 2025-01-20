@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   hooks.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 19:03:23 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 20:07:14 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 11:56:23 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 void	key_hook(mlx_key_data_t keycode, void *cub_ptr)
 {

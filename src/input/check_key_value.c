@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 18:24:51 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 11:24:55 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_color_interval(char **colors, int i, char *value)
 	if (color_int > 255 || color_int < 0)
 	{
 		free_colors(colors, value);
-		return (error_msg("to big numbers\n", 0));
+		return (error_msg("to big color value, only accept between 0-255\n", 0));
 	}
 	return (1);
 }

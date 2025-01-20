@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   draw_line.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nikos <nikos@student.codam.nl>               +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 19:46:05 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/19 19:55:49 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/20 12:15:46 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
