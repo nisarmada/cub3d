@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 18:41:18 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 11:39:19 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/20 17:05:26 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	render_map_grid(t_render_context *context, t_cub *cub)
 float	render_map(mlx_image_t *img, t_cub *cub)
 {
 	t_render_context	context;
+
 
 	context.img = img;
 	context.scale = calculate_scale(cub->map_width, cub->map_height);

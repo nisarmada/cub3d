@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/20 12:49:28 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/20 16:39:59 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,21 @@ int	is_map_line(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if (line[i] == '\0' || line[i] == '\n')
-		return (0);
-	while (line[i])
+	if (line)
 	{
-		if (!is_map_char(line[i]) && line[i] != '\n')
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		if (line[i] == '\0' || line[i] == '\n')
 			return (0);
-		i++;
+		while (line[i])
+		{
+			if (!is_map_char(line[i]) && line[i] != '\n')
+				return (0);
+			i++;
+		}
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 void	map_parsing(char *line, t_cub *cub, int j)
