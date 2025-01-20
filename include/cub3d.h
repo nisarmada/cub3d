@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 16:54:26 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/20 19:30:21 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@
 
 typedef struct s_player
 {
-	int		x;
-	int		y;
+	float	x;
+	float	y;
 	char	orientation;
 	float	angle;
 	float	fov;
