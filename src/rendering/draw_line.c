@@ -6,11 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 19:46:05 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/20 12:15:46 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/20 12:29:41 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "rendering.h"
 
 void	init_line_1(t_line *line, t_cub *cub, float scale)
 {

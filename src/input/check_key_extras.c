@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   check_key_extras.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 16:57:31 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 18:21:10 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 12:34:39 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "input.h"
 
 int	elemnt_not_found(char *key, t_string *op_line)
 {

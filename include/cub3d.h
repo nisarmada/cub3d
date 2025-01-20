@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 12:08:09 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/20 12:48:56 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,9 @@
 // #endif
 
 # define GREEN 0x00FF00FF
-// #define FLOOR_COLOR 0xDCE4E8FF  // Light blue-grey
-// #define CEILING_COLOR 0x4B4B4BFF  // Dark grey
-// #define WALL_COLOR 0x888888FF  // Light grey
-// #define INACCESSIBLE_COLOR 0x000000FF  // Black or grey
-// #define TILE_SIZE 32
-// #define MOVE_SPEED 2.5
-// #define ROTATION_SPEED 0.05
 
 #define TILE_SIZE 32
+
 #define WIN_HEIGHT 600
 #define WIN_WIDTH 800
 #define	MINI_TILE 32 * 0.4
@@ -44,44 +38,6 @@
 #define MINIMAP_OFFSET_Y 10
 #define MINI_HEIGHT 200
 #define MINI_WIDTH 200
-
-// typedef struct s_raycast
-// {
-// 	float	distance;
-// 	int		tile_x;
-// 	int		tile_y;
-// }	t_raycast;
-
-typedef struct s_key_value
-{
-	char	*key;
-	char	*value;
-}	t_key_value;
-
-// typedef struct s_coord
-// {
-// 	float	x;
-// 	float	y;
-// }	t_coord;
-
-// typedef struct s_render_context
-// {
-// 	float		scale;
-// 	mlx_image_t	*img;
-// }	t_render_context;
-
-typedef struct	s_string
-{
-	char	*line;
-	int		elem_count;
-	int		SO;
-	int		NO;
-	int		WE;
-	int		EA;
-	int		F;
-	int		C;
-	t_key_value	*info;
-}	t_string;
 
 typedef struct s_player
 {
@@ -92,14 +48,6 @@ typedef struct s_player
 	float	fov;
 	int		changed;
 }	t_player;
-
-// typedef enum e_wall_direction
-// {
-// 	NORTH,
-// 	SOUTH,
-// 	EAST,
-// 	WEST
-// } t_wall_direction ;
 
 typedef struct s_text
 {
@@ -139,58 +87,6 @@ typedef struct s_cub
 	t_player	*player;
 }	t_cub;
 
-// typedef struct s_ray
-// {
-// 	float	ray_x; // starting position x
-// 	float	ray_y; // starting poisition y
-// 	float	dir_x; // direction in x axis
-// 	float	dir_y; // direction in y axis
-// 	int		tile_x; // tile normalization
-// 	int		tile_y;
-// 	int		step_x; // determine if we're moving in x or y axis
-// 	int		step_y;
-// 	float	delta_x; // differential with respect to x
-// 	float	delta_y;
-// 	float	distance_x; //distance to next vertical border
-// 	float	distance_y; // d3istance to next horizontal border
-// }	t_ray;
-
-typedef struct s_slice
-{
-	int	x; //the x coordinate of line relative to screen
-	int	y; //the current pixel index of the line (along y axis)
-	int	start_y; //y start index of drawing texture
-	int	end_y; //y end index of drawing texture
-	int	text_x; //x coordinate of texture to draw
-	int	text_y; //y coordinate of texture to draw
-}	t_slice;
-
-// typedef struct s_raycasting
-// {
-// 	float           ray_angle;
-// 	float           wall_hit_position;
-// 	t_wall_direction wall_direction;
-// 	float           distorted_distance;
-// 	float           correct_dist;
-// 	int             x;              // For render_wallslice
-// 	float           line_height;    // For render_wallslice
-// 	int             text_x;         // For render_wallslice
-// 	int             text_y;         // For render_wallslice
-// } t_raycasting;
-
-typedef struct s_line
-{
-    int x0;
-    int y0;
-    int x;
-    int y;
-    int dx;
-    int dy;
-    int sx;
-    int sy;
-    int err;
-} t_line;
-
 typedef struct s_rgb
 {
 	int			r;
@@ -208,36 +104,18 @@ void	map_parsing(char *line, t_cub *cub, int j);
 void	free_map(char **map);
 void	free_cub(t_cub *cub);
 void	free_and_exit_game(t_cub *cub, int status);
-t_cub	*init_parse_cub(char *filename);
+t_cub	*init_cub(char *filename);
 
 /* INPUT */
-
 int		valid_input(int ac, char **av);
 
-//check_key_extras
-int		elemnt_not_found(char *key, t_string *op_line);
-void	set_element_as_found(char *key, t_string *op_line);
-int		is_path_key(char *str);
-
-//free and error
-void	free_colors(char **colors, char *value);
 int		error_msg(char *msg, int status);
-
-//check_line
-void	init_line_struct(t_string *op_line);
-int		is_cub_file(char *str);
-
-char	*trim_spaces(char *str);
-int		check_line(t_string *op_line);
-int		valid_key_and_value(t_key_value *info, t_string *op_line);
 
 /* PARSING */
 
-/* directions_parsing */
-void	parse_directions(char *line, t_cub *cub);
-
 /* map parsing*/
 int		is_map_line(char *line);
+void	parse_directions(char *line, t_cub *cub);
 int		valid_map(t_cub *cub, int height, int width);
 
 /* RENDERING */

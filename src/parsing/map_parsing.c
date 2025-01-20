@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/18 18:02:11 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/20 12:49:28 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,6 @@ int	is_map_line(char *line)
 		i++;
 	}
 	return (1);
-}
-
-void	allocate_map(char *filename, t_cub *cub)
-{
-	int		fd;
-	char	*line;
-	int		rows;
-
-	fd = open(filename, O_RDONLY);
-	rows = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (is_map_line(line))
-			break ;
-		free(line);
-		line = get_next_line(fd);
-	}
-	while (line)
-	{
-		if (!cub->map_width || ft_strlen(line) - 1 > (size_t)cub->map_width)
-			cub->map_width = ft_strlen(line) - 1;
-		free(line);
-		line = get_next_line(fd);
-		rows++;
-	}
-	cub->map_height = rows - 1;
-	cub->map = malloc(sizeof(char *) * (rows + 1));
-	close(fd);
 }
 
 void	map_parsing(char *line, t_cub *cub, int j)

@@ -6,11 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 20:37:00 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 12:34:20 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "input.h"
 
 void	init_line_struct(t_string *op_line)
 {

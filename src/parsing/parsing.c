@@ -6,35 +6,39 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/19 20:17:27 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 12:50:04 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
-static t_cub	*allocate_cub(void)
+void	allocate_map(char *filename, t_cub *cub)
 {
-	t_cub	*cub;
+	int		fd;
+	char	*line;
+	int		rows;
 
-	cub = malloc(sizeof(t_cub));
-	if (!cub)
-		return (NULL);
-	cub->player = malloc(sizeof(t_player));
-	if (!cub->player)
+	fd = open(filename, O_RDONLY);
+	rows = 0;
+	line = get_next_line(fd);
+	while (line)
 	{
-		free(cub);
-		return (NULL);
+		if (is_map_line(line))
+			break ;
+		free(line);
+		line = get_next_line(fd);
 	}
-	cub->player->orientation = '\0';
-	cub->text = malloc(sizeof(t_text));
-	if (!cub->text)
+	while (line)
 	{
-		free(cub->player);
-		free(cub);
-		return (NULL);
+		if (!cub->map_width || ft_strlen(line) - 1 > (size_t)cub->map_width)
+			cub->map_width = ft_strlen(line) - 1;
+		free(line);
+		line = get_next_line(fd);
+		rows++;
 	}
-	cub->map_width = 0;
-	return (cub);
+	cub->map_height = rows - 1;
+	cub->map = malloc(sizeof(char *) * (rows + 1));
+	close(fd);
 }
 
 static void	parse_cub_file(char *filename, t_cub *cub) //check with error handling also
@@ -67,7 +71,32 @@ static void	parse_cub_file(char *filename, t_cub *cub) //check with error handli
 	close(fd);
 }
 
-t_cub	*init_parse_cub(char *filename)
+static t_cub	*allocate_cub(void)
+{
+	t_cub	*cub;
+
+	cub = malloc(sizeof(t_cub));
+	if (!cub)
+		return (NULL);
+	cub->player = malloc(sizeof(t_player));
+	if (!cub->player)
+	{
+		free(cub);
+		return (NULL);
+	}
+	cub->player->orientation = '\0';
+	cub->text = malloc(sizeof(t_text));
+	if (!cub->text)
+	{
+		free(cub->player);
+		free(cub);
+		return (NULL);
+	}
+	cub->map_width = 0;
+	return (cub);
+}
+
+t_cub	*init_cub(char *filename)
 {
 	t_cub	*cub;
 	int		i;

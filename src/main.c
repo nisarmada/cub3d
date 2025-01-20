@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/18 18:20:36 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/20 12:46:26 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int ac, char **av)
 	filename = av[1];
 	if (!valid_input(ac, av))
 		return (1);
-	cub = init_parse_cub(filename);
+	cub = init_cub(filename);
 	if (!cub)
 		return (1);
 	if (!valid_map(cub, cub->map_height, cub->map_width))

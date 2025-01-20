@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 20:23:32 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 12:38:03 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	check_char(t_cub *cub, int row, int i)
 	return (1);
 }
 
-int	valid_map_row(t_cub	*cub, int row)
+static int	valid_map_row(t_cub	*cub, int row)
 {
 	int	i;
 

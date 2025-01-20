@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   free_error_input.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 16:57:54 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 17:04:48 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 12:34:05 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

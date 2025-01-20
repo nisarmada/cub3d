@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 11:28:53 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 12:16:49 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/20 12:29:27 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,28 @@ typedef struct s_coord
 	float	y;
 }	t_coord;
 
+typedef struct s_slice
+{
+	int	x; //the x coordinate of line relative to screen
+	int	y; //the current pixel index of the line (along y axis)
+	int	start_y; //y start index of drawing texture
+	int	end_y; //y end index of drawing texture
+	int	text_x; //x coordinate of texture to draw
+	int	text_y; //y coordinate of texture to draw
+}	t_slice;
+
+typedef struct s_line
+{
+	int	x0;
+	int	y0;
+	int	x;
+	int	y;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+} t_line;
 
 typedef enum e_wall_direction
 {

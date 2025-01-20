@@ -6,11 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/20 11:24:55 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/20 12:34:32 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "input.h"
 
 int	check_color_interval(char **colors, int i, char *value)
 {
