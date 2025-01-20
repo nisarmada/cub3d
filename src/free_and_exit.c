@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   errors_free_and_exit.c                             :+:    :+:            */
+/*   free_and_exit.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 14:12:13 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/19 18:53:08 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/20 13:00:28 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_map(char **map)
+static void	free_map(char **map)
 {
 	int	i;
 

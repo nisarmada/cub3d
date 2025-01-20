@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 12:48:56 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/20 13:02:01 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,38 +98,29 @@ typedef struct s_rgb
 	uint8_t		blue;
 }	t_rgb;
 
-void	parse_colors(char *line, t_cub *cub);
-void	allocate_map(char *filename, t_cub *cub);
-void	map_parsing(char *line, t_cub *cub, int j);
-void	free_map(char **map);
-void	free_cub(t_cub *cub);
-void	free_and_exit_game(t_cub *cub, int status);
-t_cub	*init_cub(char *filename);
-
 /* INPUT */
-int		valid_input(int ac, char **av);
-
+int		valid_input(int ac, char **av); //I main
 int		error_msg(char *msg, int status);
 
 /* PARSING */
-
-/* map parsing*/
+t_cub	*init_cub(char *filename); //i main
 int		is_map_line(char *line);
 void	parse_directions(char *line, t_cub *cub);
-int		valid_map(t_cub *cub, int height, int width);
+int		valid_map(t_cub *cub, int height, int width); //i main
+void	allocate_map(char *filename, t_cub *cub);
+void	map_parsing(char *line, t_cub *cub, int j);
+void	parse_colors(char *line, t_cub *cub);
 
 /* RENDERING */
-int		render_game(t_cub *cub);
-
-// /*hooks*/
-void	key_hook(mlx_key_data_t keycode, void *cub_ptr);
-void	hook_loop(void *cub_ptr);
-void	resize_callback(int32_t width, int32_t height, void *param);
+int		render_game(t_cub *cub); //i main
 
 /* UTILS/extra */
 char	*ft_strndup(const char *s1, size_t n);
 int		is_whitespace(char file);
 int		ft_isvalid_path_chars(int c);
 int		ft_strcmp(const char *s1, const char *s2);
+
+/* FREE AND EXIT */
+void	free_cub(t_cub *cub); //i main
 
 #endif
