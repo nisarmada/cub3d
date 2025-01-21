@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/20 12:34:32 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/21 12:23:25 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,19 @@ int	check_color_interval(char **colors, int i, char *value)
 
 int	check_arg_count(int i, char **colors, char *value)
 {
+	int	j;
+
 	if (i > 3)
 	{
-		free_colors(colors, value); //this might not work.. 
+		free_colors(colors, value);
 		return (error_msg("too many color args\n", 0));
+	}
+	j = 0;
+	while (value[j] && value[j + 1])
+	{
+		if (value[j] == ',' && value[j] == value[j + 1])
+			return (error_msg("adjacent commas\n", 0));
+		j++;
 	}
 	return (1);
 }
@@ -51,7 +60,7 @@ static int	check_color_value(char *value)
 		{
 			if (!ft_isdigit(colors[i][j]))
 				return (free_colors(colors, value), \
-				error_msg("nonnumeric char in color value\n", 0)); //2 commas or more alters the color.. 
+				error_msg("nonnumeric char in color value\n", 0));
 			j++;
 		}
 		if (!check_color_interval(colors, i, value))
