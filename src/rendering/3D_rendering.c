@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/28 16:34:35 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 11:46:26 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/22 13:29:34 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	render_view(t_cub *cub, t_player *player)
 		normalize_angle(&(rc.ray_angle));
 		rc.distorted_distance = cast_single_ray(cub, &rc);
 		rc.correct_dist = rc.distorted_distance * cos(div);
+		rc.line_height = (TILE_SIZE / rc.correct_dist) * cub->dist_pplane;
 		render_wallslice(cub, &rc);
 		div += step;
 		rc.x++;
@@ -79,48 +80,34 @@ void	render_floor_ceiling(t_cub *cub)
 	}
 }
 
-mlx_texture_t	*wall_texture_direction(t_cub *cub,
-	t_wall_direction *wall_direction)
-{
-	if (*wall_direction == NORTH)
-		return (cub->text->no);
-	else if (*wall_direction == SOUTH)
-		return (cub->text->so);
-	else if (*wall_direction == WEST)
-		return (cub->text->we);
-	else if (*wall_direction == EAST)
-		return (cub->text->ea);
-	return (cub->text->no);
-}
+// void	render_wallslice(t_cub *cub, t_raycasting *rc)
+// {
+// 	int				start_y;
+// 	int				end_y;
+// 	int				y;
+// 	int				color;
+// 	mlx_texture_t	*texture;
 
-void	render_wallslice(t_cub *cub, t_raycasting *rc)
-{
-	int				start_y;
-	int				end_y;
-	int				y;
-	int				color;
-	mlx_texture_t	*texture;
-
-	texture = wall_texture_direction(cub, &rc->wall_direction);
-	rc->line_height = (TILE_SIZE / rc->correct_dist) * cub->dist_pplane;
-	if (rc->line_height > cub->win_height)
-		rc->line_height = cub->win_height;
-	start_y = (cub->win_height / 2) - ((int)rc->line_height / 2);
-	end_y = start_y + (int)rc->line_height;
-	if (start_y < 0)
-		start_y = 0;
-	if (end_y > cub->win_height)
-		end_y = cub->win_height;
-	rc->text_x = (int)(rc->wall_hit_position * texture->width) % texture->width;
-	y = start_y;
-	while (y < end_y)
-	{
-		rc->text_y = ((y - start_y) * texture->height) / (int)rc->line_height;
-		color = get_texture_color(cub, texture, rc);
-		mlx_put_pixel(cub->img, rc->x, y, color);
-		y++;
-	}
-}
+// 	texture = wall_texture_direction(cub, &rc->wall_direction);
+// 	rc->line_height = (TILE_SIZE / rc->correct_dist) * cub->dist_pplane;
+// 	if (rc->line_height > cub->win_height)
+// 		rc->line_height = cub->win_height;
+// 	start_y = (cub->win_height / 2) - ((int)rc->line_height / 2);
+// 	end_y = start_y + (int)rc->line_height;
+// 	if (start_y < 0)
+// 		start_y = 0;
+// 	if (end_y > cub->win_height)
+// 		end_y = cub->win_height;
+// 	rc->text_x = (int)(rc->wall_hit_position * texture->width) % texture->width;
+// 	y = start_y;
+// 	while (y < end_y)
+// 	{
+// 		rc->text_y = ((y - start_y) * texture->height) / (int)rc->line_height;
+// 		color = get_texture_color(cub, texture, rc);
+// 		mlx_put_pixel(cub->img, rc->x, y, color);
+// 		y++;
+// 	}
+// }
 
 //Check this function again to understand
 // int get_texture_color(t_cub *cub, mlx_texture_t *texture, t_raycasting *rc)

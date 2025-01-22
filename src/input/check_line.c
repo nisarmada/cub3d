@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/21 11:26:05 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/22 14:22:56 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	init_line_struct(t_string *op_line)
 {
+	int	i;
+
 	op_line->elem_count = 0;
-	op_line->SO = 0;
-	op_line->NO = 0;
-	op_line->EA = 0;
-	op_line->WE = 0;
-	op_line->F = 0;
-	op_line->C = 0;
+	i = 0;
+	while (i < 6)
+	{
+		op_line->elem[i] = 0;
+		i++;
+	}
 }
 
 int	is_cub_file(char *str)

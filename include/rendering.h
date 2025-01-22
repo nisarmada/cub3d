@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 11:28:53 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 13:01:28 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/22 13:31:53 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ typedef struct s_coord
 
 typedef struct s_slice
 {
-	int	x; //the x coordinate of line relative to screen
-	int	y; //the current pixel index of the line (along y axis)
-	int	start_y; //y start index of drawing texture
-	int	end_y; //y end index of drawing texture
-	int	text_x; //x coordinate of texture to draw
-	int	text_y; //y coordinate of texture to draw
+	int		y; //the current pixel index of the line (along y axis)
+	int		start_y; //y start index of drawing texture
+	int		end_y; //y end index of drawing texture
+	int		color;
+	float	step;
+	float	text_pos;
 }	t_slice;
 
 typedef struct s_line
@@ -58,7 +58,7 @@ typedef struct s_line
 	int	sx;
 	int	sy;
 	int	err;
-} t_line;
+}	t_line;
 
 typedef enum e_wall_direction
 {
@@ -66,20 +66,20 @@ typedef enum e_wall_direction
 	SOUTH,
 	EAST,
 	WEST
-} t_wall_direction ;
+}	t_wall_direction;
 
 typedef struct s_raycasting
 {
-	float           ray_angle;
-	float           wall_hit_position;
-	t_wall_direction wall_direction;
-	float           distorted_distance;
-	float           correct_dist;
-	int             x;              // For render_wallslice
-	float           line_height;    // For render_wallslice
-	int             text_x;         // For render_wallslice
-	int             text_y;         // For render_wallslice
-} t_raycasting;
+	float				ray_angle;
+	float				wall_hit_position;
+	t_wall_direction	wall_direction;
+	float				distorted_distance;
+	float				correct_dist;
+	int					x; // For render_wallslice
+	float				line_height; // For render_wallslice
+	int					text_x; // For render_wallslice
+	int					text_y; // For render_wallslice
+}	t_raycasting;
 
 typedef struct s_render_context
 {

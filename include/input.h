@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 12:30:32 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 12:35:23 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/22 14:18:22 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,11 @@ typedef struct s_key_value
 	char	*value;
 }	t_key_value;
 
-typedef struct	s_string
+typedef struct s_string
 {
-	char	*line;
-	int		elem_count;
-	int		SO;
-	int		NO;
-	int		WE;
-	int		EA;
-	int		F;
-	int		C;
+	char		*line;
+	int			elem_count;
+	int			elem[6];
 	t_key_value	*info;
 }	t_string;
 

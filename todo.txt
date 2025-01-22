@@ -19,10 +19,6 @@ hello partner
 
 todo monday:
 
--textures get distorted when coming to close to the wall, now it looks like the thing goes a bit into the wall.
-fix:
-	- only go up to the wall, eyes can touch, thats it, or implement some sort of scale in the render wall_slice, or a stop, so the player cant go closer
-
 - see if there are structs that can be reused
 
 - extensive map_testing

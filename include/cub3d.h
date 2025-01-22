@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/20 19:30:21 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/22 14:12:39 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,15 @@
 
 # define GREEN 0x00FF00FF
 
-#define TILE_SIZE 32
+# define TILE_SIZE 32
 
-#define WIN_HEIGHT 600
-#define WIN_WIDTH 800
-#define	MINI_TILE 32 * 0.4
-#define MINIMAP_SCALE 0.4
-#define MINIMAP_OFFSET_X 10
-#define MINIMAP_OFFSET_Y 10
-#define MINI_HEIGHT 200
-#define MINI_WIDTH 200
+# define WIN_HEIGHT 600
+# define WIN_WIDTH 800
+# define MINIMAP_SCALE 0.4
+# define MINIMAP_OFFSET_X 10
+# define MINIMAP_OFFSET_Y 10
+# define MINI_HEIGHT 200
+# define MINI_WIDTH 200
 
 typedef struct s_player
 {

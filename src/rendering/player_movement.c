@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/20 19:30:37 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/22 12:09:56 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	move_player(t_cub *cub, t_player *player, char direction)
 	new.x = player->x + move.x;
 	new.y = player->y + move.y;
 	get_check_pos(new.x, new.y, &move, &check);
-	x_tile = floor(check.x / TILE_SIZE); // Convert new position to tile coordinates
+	x_tile = floor(check.x / TILE_SIZE);
 	y_tile = floor(check.y / TILE_SIZE);
 	if (cub->map[y_tile][(int)floor(player->x / TILE_SIZE)] != '1')
 		player->y = new.y;
@@ -80,6 +80,5 @@ void	rotate_player(t_player *player, char direction)
 	if (direction == 'R')
 		player->angle += ROTATION_SPEED;
 	normalize_angle(&(player->angle));
-	// printf("while rot--> angle: %f\n", player->angle);
 	player->changed = 1;
 }
