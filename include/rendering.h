@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 11:28:53 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/22 13:31:53 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/22 16:28:05 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	draw_tile(mlx_image_t *img, t_coord *tile, float scale, int color);
 float	render_map(mlx_image_t *img, t_cub *cub);
 
 /*draw miniplayer*/
-float	calculate_scale(int map_width, int map_height);
+float	calculate_scale(int map_width, int map_height, mlx_image_t *img);
 void	render_player(t_cub *cub, mlx_image_t *img, float scale);
 void	render_fov(t_player *player, t_cub *cub, float scale);
 

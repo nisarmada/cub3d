@@ -6,19 +6,21 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 20:11:20 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/20 19:28:21 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/22 16:29:56 by nikos         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rendering.h"
 
-float	calculate_scale(int map_width, int map_height)
+float	calculate_scale(int map_width, int map_height, mlx_image_t *img)
 {
 	t_coord	scale_coord;
 	float	scale;
+	float	minimap_scale;
 
-	scale_coord.x = (float)300 / (map_width * TILE_SIZE);
-	scale_coord.y = (float)200 / (map_height * TILE_SIZE);
+	minimap_scale = 0.28f;
+	scale_coord.x = (float)img->width * minimap_scale / (map_width * TILE_SIZE);
+	scale_coord.y = (float)img->height * minimap_scale / (map_height * TILE_SIZE);
 	scale = fminf(scale_coord.x, scale_coord.y);
 	return (scale);
 }
