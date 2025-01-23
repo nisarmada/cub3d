@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 19:46:05 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/20 12:29:41 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 14:41:30 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ void	init_line_direction(t_line *line)
 		line->sx = 1;
 	else
 		line->sx = -1;
-
 	if (line->y > line->y0)
 		line->sy = 1;
 	else
 		line->sy = -1;
 }
-
 
 void	draw_line_pixel(t_line *line, t_cub *cub)
 {
@@ -66,4 +64,3 @@ void	update_line_position(t_line *line)
 		line->y0 += line->sy;
 	}
 }
-

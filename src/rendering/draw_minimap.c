@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 18:41:18 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 14:30:12 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 15:24:44 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ void	render_map_grid(t_render_context *context, t_cub *cub)
 float	render_map(mlx_image_t *img, t_cub *cub)
 {
 	t_render_context	context;
-	const uint32_t min_width = 300;
-	const uint32_t min_height = 200;
+	uint32_t			min_width;
+	uint32_t			min_height;
 
+	min_width = 300;
+	min_height = 200;
 	if (img->width < min_width || img->height < min_height)
 		return (0.0f);
 	context.img = img;

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 11:59:53 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/22 16:07:39 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/23 14:43:35 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	normalize_angle(float *angle)
 	if (*angle < 0)
 		*angle += 2 * M_PI;
 }
-
 
 static uint32_t	*wall_text_dir_pixels(t_cub *cub,
 	t_wall_direction wall_direction)
@@ -39,7 +38,6 @@ int	get_texture_color(t_cub *cub, mlx_texture_t *texture, t_raycasting *rc)
 	uint32_t	argb_color;
 	t_rgb		color;
 
-    // Bounds check (clamping to texture dimensions)
 	if (rc->text_x < 0)
 		rc->text_x = 0;
 	if (rc->text_x >= (int)texture->width)
@@ -49,13 +47,11 @@ int	get_texture_color(t_cub *cub, mlx_texture_t *texture, t_raycasting *rc)
 	if (rc->text_y >= (int)texture->height)
 		rc->text_y = texture->height - 1;
 	pixels = wall_text_dir_pixels(cub, rc->wall_direction);
-	// Extract RGBA components
 	argb_color = pixels[rc->text_y * texture->width + rc->text_x];
-	//Convert to RGBA color
-	color.red = (argb_color >> 0) & 0xFF;    // Blue channel
-	color.blue = (argb_color >> 16) & 0xFF; // Red channel
-	color.green = (argb_color >> 8) & 0xFF; // Green channel
-	color.alpha = (argb_color >> 24) & 0xFF; // Alpha channel
+	color.red = (argb_color >> 0) & 0xFF;
+	color.blue = (argb_color >> 16) & 0xFF;
+	color.green = (argb_color >> 8) & 0xFF;
+	color.alpha = (argb_color >> 24) & 0xFF;
 	return ((color.red << 24) | (color.green << 16)
 		| (color.blue << 8) | color.alpha);
 }

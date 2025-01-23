@@ -6,23 +6,23 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 11:28:53 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/22 16:28:05 by nikos         ########   odam.nl         */
+/*   Updated: 2025/01/23 14:48:26 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDERING_H
 # define RENDERING_H
 
-#include "cub3d.h"
+# include "cub3d.h"
 
-#define FLOOR_COLOR 0xDCE4E8FF  // Light blue-grey
-#define CEILING_COLOR 0x4B4B4BFF  // Dark grey
-#define WALL_COLOR 0x888888FF  // Light grey
-#define INACCESSIBLE_COLOR 0x000000FF  // Black or grey
+# define FLOOR_COLOR 0xDCE4E8FF
+# define CEILING_COLOR 0x4B4B4BFF
+# define WALL_COLOR 0x888888FF
+# define INACCESSIBLE_COLOR 0x000000FF
 
 // #define TILE_SIZE 32
-#define MOVE_SPEED 2.5
-#define ROTATION_SPEED 0.05
+# define MOVE_SPEED 2.5
+# define ROTATION_SPEED 0.05
 
 typedef struct s_raycast
 {
@@ -87,22 +87,6 @@ typedef struct s_render_context
 	mlx_image_t	*img;
 }	t_render_context;
 
-// typedef struct s_text
-// {
-// 	mlx_texture_t	*no;
-// 	mlx_texture_t	*so;
-// 	mlx_texture_t	*we;
-// 	mlx_texture_t	*ea;
-// 	mlx_image_t		*no_img;
-// 	mlx_image_t		*so_img;
-// 	mlx_image_t		*we_img;
-// 	mlx_image_t		*ea_img;
-// 	uint32_t		*no_pixels; // Pixel data for North texture
-// 	uint32_t		*so_pixels; // Pixel data for South texture
-// 	uint32_t		*we_pixels; // Pixel data for West texture
-// 	uint32_t		*ea_pixels;
-// }	t_text;
-
 typedef struct s_ray
 {
 	float	ray_x; // starting position x
@@ -118,7 +102,6 @@ typedef struct s_ray
 	float	distance_x; //distance to next vertical border
 	float	distance_y; // d3istance to next horizontal border
 }	t_ray;
-
 
 /* RENDERING */
 

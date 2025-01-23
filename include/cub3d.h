@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 15:19:01 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 15:24:12 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,22 @@ typedef struct s_text
 
 typedef struct s_cub
 {
-	bool	keys[512];
-	char	*north;
-	char	*south;
-	char	*west;
-	char	*east;
-	char	**map;
-	int		floor_color;
-	int		wall_color;
-	int		map_width;
-	int		map_height;
-	int		win_width;
-	int		win_height;
-	int		dist_pplane;
-	bool	first_render;
-	t_text	*text;
-	mlx_t	*mlx;
+	bool		keys[512];
+	char		*north;
+	char		*south;
+	char		*west;
+	char		*east;
+	char		**map;
+	int			floor_color;
+	int			wall_color;
+	int			map_width;
+	int			map_height;
+	int			win_width;
+	int			win_height;
+	int			dist_pplane;
+	bool		first_render;
+	t_text		*text;
+	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_player	*player;
 }	t_cub;
@@ -96,7 +96,6 @@ typedef struct s_rgb
 	uint8_t		green;
 	uint8_t		blue;
 }	t_rgb;
-
 
 void	print_map(t_cub *cub);
 

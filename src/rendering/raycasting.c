@@ -6,61 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/27 12:45:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/20 11:43:48 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 14:45:23 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rendering.h"
-
-/* OPTIMIZATION
-all calcs that are same every rendering should be caluclated only once!
-Reduce Trigonometric Overhead:
-
-    Precompute sine and cosine values for angles if they are reused across frames.
-
-Optimize Ray Distance Calculation:
-
-    Use efficient algorithms for grid traversal (e.g., Digital Differential Analyzer (DDA)).
-
-Boundary Checks:
-
-    Ensure rays terminate when they leave the map bounds to avoid unnecessary calculations.
-*/
-
-
-// void raycasting(t_cub *cub, t_player *player)
-// {
-// 	float	distorted_distance;
-// 	float	correct_dist;
-// 	float	one_degree_in_rad;
-// 	int		r;
-// 	float	ray_angle;
-
-// 	one_degree_in_rad = 0.0174532925;
-// 	r = 0;
-// 	ray_angle =  player->angle - one_degree_in_rad*30;
-// 	while (r < 60)
-// 	{
-// 		normalize_angle(&(player->angle)); // Ensure the angle is within -2PI to 2*PI
-// 		normalize_angle(&(ray_angle));
-// 		distorted_distance = cast_single_ray(cub, player, ray_angle); //we need to call this in a while loop to do around 1024
-// 		correct_dist = distorted_distance * cos(player->angle - ray_angle);
-// 		// render_wallslice(cub, correct_dist, player->angle + div);
-// 		ray_angle += one_degree_in_rad;
-// 		r++;
-// 	}
-// 	printf("distorted: %f, corrected: %f\n", distorted_distance, correct_dist);
-// 	//rays in total from player->angle - player->fov / 2 up to + fov / 2
-// }
-
-/*
-projection plan: 
-distance from player to projection plan = (projectionplan width / 2) / tan(30 (half of fov))
-angle between rays = fov / projectionplan width (these are columns on the projection plan)
-projected wall slice height = actual wall slice height / dist to the actual wall * dist f. player to projection plane
-projected wall slice height = 32 / correct_dist * dist f. player to projection plane
-draw vertical line on the corresponding column on projection plane
-*/
 
 float	calc_ray_distance(float x1, float y1, float x2, float y2)
 {
@@ -77,16 +27,16 @@ void	init_param_ray(t_player *player, t_ray *ray, float ray_angle)
 	ray->tile_y = floor(ray->ray_y / TILE_SIZE);
 	ray->distance_x = 0.0;
 	ray->distance_y = 0.0;
-	ray->delta_x = TILE_SIZE / fabs(ray->dir_x); // from: cos(x) = TILE_SIZE / dx
+	ray->delta_x = TILE_SIZE / fabs(ray->dir_x);
 	ray->delta_y = TILE_SIZE / fabs(ray->dir_y);
 	if (ray->dir_x > 0)
-		ray->step_x = 1; // we move right
+		ray->step_x = 1;
 	else
-		ray->step_x = -1; // we move left
+		ray->step_x = -1;
 	if (ray->dir_y > 0)
-		ray->step_y = 1; // we move down
+		ray->step_y = 1;
 	else
-		ray->step_y = -1; // we move up
+		ray->step_y = -1;
 }
 
 void	calc_start_dist(t_ray *ray)
