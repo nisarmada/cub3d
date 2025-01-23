@@ -7,9 +7,9 @@ F 220,100,0
 C 225,30,0
 
 111111
-1000001
-10N0001
-1000001
+1     1
+1 N   1
+1     1
 111111
 
 //segmetation fault maybe spaces should be only between 1's
