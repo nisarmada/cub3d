@@ -6,13 +6,15 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 10:27:40 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/23 12:27:50 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	allocate_map(char *filename, t_cub *cub)
+
+
+void	allocate_map(char *filename, t_cub *cub)
 {
 	int		fd;
 	char	*line;
@@ -28,7 +30,7 @@ int	allocate_map(char *filename, t_cub *cub)
 		free(line);
 		line = get_next_line(fd);
 	}
-	while (is_map_line(line))
+	while (is_map_line(line)) // if other char in map it will exit 
 	{
 		if (!cub->map_width || ft_strlen(line) - 1 > (size_t)cub->map_width)
 			cub->map_width = ft_strlen(line) - 1;
@@ -36,12 +38,14 @@ int	allocate_map(char *filename, t_cub *cub)
 		line = get_next_line(fd);
 		rows++;
 	}
-	if (line)
+	while (line)
+	{
 		free(line);
+		line = get_next_line(fd);
+	}
 	cub->map_height = rows;
 	cub->map = malloc(sizeof(char *) * (rows + 1));
-	return (fd);
-	// close(fd);
+	close(fd);
 }
 
 static void	parse_cub_file(char *filename, t_cub *cub) //check with error handling also
@@ -51,9 +55,8 @@ static void	parse_cub_file(char *filename, t_cub *cub) //check with error handli
 	int		j;
 
 	j = 0;
-	int old_fd = allocate_map(filename, cub);
+	allocate_map(filename, cub);
 	fd = open(filename, O_RDONLY);
-	close(old_fd);
 	line = get_next_line(fd);
 	while (line)
 	{

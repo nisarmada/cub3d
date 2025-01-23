@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/22 14:22:56 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/23 12:45:28 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	check_line(t_string *line)
 
 	i = 0;
 	cur_fileline = line->line;
+	if ((is_map_line(cur_fileline)))
+		return (error_msg("Error\nMissing element\n", 0));
 	info = NULL;
 	while (is_whitespace(cur_fileline[i]))
 		i++;

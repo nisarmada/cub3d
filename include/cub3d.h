@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/22 14:12:39 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/23 12:21:00 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,14 @@ void	print_map(t_cub *cub);
 /* INPUT */
 int		valid_input(int ac, char **av); //I main
 int		error_msg(char *msg, int status);
+int		error_msg_spec(char *msg, void *spec, int status);
 
 /* PARSING */
 t_cub	*init_cub(char *filename); //i main
 int		is_map_line(char *line);
 void	parse_directions(char *line, t_cub *cub);
 int		valid_map(t_cub *cub, int height, int width); //i main
-int		allocate_map(char *filename, t_cub *cub);
+// int		allocate_map(char *filename, t_cub *cub);
 void	map_parsing(char *line, t_cub *cub, int j);
 void	parse_colors(char *line, t_cub *cub);
 

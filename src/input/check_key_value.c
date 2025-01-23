@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/21 12:23:25 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/23 12:48:45 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ static int	check_path_value(char *value)
 		return (free(trimmed_value), error_msg("too long path\n", 0));
 	fd = open(trimmed_value, O_RDONLY);
 	if (fd < 0)
-		return (free(trimmed_value), error_msg("error opening file\n", 0));
+	{
+		error_msg_spec("Error\nFailed to open file: ", trimmed_value, 0);
+		return (free(trimmed_value), 0);
+	}
 	close (fd);
 	free(trimmed_value);
 	return (1);
