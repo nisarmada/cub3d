@@ -1,0 +1,20 @@
+NO ./textures/redbrick.png
+
+
+SO ./textures/redbrick.png
+
+WE ./textures/redbrick.png
+
+
+EA ./textures/redbrick.png
+F 220,100,0
+
+
+
+C 225,30,0
+
+111111
+100001
+10N001
+100001
+111111

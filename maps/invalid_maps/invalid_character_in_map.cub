@@ -1,0 +1,14 @@
+NO ./textures/redbrick.png
+SO ./textures/wall_texture.png
+WE ./textures/redbrick.png
+EA ./textures/wall_texture.png
+F 220,100,0
+C 225,30,0
+
+111111
+100101
+10X001
+100101
+111111
+
+//wrong first or last line(?)

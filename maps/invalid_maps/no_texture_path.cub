@@ -1,0 +1,14 @@
+EA ./textures/wood.png
+NO ./textures/redbrick.png
+SO ./textures/wood.png
+
+F 220,100,0
+C 225,30,0
+
+111111
+100101
+10N001
+100101
+111111
+
+//wrong error message

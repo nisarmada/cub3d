@@ -1,0 +1,12 @@
+NO ./textures/redbrick.png
+SO ./textures/wall_texture.png
+WE ./textures/redbrick.png
+EA ./textures/wall_texture.png
+F 220,100,0
+C 225,30,0
+
+111111
+100001
+101001
+100001
+111111
