@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   get_next_line.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/08 11:54:19 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/05/17 17:18:21 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/23 13:23:28 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

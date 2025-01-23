@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/20 12:33:50 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 13:37:13 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,28 @@ static char	*skip_empty_lines(int fd)
 	return (next_line);
 }
 
-static int	process_line(int fd, t_string *line, char *next_line)
+static int	process_line(t_string *line, char *next_line)
 {
 	line->line = next_line;
 	if (!check_line(line))
 	{
-		close(fd);
 		free(next_line);
 		return (0);
 	}
 	free(next_line);
 	return (1);
+}
+
+void	finish_file(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while(line != NULL)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 }
 
 static int	process_file(int fd)
@@ -61,12 +72,13 @@ static int	process_file(int fd)
 	next_line = get_next_line(fd);
 	while (next_line)
 	{
-		if (!process_line(fd, &line, next_line))
-			return (0);
+		if (!process_line(&line, next_line))
+			return (close(fd), 0);
 		if (line.elem_count == 6)
 			break ;
 		next_line = skip_empty_lines(fd);
 	}
+	finish_file(fd);
 	close(fd);
 	return (line.elem_count == 6);
 }
