@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 11:58:29 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 14:43:54 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	render_frame(t_cub *cub)
 {
-	// static bool first_render = true;
 	float		scale;
 
 	if (cub->first_render)

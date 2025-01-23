@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 19:32:32 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/06/21 18:25:54 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/23 14:50:28 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	i = 0;
 	if (s1 == NULL)
 		return (1);
-	// if (n == 0)
-	// 	return (0);
 	while (i < n)
 	{
 		if (s1[i] == '\0' || s2[i] == '\0' || s1[i] != s2[i])

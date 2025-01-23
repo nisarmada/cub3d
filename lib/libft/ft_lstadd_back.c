@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/24 14:06:02 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/07/26 18:48:25 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/23 14:52:47 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*node;
-	//int i = 0;
 
 	node = NULL;
-	//printf("yoo\n");
 	if (!lst || !new)
 		return ;
 	if (!*lst)
@@ -30,14 +28,9 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		while ((node)->next)
 		{
 			node = node->next;
-			//printf("node content %i: %s\n", i, node->content);
-			//i++;
 		}
 		(node)->next = new;
-		//printf("\nless important check: %s\n", node->content);
-		//printf("\nultimate important check: %s\n", node->next->content);
 	}
-	// printf("added to env: %s\n", node->next->content);
 }
 
 // int main()

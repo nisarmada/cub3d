@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 20:11:20 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 14:07:44 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/23 14:43:03 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ float	calculate_scale(int map_width, int map_height, mlx_image_t *img)
 
 	minimap_scale = 0.28f;
 	scale_coord.x = (float)img->width * minimap_scale / (map_width * TILE_SIZE);
-	scale_coord.y = (float)img->height * minimap_scale / (map_height * TILE_SIZE);
+	scale_coord.y = (float)img->height * minimap_scale
+		/ (map_height * TILE_SIZE);
 	scale = fminf(scale_coord.x, scale_coord.y);
 	return (scale);
 }

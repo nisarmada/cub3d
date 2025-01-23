@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/13 13:44:38 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/07/05 10:51:48 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/23 14:51:21 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-char 	*strndup(const char *s, size_t n);
+char	*strndup(const char *s, size_t n);
 char	*ft_itoa(int n);
 typedef struct s_list
 {
-	char	*content;
+	char			*content;
 	struct s_list	*next;
 }	t_list;
 t_list	*ft_lstnew(void *content);
@@ -80,5 +80,5 @@ int		ft_putnbr(int n);
 int		putnbr_base(unsigned int nbr, char *base);
 int		ft_uns_putnbr(unsigned int n);
 int		hex_address(void *ptr, char *base);
-int 	ft_strcpy(char *src, char *dest, int j);
+int		ft_strcpy(char *src, char *dest, int j);
 #endif

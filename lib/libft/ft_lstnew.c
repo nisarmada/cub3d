@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/19 13:07:04 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/07/11 18:37:45 by snijhuis      ########   odam.nl         */
+/*   Updated: 2025/01/23 14:52:22 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*new_node;
 
-	// printf("CONTENT: %s\n", (char *)content);
 	new_node = NULL;
 	new_node = (t_list *)malloc(sizeof(t_list));
 	if (new_node == NULL)
 		return (NULL);
 	new_node->content = content;
-	// printf("node content: %s\n", new_node->content);
 	new_node->next = NULL;
 	return (new_node);
 }
