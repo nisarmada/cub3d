@@ -1,7 +1,7 @@
-EA ./textures/wolfestein.png
-NO ./textures/wolfestein.png
-SO ./textures/redbrick.png
-WE ./textures/redbrick.png
+EA ./textures/zombie.png
+NO ./textures/zombie.png
+SO ./textures/zombie_new.png
+WE ./textures/zombie_new.png
 
 F 160,120,60
 C 135,206,235
