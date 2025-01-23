@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 12:21:00 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 13:37:50 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int		error_msg(char *msg, int status);
 int		error_msg_spec(char *msg, void *spec, int status);
 
 /* PARSING */
+void	finish_file(int fd);
 t_cub	*init_cub(char *filename); //i main
 int		is_map_line(char *line);
 void	parse_directions(char *line, t_cub *cub);

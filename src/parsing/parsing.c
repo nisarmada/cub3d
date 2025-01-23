@@ -6,13 +6,11 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 12:27:50 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 13:38:59 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
 
 void	allocate_map(char *filename, t_cub *cub)
 {
