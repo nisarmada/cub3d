@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 15:24:16 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 15:27:42 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,12 @@ static	t_rgb	get_rgb_values(char *line)
 	color_string = extract_color_substring(line, &start);
 	rgb.r = ft_atoi(color_string);
 	free(color_string);
-
 	color_string = extract_color_substring(line, &start);
 	rgb.g = ft_atoi(color_string);
 	free(color_string);
-
 	color_string = extract_color_substring(line, &start);
 	rgb.b = ft_atoi(color_string);
 	free(color_string);
-
 	return (rgb);
 }
 
