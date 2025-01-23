@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/23 15:08:10 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 15:20:17 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 17:41:48 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	get_map_size(t_cub *cub, char *line, int fd)
 	cub->map_height = rows;
 }
 
-void	allocate_map(char *filename, t_cub *cub)
+int	allocate_map(char *filename, t_cub *cub)
 {
 	int		fd;
 	char	*line;
@@ -57,6 +57,9 @@ void	allocate_map(char *filename, t_cub *cub)
 	fd = open(filename, O_RDONLY);
 	line = skip_elem_lines(fd);
 	get_map_size(cub, line, fd);
-	cub->map = malloc(sizeof(char *) * (cub->map_height + 1));
 	close(fd);
+	cub->map = malloc(sizeof(char *) * (cub->map_height + 1));
+	if (!cub->map)
+		return (0);
+	return (1);
 }

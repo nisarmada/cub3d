@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 12:44:28 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 15:06:53 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 17:33:30 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	parse_directions(char *line, t_cub *cub)
 	if (!ft_strncmp(line, "NO", 2))
 	{
 		path = find_path(line);
-		cub->north = path;
+		cub->north = path; //this can be NULL, what happens then?
 	}
 	else if (!ft_strncmp(line, "SO", 2))
 	{

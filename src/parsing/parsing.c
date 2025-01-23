@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 15:19:36 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 17:39:00 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*parse_elem(t_cub *cub, int fd)
 }
 
 //check with error handling also
-static void	parse_cub_file(char *filename, t_cub *cub)
+static int	parse_cub_file(char *filename, t_cub *cub)
 {
 	int		fd;
 	char	*line;
@@ -38,9 +38,12 @@ static void	parse_cub_file(char *filename, t_cub *cub)
 
 	j = 0;
 	fd = 0;
-	allocate_map(filename, cub);
+	if (!allocate_map(filename, cub))
+		return (free_cub(cub), 0);
 	fd = open(filename, O_RDONLY);
 	line = parse_elem(cub, fd);
+	// if (!line)//oklart
+	// 	return ();
 	while (is_map_line(line))
 	{
 		map_parsing(line, cub, j);
@@ -48,8 +51,11 @@ static void	parse_cub_file(char *filename, t_cub *cub)
 		free(line);
 		line = get_next_line(fd);
 	}
+	if (line)
+		free(line);
 	cub->map[j] = NULL;
 	close(fd);
+	return (1);
 }
 
 static t_cub	*allocate_cub(void)

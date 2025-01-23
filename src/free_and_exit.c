@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 14:12:13 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/20 13:00:28 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 17:28:49 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,13 @@ void	free_cub(t_cub *cub)
 	free(cub->text);
 	if (cub->map)
 		free_map(cub->map);
-	free(cub->east);
-	free(cub->north);
-	free(cub->west);
-	free(cub->south);
+	if (cub->east)
+		free(cub->east);
+	if (cub->north)
+		free(cub->north);
+	if (cub->west)
+		free(cub->west);
+	if (cub->south)
+		free(cub->south);
 	free(cub);
 }

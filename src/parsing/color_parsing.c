@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 15:27:42 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 17:42:31 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static	t_rgb	get_rgb_values(char *line)
 	int		start;
 
 	start = 1;
-	color_string = extract_color_substring(line, &start);
+	color_string = extract_color_substring(line, &start); //malloc can fail here
 	rgb.r = ft_atoi(color_string);
 	free(color_string);
 	color_string = extract_color_substring(line, &start);
