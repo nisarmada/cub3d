@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/20 17:06:04 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 12:47:40 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	check_surrounding(char **map, int row, int i, int width)
 		return (0);
 	if ((up[i] != '1' && up[i] != ' '))
 		return (0);
-	if (down[i] != '1' && (down[i] != ' '))
+	if (down[i] && down[i] != '1' && (down[i] != ' '))
 		return (0);
 	return (1);
 }
@@ -105,11 +105,12 @@ int	valid_map(t_cub *cub, int height, int width)
 {
 	int	row;
 
+	printf("height: %i\n", height);
 	if (!valid_outer_row(cub->map, 0, width) || \
 	!valid_outer_row(cub->map, height - 1, width))
-		return (error_msg("wrong first or last line\n", 0));
+		return (error_msg("Error\nLeak in map\n", 0));
 	row = 1;
-	while (row < height)
+	while (row < height - 1)
 	{
 		if (!valid_map_row(cub, row))
 			return (0);
