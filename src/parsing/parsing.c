@@ -6,55 +6,16 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 14:09:43 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/23 15:19:36 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	allocate_map(char *filename, t_cub *cub)
+char	*parse_elem(t_cub *cub, int fd)
 {
-	int		fd;
 	char	*line;
-	int		rows;
 
-	fd = open(filename, O_RDONLY);
-	rows = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (is_map_line(line))
-			break ;
-		free(line);
-		line = get_next_line(fd);
-	}
-	while (is_map_line(line)) // if other char in map it will exit 
-	{
-		if (!cub->map_width || ft_strlen(line) - 1 > (size_t)cub->map_width)
-			cub->map_width = ft_strlen(line) - 1;
-		free(line);
-		line = get_next_line(fd);
-		rows++;
-	}
-	while (line)
-	{
-		free(line);
-		line = get_next_line(fd);
-	}
-	cub->map_height = rows;
-	cub->map = malloc(sizeof(char *) * (rows + 1));
-	close(fd);
-}
-
-static void	parse_cub_file(char *filename, t_cub *cub) //check with error handling also
-{
-	int		fd = 0;
-	char	*line;
-	int		j;
-
-	j = 0;
-	allocate_map(filename, cub);
-	fd = open(filename, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -65,6 +26,21 @@ static void	parse_cub_file(char *filename, t_cub *cub) //check with error handli
 		free(line);
 		line = get_next_line(fd);
 	}
+	return (line);
+}
+
+//check with error handling also
+static void	parse_cub_file(char *filename, t_cub *cub)
+{
+	int		fd;
+	char	*line;
+	int		j;
+
+	j = 0;
+	fd = 0;
+	allocate_map(filename, cub);
+	fd = open(filename, O_RDONLY);
+	line = parse_elem(cub, fd);
 	while (is_map_line(line))
 	{
 		map_parsing(line, cub, j);
@@ -113,8 +89,6 @@ t_cub	*init_cub(char *filename)
 	cub->win_height = WIN_HEIGHT;
 	cub->win_width = WIN_WIDTH;
 	cub->first_render = true;
-	//distance from player to projection plan = (projectionplan width / 2) / tan(30 (half of fov)) --> 692
-	// printf("dist: %i\n", cub->dist_pplane);
 	i = 0;
 	while (i < 512)
 	{

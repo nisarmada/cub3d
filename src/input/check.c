@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 13:37:13 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 14:43:39 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,6 @@ static int	process_line(t_string *line, char *next_line)
 	}
 	free(next_line);
 	return (1);
-}
-
-void	finish_file(int fd)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	while(line != NULL)
-	{
-		free(line);
-		line = get_next_line(fd);
-	}
 }
 
 static int	process_file(int fd)

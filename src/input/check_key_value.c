@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 12:48:45 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 14:52:31 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	check_color_interval(char **colors, int i, char *value)
 	if (color_int > 255 || color_int < 0)
 	{
 		free_colors(colors, value);
-		return (error_msg("to big color value, only accept between 0-255\n", 0));
+		return (error_msg("Error\n\
+		Too big color value, only accept between 0-255\n", 0));
 	}
 	return (1);
 }
@@ -32,13 +33,13 @@ int	check_arg_count(int i, char **colors, char *value)
 	if (i > 3)
 	{
 		free_colors(colors, value);
-		return (error_msg("too many color args\n", 0));
+		return (error_msg("Error\nToo many color args\n", 0));
 	}
 	j = 0;
 	while (value[j] && value[j + 1])
 	{
 		if (value[j] == ',' && value[j] == value[j + 1])
-			return (error_msg("adjacent commas\n", 0));
+			return (error_msg("Error\nAdjacent commas\n", 0));
 		j++;
 	}
 	return (1);
@@ -60,7 +61,7 @@ static int	check_color_value(char *value)
 		{
 			if (!ft_isdigit(colors[i][j]))
 				return (free_colors(colors, value), \
-				error_msg("nonnumeric char in color value\n", 0));
+				error_msg("Error\nNonnumeric char in color value\n", 0));
 			j++;
 		}
 		if (!check_color_interval(colors, i, value))
@@ -76,7 +77,6 @@ static int	check_color_value(char *value)
 static int	check_path_value(char *value)
 {
 	int		i;
-	int		fd;
 	char	*trimmed_value;
 
 	trimmed_value = trim_spaces(value);
@@ -91,14 +91,9 @@ static int	check_path_value(char *value)
 		i++;
 	}
 	if (i > PATH_MAX)
-		return (free(trimmed_value), error_msg("too long path\n", 0));
-	fd = open(trimmed_value, O_RDONLY);
-	if (fd < 0)
-	{
-		error_msg_spec("Error\nFailed to open file: ", trimmed_value, 0);
-		return (free(trimmed_value), 0);
-	}
-	close (fd);
+		return (free(trimmed_value), error_msg("Error\nToo long path\n", 0));
+	if (!open_file_check(trimmed_value))
+		return (0);
 	free(trimmed_value);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 16:57:31 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/22 14:20:02 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/23 14:52:10 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,20 @@ char	*trim_spaces(char *str)
 		return (NULL);
 	free (str);
 	return (tmp);
+}
+
+int	open_file_check(char *trimmed_value)
+{
+	int	fd;
+
+	fd = open(trimmed_value, O_RDONLY);
+	if (fd < 0)
+	{
+		error_msg_spec("Error\nFailed to open file: ", trimmed_value, 0);
+		close(fd);
+		free(trimmed_value);
+		return (0);
+	}
+	close (fd);
+	return (1);
 }
