@@ -15,9 +15,13 @@ LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT) -L/opt/home
 SRCS_DIR = src
 OBJ_DIR = obj
 
-SRCS = $(addprefix $(SRCS_DIR)/, main.c input/check.c input/check_line.c input/check_key_value.c input/check_key_extras.c input/free_error_input.c free_and_exit.c parsing/parsing.c parsing/color_conversion.c \
-parsing/map_parsing.c parsing/direction_parsing.c parsing/validate_map.c utils/extra.c rendering/prepare_game.c rendering/extras.c rendering/player_movement.c rendering/hooks.c \
-rendering/raycasting.c rendering/3D_rendering.c rendering/wallslice_rendering.c rendering/draw_minimap.c rendering/draw_miniplayer.c rendering/raycasting_helper.c rendering/draw_line.c)
+SRCS	= $(addprefix $(SRCS_DIR)/, main.c input/check.c input/check_line.c input/check_key_value.c \
+input/check_key_extras.c input/free_error_input.c free_and_exit.c parsing/allocate_map.c \
+parsing/parsing.c parsing/color_parsing.c parsing/map_parsing.c parsing/direction_parsing.c \
+parsing/validate_map.c parsing/validate_map_row.c utils/extra.c rendering/prepare_game.c \
+rendering/extras.c rendering/player_movement.c rendering/hooks.c rendering/raycasting.c \
+rendering/3D_rendering.c rendering/wallslice_rendering.c rendering/draw_minimap.c \
+rendering/draw_miniplayer.c rendering/raycasting_helper.c rendering/draw_line.c)
 
 OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_SUBDIRS = $(sort $(dir $(OBJS)))

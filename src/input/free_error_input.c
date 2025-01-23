@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 16:57:54 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 12:22:22 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 14:43:49 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,19 @@ void	free_colors(char **colors, char *value)
 		i++;
 	}
 	free(colors);
-	free(value); // double check at codam
+	free(value);
+}
+
+void	finish_file(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 }
 
 int	error_msg(char *msg, int status)

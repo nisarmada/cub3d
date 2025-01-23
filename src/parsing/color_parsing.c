@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   color_conversion.c                                 :+:    :+:            */
+/*   color_parsing.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 15:21:36 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/23 15:27:42 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,12 @@ static	t_rgb	get_rgb_values(char *line)
 	color_string = extract_color_substring(line, &start);
 	rgb.r = ft_atoi(color_string);
 	free(color_string);
-
 	color_string = extract_color_substring(line, &start);
 	rgb.g = ft_atoi(color_string);
 	free(color_string);
-
 	color_string = extract_color_substring(line, &start);
 	rgb.b = ft_atoi(color_string);
 	free(color_string);
-
 	return (rgb);
 }
 
@@ -60,8 +57,6 @@ void	parse_colors(char *line, t_cub *cub)
 	t_rgb	wall;
 	int		color_int;
 
-	(void)cub;
-	(void) wall;
 	if (!ft_strncmp(line, "F", 1))
 	{
 		floor = get_rgb_values(line);

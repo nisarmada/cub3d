@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 12:30:32 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/22 14:18:22 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/23 14:52:18 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ typedef struct s_string
 int		elemnt_not_found(char *key, t_string *op_line);
 void	set_element_as_found(char *key, t_string *op_line);
 int		is_path_key(char *str);
+int		open_file_check(char *trimmed_value);
 
 //free and error
 void	free_colors(char **colors, char *value);
+void	finish_file(int fd);
 // int		error_msg(char *msg, int status);
 
 //check_line

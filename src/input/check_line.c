@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 12:45:28 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 14:43:07 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static t_key_value	*split_in_two(char *str)
 	return (free(info), NULL);
 }
 
-
 int	check_line(t_string *line)
 {
 	int			i;
@@ -92,8 +91,5 @@ int	check_line(t_string *line)
 		free_info(info);
 		return (1);
 	}
-	// printf("should come here\n");
-	// free_info(info); //not allocated for if it doesnt enter the while loop
-	// error_msg("only whitespace on line\n", 0);
-	return (1); // maybe we say this is fine?? 
+	return (1);
 }
