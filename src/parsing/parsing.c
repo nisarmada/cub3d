@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 15:19:36 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/23 15:37:18 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static void	parse_cub_file(char *filename, t_cub *cub)
 		free(line);
 		line = get_next_line(fd);
 	}
+	if (line)
+		free(line);
 	cub->map[j] = NULL;
 	close(fd);
 }
