@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 15:37:18 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/24 12:46:39 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	*parse_elem(t_cub *cub, int fd)
 	line = get_next_line(fd);
 	while (line)
 	{
-		parse_directions(line, cub);
-		parse_colors(line, cub);
+		if (parse_directions(line, cub) < 0)
+			return (free(line), NULL);
+		if (parse_colors(line, cub) < 0)
+			return (free(line), NULL);
 		if (is_map_line(line))
 			break ;
 		free(line);
@@ -30,7 +32,7 @@ char	*parse_elem(t_cub *cub, int fd)
 }
 
 //check with error handling also
-static void	parse_cub_file(char *filename, t_cub *cub)
+static int	parse_cub_file(char *filename, t_cub *cub)
 {
 	int		fd;
 	char	*line;
@@ -38,9 +40,12 @@ static void	parse_cub_file(char *filename, t_cub *cub)
 
 	j = 0;
 	fd = 0;
-	allocate_map(filename, cub);
+	if (!allocate_map(filename, cub))
+		return (free_cub(cub), 0);
 	fd = open(filename, O_RDONLY);
 	line = parse_elem(cub, fd);
+	if (!line)
+		return (0);
 	while (is_map_line(line))
 	{
 		map_parsing(line, cub, j);
@@ -52,6 +57,7 @@ static void	parse_cub_file(char *filename, t_cub *cub)
 		free(line);
 	cub->map[j] = NULL;
 	close(fd);
+	return (1);
 }
 
 static t_cub	*allocate_cub(void)
@@ -85,7 +91,10 @@ t_cub	*init_cub(char *filename)
 	int		i;
 
 	cub = allocate_cub();
-	parse_cub_file(filename, cub);
+	if (!cub)
+		return (NULL);
+	if (!parse_cub_file(filename, cub))
+		return (NULL);
 	cub->player->changed = 0;
 	cub->dist_pplane = ((WIN_WIDTH / 2) / tan(0.524));
 	cub->win_height = WIN_HEIGHT;

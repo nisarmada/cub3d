@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   wallslice_rendering.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: elleneklund <elleneklund@student.codam.      +#+                     */
+/*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/22 13:27:52 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/22 14:10:42 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/23 17:22:18 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	render_wallslice(t_cub *cub, t_raycasting *rc)
 	t_slice			slice;
 	mlx_texture_t	*texture;
 
+	rc->line_height = (TILE_SIZE / rc->correct_dist) * cub->dist_pplane;
 	texture = wall_texture_direction(cub, &rc->wall_direction);
 	calc_y_interval(&slice, cub->win_height, rc->line_height);
 	init_slice_text(rc, texture, &slice, cub->win_height);

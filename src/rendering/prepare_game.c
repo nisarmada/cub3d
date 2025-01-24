@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 14:14:42 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 14:43:54 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/24 12:42:09 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	render_frame(t_cub *cub)
 {
-	float		scale;
+	float	scale;
 
 	if (cub->first_render)
 	{
@@ -82,12 +82,16 @@ int	render_game(t_cub *cub)
 {
 	init_mlx(cub);
 	if (!load_textures(cub))
-		return (1);
+	{
+		mlx_delete_image(cub->mlx, cub->img);
+		mlx_terminate(cub->mlx);
+		return (0);
+	}
 	render_frame(cub);
 	mlx_key_hook(cub->mlx, key_hook, cub);
 	mlx_loop_hook(cub->mlx, hook_loop, cub);
 	mlx_resize_hook(cub->mlx, resize_callback, cub);
 	mlx_close_hook(cub->mlx, close_window, cub);
 	mlx_loop(cub->mlx);
-	return (0);
+	return (1);
 }
