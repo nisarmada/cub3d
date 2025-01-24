@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/25 13:45:46 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/23 14:43:45 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/24 15:17:51 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	get_check_pos(float new_x, float new_y, t_coord *move, t_coord *check)
 {
 	float	padding;
 
-	padding = TILE_SIZE * 0.2;
+	padding = TILE_SIZE * 0.4;
 	if (move->x > 0)
 		check->x = new_x + padding;
 	else

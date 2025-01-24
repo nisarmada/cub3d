@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 11:28:53 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 14:48:26 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/24 15:55:28 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ float	render_map(mlx_image_t *img, t_cub *cub);
 /*draw miniplayer*/
 float	calculate_scale(int map_width, int map_height, mlx_image_t *img);
 void	render_player(t_cub *cub, mlx_image_t *img, float scale);
-void	render_fov(t_player *player, t_cub *cub, float scale);
 
 /*HOOKS*/
 void	key_hook(mlx_key_data_t keycode, void *cub_ptr);
