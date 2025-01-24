@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/23 15:18:05 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 15:21:45 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/24 15:25:22 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void	define_field_of_vision(t_cub *cub)
 static int	check_char(t_cub *cub, int row, int i)
 {
 	if ((i == 0 && cub->map[row][i] != '1'))
-		return (printf("wrong, \n"), 0);
+		return (error_msg("wrong, \n", 0));
 	if (!ft_strchr("NSEW01", cub->map[row][i]))
-		return (printf("invalid char: %c\n", cub->map[row][i]), 0);
+		return (error_msg("Error\nInvalid char\n", 0));
 	if (!cub->player->orientation && ft_strchr("NSEW", cub->map[row][i]))
 	{
 		cub->player->orientation = cub->map[row][i];
@@ -61,7 +61,7 @@ static int	check_char(t_cub *cub, int row, int i)
 		define_field_of_vision(cub);
 	}
 	else if (cub->player->orientation && ft_strchr("NSEW", cub->map[row][i]))
-		return (printf("player alredy exists, x %i, y %i\n", i, row), 0);
+		return (error_msg("Error\nPlayer alredy exists\n", 0));
 	return (1);
 }
 
@@ -75,12 +75,12 @@ int	valid_map_row(t_cub	*cub, int row)
 		if (cub->map[row][i] == ' ')
 		{
 			if (!check_surrounding(cub->map, row, i, cub->map_width - 1))
-				return (printf("leak in map, row: %i, index: %i\n", row, i), 0);
+				return (error_msg("Error\nLeak in map\n", 0));
 		}
 		else
 		{
 			if (!check_char(cub, row, i))
-				return (printf("invalid char in row:%i index:%i\n", row, i), 0);
+				return (0);
 		}
 		i++;
 	}

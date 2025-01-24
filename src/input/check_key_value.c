@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 14:52:31 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/24 15:40:03 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	check_color_interval(char **colors, int i, char *value)
 	if (color_int > 255 || color_int < 0)
 	{
 		free_colors(colors, value);
-		return (error_msg("Error\n\
-		Too big color value, only accept between 0-255\n", 0));
+		return (error_msg("Error\nColor value not in scope, "\
+		"only accept value between 0-255\n", 0));
 	}
 	return (1);
 }
@@ -85,13 +85,16 @@ static int	check_path_value(char *value)
 	{
 		if (!ft_isvalid_path_chars(trimmed_value[i]))
 		{
-			printf("invalid char in path, value[i] %c\n", trimmed_value[i]);
-			return (free(trimmed_value), 0);
+			free(trimmed_value);
+			return (error_msg("Error\nInvalid char in path\n", 0));
 		}
 		i++;
 	}
 	if (i > PATH_MAX)
-		return (free(trimmed_value), error_msg("Error\nToo long path\n", 0));
+	{
+		free(trimmed_value);
+		return (error_msg("Error\nToo long path\n", 0));
+	}
 	if (!open_file_check(trimmed_value))
 		return (0);
 	free(trimmed_value);

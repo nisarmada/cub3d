@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/24 12:46:39 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/24 16:11:59 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,11 @@ char	*parse_elem(t_cub *cub, int fd)
 	return (line);
 }
 
-//check with error handling also
-static int	parse_cub_file(char *filename, t_cub *cub)
+void	read_map_lines(t_cub *cub, char *line, int fd)
 {
-	int		fd;
-	char	*line;
-	int		j;
+	int	j;
 
 	j = 0;
-	fd = 0;
-	if (!allocate_map(filename, cub))
-		return (free_cub(cub), 0);
-	fd = open(filename, O_RDONLY);
-	line = parse_elem(cub, fd);
-	if (!line)
-		return (0);
 	while (is_map_line(line))
 	{
 		map_parsing(line, cub, j);
@@ -56,6 +46,27 @@ static int	parse_cub_file(char *filename, t_cub *cub)
 	if (line)
 		free(line);
 	cub->map[j] = NULL;
+}
+
+static int	parse_cub_file(char *filename, t_cub *cub)
+{
+	int		fd;
+	char	*line;
+
+	fd = 0;
+	if (!allocate_map(filename, cub))
+	{
+		free(cub->player);
+		free(cub->text);
+		return (free(cub), 0);
+	}
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	line = parse_elem(cub, fd);
+	if (!line)
+		return (0);
+	read_map_lines(cub, line, fd);
 	close(fd);
 	return (1);
 }
