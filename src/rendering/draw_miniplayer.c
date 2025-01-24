@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 20:11:20 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 15:24:51 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/24 11:14:18 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	render_player(t_cub *cub, mlx_image_t *img, float scale)
 	int	i;
 	int	j;
 
-	x = cub->player->x * scale;
+	// x = cub->player->x * scale;
+	x = img->width - (cub->player->x * scale);
 	y = cub->player->y * scale;
 	r = (TILE_SIZE * scale) / 2;
 	i = -r;
@@ -67,9 +68,13 @@ void	render_fov(t_player *player, t_cub *cub, float scale)
 	right_angle = player->angle - player->fov / 2;
 	normalize_angle(&left_angle);
 	normalize_angle(&right_angle);
-	left.x = (int)(player->x * scale + cos(left_angle) * max_distance);
+	// left.x = (int)(player->x * scale + cos(left_angle) * max_distance);
+	// left.y = (int)(player->y * scale - sin(left_angle) * max_distance);
+	// right.x = (int)(player->x * scale + cos(right_angle) * max_distance);
+	// right.y = (int)(player->y * scale - sin(right_angle) * max_distance);
+	left.x = cub->img->width - (int)(player->x * scale + cos(left_angle) * max_distance);
 	left.y = (int)(player->y * scale - sin(left_angle) * max_distance);
-	right.x = (int)(player->x * scale + cos(right_angle) * max_distance);
+	right.x = cub->img->width - (int)(player->x * scale + cos(right_angle) * max_distance);
 	right.y = (int)(player->y * scale - sin(right_angle) * max_distance);
 	draw_line(cub, (int)left.x, (int)left.y, scale);
 	draw_line(cub, (int)right.x, (int)right.y, scale);

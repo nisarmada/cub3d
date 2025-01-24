@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 19:46:05 by nikos         #+#    #+#                 */
-/*   Updated: 2025/01/23 14:41:30 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/24 11:13:00 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_line_1(t_line *line, t_cub *cub, float scale)
 {
-	line->x0 = cub->player->x * scale;
+	line->x0 = cub->img->width - (cub->player->x * scale);
 	line->y0 = cub->player->y * scale;
 }
 

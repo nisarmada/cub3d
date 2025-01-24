@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 14:03:34 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/23 17:42:31 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/24 12:29:53 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,45 +28,48 @@ static char	*extract_color_substring(char *line, int *start)
 	while (line[end] && (line[end] >= '0' && line[end] <= '9'))
 		end++;
 	color_string = ft_substr(line, *start, end - *start);
+	if (!color_string)
+		return (NULL);
 	*start = end + 1;
 	return (color_string);
 }
 
-static	t_rgb	get_rgb_values(char *line)
+static int	get_rgb_component(char *line, int *component, int *start)
 {
-	t_rgb	rgb;
 	char	*color_string;
+
+	color_string = extract_color_substring(line, start);
+	if (!color_string)
+		return (-1);
+	*component = ft_atoi(color_string);
+	free(color_string);
+	return (1);
+}
+
+int	rgb_toint(char *line, int *cub_color)
+{
+	t_rgb	tmp_color;
+	int		color_int;
 	int		start;
 
 	start = 1;
-	color_string = extract_color_substring(line, &start); //malloc can fail here
-	rgb.r = ft_atoi(color_string);
-	free(color_string);
-	color_string = extract_color_substring(line, &start);
-	rgb.g = ft_atoi(color_string);
-	free(color_string);
-	color_string = extract_color_substring(line, &start);
-	rgb.b = ft_atoi(color_string);
-	free(color_string);
-	return (rgb);
+	tmp_color.r = 0;
+	tmp_color.b = 0;
+	tmp_color.g = 0;
+	if (get_rgb_component(line, &tmp_color.r, &start) < 0 || \
+	get_rgb_component(line, &tmp_color.g, &start) < 0 || \
+	get_rgb_component(line, &tmp_color.b, &start) < 0)
+		return (-1);
+	color_int = convert_rgb_to_int(tmp_color.r, tmp_color.g, tmp_color.b);
+	*cub_color = color_int;
+	return (1);
 }
 
-void	parse_colors(char *line, t_cub *cub)
+int	parse_colors(char *line, t_cub *cub)
 {
-	t_rgb	floor;
-	t_rgb	wall;
-	int		color_int;
-
 	if (!ft_strncmp(line, "F", 1))
-	{
-		floor = get_rgb_values(line);
-		color_int = convert_rgb_to_int(floor.r, floor.g, floor.b);
-		cub->floor_color = color_int;
-	}
+		return (rgb_toint(line, &cub->floor_color));
 	else if (!ft_strncmp(line, "C", 1))
-	{
-		wall = get_rgb_values(line);
-		color_int = convert_rgb_to_int(wall.r, wall.g, wall.b);
-		cub->wall_color = color_int;
-	}
+		return (rgb_toint(line, &cub->wall_color));
+	return (0);
 }

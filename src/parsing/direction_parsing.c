@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 12:44:28 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 17:33:30 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/24 12:40:13 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,26 @@ static	char	*find_path(char *file)
 	return (path);
 }
 
-void	parse_directions(char *line, t_cub *cub)
+static int	assign_path(char *line, char **direction)
 {
 	char	*path;
 
+	path = find_path(line);
+	if (!path)
+		return (-1);
+	*direction = path;
+	return (1);
+}
+
+int	parse_directions(char *line, t_cub *cub)
+{
 	if (!ft_strncmp(line, "NO", 2))
-	{
-		path = find_path(line);
-		cub->north = path; //this can be NULL, what happens then?
-	}
+		assign_path(line, &cub->north);
 	else if (!ft_strncmp(line, "SO", 2))
-	{
-		path = find_path(line);
-		cub->south = path;
-	}
+		assign_path(line, &cub->south);
 	else if (!ft_strncmp(line, "WE", 2))
-	{
-		path = find_path(line);
-		cub->west = path;
-	}
+		assign_path(line, &cub->west);
 	else if (!ft_strncmp(line, "EA", 2))
-	{
-		path = find_path(line);
-		cub->east = path;
-	}
+		assign_path(line, &cub->east);
+	return (0);
 }

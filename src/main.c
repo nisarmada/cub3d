@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 13:00:00 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/23 17:12:57 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/24 12:42:22 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int	main(int ac, char **av)
 		free_cub(cub);
 		return (1);
 	}
-	// mlx_terminate(cub->mlx);
+	mlx_terminate(cub->mlx);
 	return (0);
 }

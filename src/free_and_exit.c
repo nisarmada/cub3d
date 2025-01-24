@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 14:12:13 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 17:28:49 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/24 12:11:37 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ void	free_and_exit_game(t_cub *cub, int status)
 
 void	free_cub(t_cub *cub)
 {
-	free(cub->player);
-	free(cub->text);
+	if (cub->player)
+		free(cub->player);
+	if (cub->text)
+		free(cub->text);
 	if (cub->map)
 		free_map(cub->map);
 	if (cub->east)
