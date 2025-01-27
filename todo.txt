@@ -17,16 +17,12 @@ Hello this is a cute way to communicate what do you want me to do ?:DD
 <3333
 hello partner
 
-todo monday:
+todo:
 
-- see if there are structs that can be reused
+not accept input after last mapline, should result in error
 
-- extensive map_testing
-	- ruben said he has a lot of test, otherwise just some repo on github
+leak if space in last or first line. need to check the above or below line
 
-- double check all leaks, now after norminette
+completely empty map --> fix error message
 
-- final norminette, delete comments and stuff
-
-
-
+compiling print 

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:06:45 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/27 08:38:48 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/27 15:42:54 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	valid_key_and_value(t_key_value *info, t_string *line)
 				return (set_element_as_found(info->key, line), 1);
 			return (0);
 		}
+		free(info->value);
 		return (error_msg("Error\nDuplicate ID\n", 0));
 	}
 	else if (len == 1)
@@ -125,6 +126,7 @@ int	valid_key_and_value(t_key_value *info, t_string *line)
 				return (set_element_as_found(info->key, line), 1);
 			return (0);
 		}
+		free(info->value);
 		return (error_msg("Error\nDuplicate ID\n", 0));
 	}
 	return (error_msg("Error\nInvalid ID\n", 0));

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/27 08:23:17 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/27 15:59:56 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,25 @@ static int	process_line(t_string *line, char *next_line)
 	return (1);
 }
 
+// int	check_map_part(int fd, char *cur_line)
+// {
+// 	char	*prev_line;
+// 	char	*next_line;
+
+// 	prev_line = cur_line;
+// 	while (cur_line)
+// 	{
+// 		next_line = get_next_line(fd);
+// 		if (!next_line)
+// 			break ;
+// 		check();
+// 		free(prev_line);
+// 		prev_line = cur_line;
+// 		cur_line = next_line;
+// 	}
+// }
+
+
 static int	process_file(int fd)
 {
 	t_string	line;
@@ -58,6 +77,8 @@ static int	process_file(int fd)
 
 	init_line_struct(&line);
 	next_line = get_next_line(fd);
+	if (!next_line) //FIX: only accept an element, anything else is incorrect. also whitespace. 
+		return (error_msg("Error\nEmpty file\n", 0));
 	while (next_line && !is_map_line(next_line))
 	{
 		if (!process_line(&line, next_line))
@@ -66,9 +87,9 @@ static int	process_file(int fd)
 		if (line.elem_count < 6 && (is_map_line(next_line)))
 			return (error_msg("Error\nMissing element\n", 0));
 	}
+	// check_map_part(fd, next_line);
 	finish_file(fd);
 	close(fd);
-	// printf("elemcound: %i\n", line.elem_count);
 	if (line.elem_count > 6)
 		return(error_msg("Error\nJunk in file\n", 0));
 	else if (line.elem_count != 6)
@@ -83,9 +104,8 @@ int	valid_input(int ac, char **av)
 	fd = check_file(ac, av);
 	if (!fd)
 		return (0);
+	printf("HElo\n");
 	if (!process_file(fd))
-	{
-		return(0);
-	}
+		return (0);
 	return (1);
 }

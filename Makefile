@@ -1,6 +1,6 @@
-NAME = cub3d
+NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -DMACOSX_DEPLOYMENT_TARGET=12.7
+CFLAGS = -Wall -Werror -Wextra -g -DMACOSX_DEPLOYMENT_TARGET=12.7 
 
 export MACOSX_DEPLOYMENT_TARGET = 12.7
 

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 16:57:31 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/27 08:30:05 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/27 15:39:09 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*trim_spaces(char *str)
 	else
 		tmp = ft_strndup(&str[i], j - i + 1);
 	if (!tmp)
-		return (NULL);
+		return (free(str), NULL);
 	free (str);
 	return (tmp);
 }
