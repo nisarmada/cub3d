@@ -1,16 +1,16 @@
+ejwehfjkla
+jdfkj
+
 NO ./textures/wall_texture.png
 SO ./textures/redbrick.png
 WE ./textures/wall_texture.png
 EA ./textures/redbrick.png
+
 F 220,100,0
 C 225,30,0
 
 111111
-100001
-10N001
-
-
-110011
-
-//wrong first or last time error msg(?)
-fixed
+100101
+1010N1
+100101
+111111

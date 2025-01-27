@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 16:57:31 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 14:52:10 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/27 08:30:05 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 int	elemnt_not_found(char *key, t_string *op_line)
 {
 	if (!ft_strcmp(key, "NO") && op_line->elem[0] == 1)
-		return (printf("duplicate id\n"), 0);
+		return (0);
 	else if (!ft_strcmp(key, "SO") && op_line->elem[1] == 1)
-		return (printf("duplicate id\n"), 0);
+		return (0);
 	else if (!ft_strcmp(key, "WE") && op_line->elem[2] == 1)
-		return (printf("duplicate id\n"), 0);
+		return (0);
 	else if (!ft_strcmp(key, "EA") && op_line->elem[3] == 1)
-		return (printf("duplicate id\n"), 0);
+		return (0);
 	else if (!ft_strcmp(key, "F") && op_line->elem[4] == 1)
-		return (printf("duplicate id\n"), 0);
+		return (0);
 	else if (!ft_strcmp(key, "C") && op_line->elem[5] == 1)
-		return (printf("duplicate id\n"), 0);
+		return (0);
 	return (1);
 }
 
