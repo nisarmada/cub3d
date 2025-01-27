@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/23 14:43:39 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/27 08:11:52 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	check_file(int ac, char **av)
 		return (error_msg("Wrong file type, need .cub\n", 0));
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
-		return (error_msg("Invalid file format", 0));
+		return (error_msg("Error\nCould not open file\n", 0));
 	return (fd);
 }
 
@@ -58,17 +58,20 @@ static int	process_file(int fd)
 
 	init_line_struct(&line);
 	next_line = get_next_line(fd);
-	while (next_line)
+	while (next_line && !is_map_line(next_line))
 	{
 		if (!process_line(&line, next_line))
 			return (close(fd), 0);
-		if (line.elem_count == 6)
-			break ;
 		next_line = skip_empty_lines(fd);
+		if (line.elem_count < 6 && (is_map_line(next_line)))
+			return (error_msg("Error\nMissing element\n", 0));
 	}
 	finish_file(fd);
 	close(fd);
-	return (line.elem_count == 6);
+	printf("elemcound: %i\n", line.elem_count);
+	if (line.elem_count != 6)
+		return(error_msg("Error\nJunk in file\n", 0));
+	return (1);
 }
 
 int	valid_input(int ac, char **av)
@@ -78,5 +81,9 @@ int	valid_input(int ac, char **av)
 	fd = check_file(ac, av);
 	if (!fd)
 		return (0);
-	return (process_file(fd));
+	if (!process_file(fd))
+	{
+		return(0);
+	}
+	return (1);
 }
