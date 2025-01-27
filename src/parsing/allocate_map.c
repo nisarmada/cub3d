@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/23 15:08:10 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/24 15:51:26 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/27 09:10:59 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ int	allocate_map(char *filename, t_cub *cub)
 	get_map_size(cub, line, fd);
 	close(fd);
 	if (cub->map_height < 3)
-		return (error_msg("Error\nInvalid char in map, "\
-		"map too small, or no map\n", 0));
+		return (error_msg("Error\nmap too small, or no map\n", 0));
 	cub->map = malloc(sizeof(char *) * (cub->map_height + 1));
 	if (!cub->map)
 		return (0);

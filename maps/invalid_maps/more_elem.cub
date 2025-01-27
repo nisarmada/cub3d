@@ -7,7 +7,10 @@ EA ./textures/redbrick.png
 
 F 220,100,0
 C 225,30,0
- heeejeje
+
+EA ./textures/redbrick.png
+C 225,30,0
+
 
 111111
 100101

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:04:40 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/27 07:58:21 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/27 08:25:05 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	check_line(t_string *line)
 	{
 		info = split_in_two(&cur_fileline[i]);
 		if (!info)
-			return (error_msg("Error\nCould not find key and value\n", 0));
+			return (error_msg("Error\nCould not find ID and value\n", 0));
 		if (!valid_key_and_value(info, line))
 			return (free_info(info), 0);
 		line->elem_count++;

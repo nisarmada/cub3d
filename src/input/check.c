@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/27 08:11:52 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/27 08:23:17 by elleneklund   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,11 @@ static int	process_file(int fd)
 	}
 	finish_file(fd);
 	close(fd);
-	printf("elemcound: %i\n", line.elem_count);
-	if (line.elem_count != 6)
+	// printf("elemcound: %i\n", line.elem_count);
+	if (line.elem_count > 6)
 		return(error_msg("Error\nJunk in file\n", 0));
+	else if (line.elem_count != 6)
+		return (error_msg("Error\nElement not at start of file\n", 0));
 	return (1);
 }
 
