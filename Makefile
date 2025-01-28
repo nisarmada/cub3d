@@ -1,16 +1,16 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -DMACOSX_DEPLOYMENT_TARGET=12.7 
+CFLAGS = -Wall -Werror -Wextra -g -DMACOSX_DEPLOYMENT_TARGET=12.7 -MMD -MP
 
 export MACOSX_DEPLOYMENT_TARGET = 12.7
 
-LIBMLX	= ./lib/MLX42
-LIBFT_DIR	= ./lib/libft
-LIBFT	= $(LIBFT_DIR)/libft.a
+LIBMLX = ./lib/MLX42
+LIBFT_DIR = ./lib/libft
+LIBFT = $(LIBFT_DIR)/libft.a
 LDFLAGS = -L/usr/local/opt/glfw/lib
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include -I /opt/homebrew/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT) -L/opt/homebrew/lib
+HEADERS := -I ./include -I $(LIBMLX)/include -I /opt/homebrew/include
+LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT) -L/opt/homebrew/lib
 
 SRCS_DIR = src
 OBJ_DIR = obj
@@ -23,7 +23,7 @@ rendering/extras.c rendering/player_movement.c rendering/hooks.c rendering/rayca
 rendering/3D_rendering.c rendering/wallslice_rendering.c rendering/draw_minimap.c \
 rendering/draw_miniplayer.c rendering/raycasting_helper.c rendering/draw_line.c)
 
-OBJS	= $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_SUBDIRS = $(sort $(dir $(OBJS)))
 
 GREEN = \033[32m
@@ -58,5 +58,7 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: clean all
+
+-include $(OBJS:.o=.d)
 
 .PHONY: all clean fclean re libmlx
