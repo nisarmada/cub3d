@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/28 11:51:16 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/29 14:18:04 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ static int	check_file(int ac, char **av)
 	return (fd);
 }
 
-static char	*skip_empty_lines(int fd)
+char	*skip_empty_lines(int fd)
 {
 	char	*next_line;
 
 	next_line = get_next_line(fd);
+	if (!next_line)
+		return (NULL);
 	while (next_line && !ft_strcmp(next_line, "\n"))
 	{
 		free(next_line);
@@ -88,7 +90,11 @@ static int	process_file(int fd)
 			return (error_msg("Error\nMissing element\n", 0));
 	}
 	// check_map_part(fd, next_line);
-	finish_file(fd);
+	if (!finish_file(fd))
+	{
+		close(fd);
+		return(error_msg("Error\nJunk in file\n", 0));
+	}
 	close(fd);
 	if (line.elem_count > 6)
 		return(error_msg("Error\nJunk in file\n", 0));
@@ -104,7 +110,6 @@ int	valid_input(int ac, char **av)
 	fd = check_file(ac, av);
 	if (!fd)
 		return (0);
-	printf("HElo\n");
 	if (!process_file(fd))
 		return (0);
 	return (1);

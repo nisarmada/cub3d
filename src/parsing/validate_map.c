@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/27 09:11:06 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/29 14:37:16 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ static int	valid_outer_row(char **map, int row, int width)
 	{
 		if (map[row][i] != ' ' && map[row][i] != '1')
 			return (0);
+		if (map[row][i] == ' ')
+		{
+			if (!check_surrounding(map, row, i, width - 1))
+				return (0);
+		}
 		i++;
 	}
 	return (1);

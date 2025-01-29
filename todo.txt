@@ -21,8 +21,6 @@ todo:
 
 not accept input after last mapline, should result in error
 
-leak if space in last or first line. need to check the above or below line
-
-completely empty map --> fix error message
+completely empty file --> fix error message
 
 compiling print 

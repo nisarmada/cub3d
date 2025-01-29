@@ -6,13 +6,13 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/23 15:18:05 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/24 15:25:22 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/29 14:36:02 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	check_surrounding(char **map, int row, int i, int width)
+int	check_surrounding(char **map, int row, int i, int width)
 {
 	char	*cur;
 	char	*up;
@@ -22,15 +22,18 @@ static int	check_surrounding(char **map, int row, int i, int width)
 	up = map[row - 1];
 	down = map[row + 1];
 	if (i == width && cur[i] == '0')
-		return (0);
+		return (printf("first"), 0);
 	if (i != 0 && (cur[i - 1] != '1' && cur[i - 1] != ' '))
-		return (0);
+		return (printf("scnd"), 0);
 	if (i != width && (cur[i + 1] != '1' && cur[i + 1] != ' '))
-		return (0);
-	if ((up[i] != '1' && up[i] != ' '))
-		return (0);
-	if (down[i] && down[i] != '1' && (down[i] != ' '))
-		return (0);
+		return (printf("3d"), 0);
+	if ((up && up[i] != '1' && up[i] != ' '))
+	{
+		printf("char: %c\n", up[i]);
+		return (printf("4th"), 0);
+	}
+	if (down && down[i] != '1' && down[i] != ' ')
+		return (printf("5th"), 0);
 	return (1);
 }
 

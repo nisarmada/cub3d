@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/24 12:46:34 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/29 14:13:09 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int		error_msg(char *msg, int status);
 int		error_msg_spec(char *msg, void *spec, int status);
 
 /* PARSING */
-void	finish_file(int fd);
+// void	finish_file(int fd);
+char	*skip_empty_lines(int fd);
 t_cub	*init_cub(char *filename); //i main
 int		is_map_line(char *line);
 int		parse_directions(char *line, t_cub *cub);
@@ -114,6 +115,7 @@ int		allocate_map(char *filename, t_cub *cub);
 void	map_parsing(char *line, t_cub *cub, int j);
 int		parse_colors(char *line, t_cub *cub);
 int		valid_map_row(t_cub	*cub, int row);
+int		check_surrounding(char **map, int row, int i, int width);
 
 /* RENDERING */
 int		render_game(t_cub *cub); //i main
