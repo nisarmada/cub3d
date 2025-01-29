@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/19 16:57:54 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/29 14:31:37 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/29 17:11:57 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	finish_file(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (line)
+	if (line && !ft_strcmp(line, "\n"))
 	{
 		free (line);
 		line = skip_empty_lines(fd);

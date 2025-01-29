@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/29 14:18:04 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/29 17:08:08 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,6 @@ static int	process_line(t_string *line, char *next_line)
 	return (1);
 }
 
-// int	check_map_part(int fd, char *cur_line)
-// {
-// 	char	*prev_line;
-// 	char	*next_line;
-
-// 	prev_line = cur_line;
-// 	while (cur_line)
-// 	{
-// 		next_line = get_next_line(fd);
-// 		if (!next_line)
-// 			break ;
-// 		check();
-// 		free(prev_line);
-// 		prev_line = cur_line;
-// 		cur_line = next_line;
-// 	}
-// }
-
-
 static int	process_file(int fd)
 {
 	t_string	line;
@@ -79,7 +60,7 @@ static int	process_file(int fd)
 
 	init_line_struct(&line);
 	next_line = get_next_line(fd);
-	if (!next_line) //FIX: only accept an element, anything else is incorrect. also whitespace. 
+	if (!next_line)
 		return (error_msg("Error\nEmpty file\n", 0));
 	while (next_line && !is_map_line(next_line))
 	{
@@ -89,15 +70,14 @@ static int	process_file(int fd)
 		if (line.elem_count < 6 && (is_map_line(next_line)))
 			return (error_msg("Error\nMissing element\n", 0));
 	}
-	// check_map_part(fd, next_line);
 	if (!finish_file(fd))
 	{
-		close(fd);
-		return(error_msg("Error\nJunk in file\n", 0));
+		printf("hello\n");
+		return (close(fd), error_msg("Error\nJunk in file\n", 0));
 	}
 	close(fd);
 	if (line.elem_count > 6)
-		return(error_msg("Error\nJunk in file\n", 0));
+		return (error_msg("Error\nJunk in file\n", 0));
 	else if (line.elem_count != 6)
 		return (error_msg("Error\nElement not at start of file\n", 0));
 	return (1);

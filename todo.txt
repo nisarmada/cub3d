@@ -17,10 +17,11 @@ Hello this is a cute way to communicate what do you want me to do ?:DD
 <3333
 hello partner
 
+Hello niko mou, i have kind of fixed the things but i think we need to do tests.
+also maybe a bit of norminette now hehe
+
 todo:
 
-not accept input after last mapline, should result in error
 
-completely empty file --> fix error message
 
 compiling print 
