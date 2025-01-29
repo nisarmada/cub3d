@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 12:30:32 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/29 14:13:05 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/29 17:18:00 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		open_file_check(char *trimmed_value);
 
 //free and error
 void	free_colors(char **colors, char *value);
-int		finish_file(int fd);
+int		finish_file(int fd, char *line);
 // int		error_msg(char *msg, int status);
 
 //check_line

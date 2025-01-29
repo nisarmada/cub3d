@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -DMACOSX_DEPLOYMENT_TARGET=12.7 -MMD -MP
+CFLAGS = -Wall -Werror -Wextra -g -DMACOSX_DEPLOYMENT_TARGET=12.7 -MMD -MP -fsanitize=address
 
 export MACOSX_DEPLOYMENT_TARGET = 12.7
 

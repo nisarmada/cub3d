@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 14:02:36 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/29 17:08:08 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/29 17:45:15 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,14 @@ static int	process_file(int fd)
 			return (close(fd), 0);
 		next_line = skip_empty_lines(fd);
 		if (line.elem_count < 6 && (is_map_line(next_line)))
+		{
+			if (next_line)
+				free(next_line);
 			return (error_msg("Error\nMissing element\n", 0));
+		}
 	}
-	if (!finish_file(fd))
-	{
-		printf("hello\n");
+	if (!finish_file(fd, next_line) || line.elem_count > 6)
 		return (close(fd), error_msg("Error\nJunk in file\n", 0));
-	}
-	close(fd);
-	if (line.elem_count > 6)
-		return (error_msg("Error\nJunk in file\n", 0));
 	else if (line.elem_count != 6)
 		return (error_msg("Error\nElement not at start of file\n", 0));
 	return (1);

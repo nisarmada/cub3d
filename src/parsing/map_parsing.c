@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/15 15:08:54 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/20 16:39:59 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/29 17:42:52 by eeklund       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ int	is_map_line(char *line)
 
 void	map_parsing(char *line, t_cub *cub, int j)
 {
-	int	i;
+	int		i;
+	size_t	len;
 
 	i = 0;
-	(void)j;
+	len = ft_strlen(line);
+	if (line[len - 1] == '\n')
+		len--;
 	cub->map[j] = malloc(sizeof(char) * cub->map_width + 1);
 	if (!cub->map[j])
 		return ;
-	while (i < (int)(ft_strlen(line) - 1))
+	while (i < (int)len)
 	{
 		cub->map[j][i] = line[i];
 		i++;
