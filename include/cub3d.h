@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 14:06:27 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/29 14:13:09 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/30 12:06:46 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int		allocate_map(char *filename, t_cub *cub);
 void	map_parsing(char *line, t_cub *cub, int j);
 int		parse_colors(char *line, t_cub *cub);
 int		valid_map_row(t_cub	*cub, int row);
-int		check_surrounding(char **map, int row, int i, int width);
+int		check_surrounding(char **map, int row, int i, t_cub *cub);
 
 /* RENDERING */
 int		render_game(t_cub *cub); //i main

@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 15:54:20 by nsarmada      #+#    #+#                 */
-/*   Updated: 2025/01/27 14:00:51 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/30 12:14:09 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	read_map_lines(t_cub *cub, char *line, int fd)
 	if (line)
 		free(line);
 	cub->map[j] = NULL;
+
 }
 
 static int	parse_cub_file(char *filename, t_cub *cub)

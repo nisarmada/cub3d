@@ -6,21 +6,28 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/23 15:18:05 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/29 17:44:32 by eeklund       ########   odam.nl         */
+/*   Updated: 2025/01/30 12:09:21 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_surrounding(char **map, int row, int i, int width)
+int	check_surrounding(char **map, int row, int i, t_cub *cub)
 {
 	char	*cur;
 	char	*up;
 	char	*down;
+	int		width;
 
+	//width = cub->map->width - 1
+	up = NULL;
+	down = NULL;
+	if (row > 0)
+		up = map[row - 1];
+	if (row < cub->map_height - 1)
+		down = map[row + 1];
+	width = cub->map_width - 1;
 	cur = map[row];
-	up = map[row - 1];
-	down = map[row + 1];
 	if (i == width && cur[i] == '0')
 		return (0);
 	if (i != 0 && (cur[i - 1] != '1' && cur[i - 1] != ' '))
@@ -76,7 +83,7 @@ int	valid_map_row(t_cub	*cub, int row)
 	{
 		if (cub->map[row][i] == ' ')
 		{
-			if (!check_surrounding(cub->map, row, i, cub->map_width - 1))
+			if (!check_surrounding(cub->map, row, i, cub))
 				return (error_msg("Error\nLeak in map\n", 0));
 		}
 		else
