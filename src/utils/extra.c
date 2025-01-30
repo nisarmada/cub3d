@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/18 17:32:07 by eeklund       #+#    #+#                 */
-/*   Updated: 2025/01/19 18:53:27 by elleneklund   ########   odam.nl         */
+/*   Updated: 2025/01/30 13:09:32 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_isvalid_path_chars(int c)
 {
 	if (ft_isalnum(c))
 		return (1);
-	if (c == '/' || c == '\\' || c == '.' || c == '_' || c == '-' || c == ' ')
+	if (c == '/' || c == '\\' || c == '.' || c == '_' || c == '-')
 		return (1);
 	else
 		return (0);

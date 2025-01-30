@@ -6,7 +6,7 @@
 /*   By: eeklund <eeklund@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/11 15:36:00 by elleneklund   #+#    #+#                 */
-/*   Updated: 2025/01/30 12:13:19 by nsarmada      ########   odam.nl         */
+/*   Updated: 2025/01/30 13:25:37 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	valid_outer_row(t_cub *cub, int row, int width)
 {
-	int	i;
+	int		i;
 	char	**map;
 
 	i = 0;
